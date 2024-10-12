@@ -1,0 +1,44 @@
+# Proposed Model
+
+The goal of this analysis is ***.  We learn the post-treatment counterfactual by simply excluding all birth counts from the likelihood for any states with abortion bans in time periods after the date which the ban went into effect (or 9 months after?). The proposed model is inspired by a combination of the birthday modeling work that Aki Vehtari [sketches out in detail](https://avehtari.github.io/casestudies/Birthdays/birthdays.html) and [our multi-task Gaussian process model for estimating the effect of a targeted effort to remove firearms ](https://ebenmichael.github.io/assets/research/MTGP_DRAFT_09272021.pdf).
+
+
+Let $Y_{itk}$ denote the number of births in state $i$ at time point $t$ for subgroup $k$ (subgroups can include race, age and/or insurance status).  We assume that these births have a Poisson distribution with mean $f_{it}$. 
+
+<!-- and overdispersion parameter $\phi_i$, so that $\text{Var}(Y_{it}) = f_{it} + \frac{f_{it}^2}{\phi}$.  -->
+The log birth rate for state $i$ at time $t$ in category $k$ can be written as
+
+$$
+\begin{align}
+\text{log}(f_{it}) &= \alpha_i + g_{kt}^{overall} + \sum_m \gamma_{ikm} g^{fact}_{tkm}  + log(P_{it}/1000) + \tau_{itk}
+\end{align}
+$$
+
+where $\alpha_i$ is the average state level birth rate and $g_{kt}^{overall}$ is the global mean time series over all states for category $k$ and $P_{it}$ is the population (or denominator) for state $i$ at time $t$.  $g^{overall}$ is a Gaussian Process.
+
+$g^{fact}$ are the latent factors representing unmeasured time-varying confounders and are assumed to be unique to each subgroup $k$ but shared across all states.  The latent factors are assumed to be Gaussian processes with a squared exponential covariance function.  The covariance function for the latent factors is
+
+The covariance functions for each component are
+
+\begin{align}
+k_{\text {sqexp}}\left(t, t^{\prime}\right) &=\exp \left(-\frac{\left\|t-t^{\prime}\right\|^2}{2 \rho}\right)\\
+k_{\text{per}}\left(t, t^{\prime}\right) &= \sigma^2 \exp \left(-\frac{2 \sin ^2\left(\pi \frac{|t-t'|}{12}\right)}{l^2}\right)
+\end{align}
+
+## Hierarchical Priors on the Treatment Effect
+
+A unique feature of this model is how we handle priors on the treatment effects across categories. $\tau_{itk}$ is the treatment effect (on the log rate scale) for outcome $i$ at time $t$ in category $k$. Let $T^0_i$ be the treatment time for unit $i$.  Then $\tau_{itk} = 0$ for all $t < T^0_i$.  Otherwise, we assume
+
+\begin{align}
+\tau_{itk} &\sim \text{Normal}(\beta_0 + \beta_t + \beta_i + \beta_k, \sigma^2_\tau)\\
+\beta_0 &\sim \text{Normal}(0, \sigma^2_0)\\
+\beta_t &\sim \text{Normal}(0, \sigma^2_{time})\\
+\beta_k &\sim \text{Normal}(0, \sigma^2_{category})\\
+\beta_i &\sim \text{Normal}(\beta X_i, \sigma^2_{state})\\
+\end{align}
+
+At a high level, this has the effect of shrinking treatment effects toward eachother (and toward 0 a priori).  $\beta_0$ accounts for any overall effect, $\beta_t$ accounts for any time-varying effect, $\beta_i$ accounts for any state-level effect, and $\beta_k$ accounts for any category-level effect.  $X_i$ are any state-level covariates (prior abortion rate, partial ban indicator) so that a priori we shrink $\beta_i$ toward the inferred regression surface $\beta X_i$.  
+
+## Missing Data
+
+Census numbers are missing when the counts are between 1 and 9 inclusive.  We handle this non-ignorable missing data 

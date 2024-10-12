@@ -1,0 +1,221 @@
+---
+params:
+  type: "race"
+  model_rank: NA
+  csv_prefix: "~/Downloads/joint_bimonthly_results/joint_bimonthly_gamma_overdispersed"
+  suffix: NA 
+  sensitivity: FALSE
+  model_fits_file: "dobbs_birth_fits.csv"
+  placebo_time: "2020-03-01"
+title: "Effects of Abortion Bans - `r params$type` analysis - rank `r params$model_rank`"
+author: Alex Franks
+format: 
+  html:
+   code-fold: true
+   code-summary: "Show the code"
+   embed-resources: true
+   toc: true
+   output-ext: "html"
+   grid:
+    sidebar-width: 0px
+    body-width: 1000px
+---
+
+```{r packages, message=FALSE}
+options(dplyr.summarise.inform = FALSE)
+
+library(tidyverse)
+library(tidybayes)
+library(posterior)
+library(jsonlite)
+library(kableExtra)
+library(gt)
+
+df <- read_csv("data/dobbsbimonthlybirthsdeaths_7_16_24.csv")
+df |>
+  mutate(
+          start_date = ym(paste(year, "-", bmcode * 2 - 1)),
+          end_date = start_date + months(2) - days(1)
+        ) -> df
+
+
+fill_in_missing_denoms <- function(dat) {
+    pop_index_2022 <- which.max(dat$year == 2022)
+    pop_index_2021 <- which.max(dat$year == 2021)
+    dat %>% mutate_at(vars(contains("pop")), ~ ifelse(is.na(.), .[pop_index_2022]^2 / .[pop_index_2021], .))
+}
+
+## Hacky imputation
+df <- df %>%
+    group_by(state) %>%
+    group_modify(~ fill_in_missing_denoms(.)) %>%
+    ungroup()
+
+df$time <- lubridate::ymd(paste0(df$year, "-", 2*df$bmcode-1, "-01"))
+
+df <- df %>% filter(time < "2024-01-01") 
+df$dobbs_code <- df$dobbscodev2
+df <- df %>% group_by(state) %>% fill(exposed_births, .direction="down") %>% ungroup()
+df <- df %>% group_by(state) %>% fill(exposed_infdeaths, .direction="down") %>% ungroup()
+
+placebo_time <- "2020-03-01"
+if(!is.null(placebo_time)) {
+  new_treatment_start = lubridate::date(placebo_time)
+  end_date = df %>% filter(exposed_births == 1) %>% pull(time) %>% max
+  original_treatment_start = df %>% filter(exposed_births == 1) %>% pull(time) %>% min
+
+  new_end = new_treatment_start + (end_date - original_treatment_start)
+
+  original_time_length = end_date - lubridate::date("2016-01-01")
+  new_start = new_end - original_time_length
+  if(new_start < min(df$time))
+    new_start = min(df$time)
+  new_start = round_date(new_start, unit="month")
+  new_end = round_date(new_end, unit="month")
+  new_time_length = new_end - new_start
+    
+  # Get the columns that start with 'exposure_code' for the end part of the time series
+  exposure_column_date <- (end_date-new_time_length)
+  exposure_code_values <- df %>% filter(time >= exposure_column_date) %>% pull(exposed_births)
+
+  df <- df %>% filter(time <= new_end & time >= new_start)
+
+  if(length(exposure_code_values) == nrow(df)){
+    df$exposed_births = exposure_code_values
+  } else{
+    stop("The length of new exposure_code values does not match the number of rows in df")
+  }
+
+} else {
+  df <- df %>% filter(time >= "2016-01-01")
+}
+
+df %>% group_by(state) %>% 
+    mutate(ban = ifelse(any(exposed_births == 1), "Exposed (excl. Texas)", "Unexposed")) %>%
+    mutate(ban = ifelse(is.na(ban), "Unexposed", ban)) %>% 
+    mutate(ban = ifelse(state == "Texas", "Texas", ban)) %>%
+    group_by(ban, time) %>% 
+    summarize(births_total = sum(births_total), pop_total=sum(pop_total)) %>% 
+    ungroup() %>% group_by(ban) %>% 
+    mutate(mean_br = mean(births_total[time < placebo_time]/pop_total[time < placebo_time])) %>%
+    mutate(birthrate = (births_total/pop_total)/mean_br) %>% 
+    ggplot() + geom_smooth(aes(x=time, y=birthrate, group=ban, col=ban), se=FALSE, span=0.4) + 
+    geom_jitter(aes(x=time, y=birthrate, col=ban), alpha=0.5) +
+    theme_bw(base_size=16) + 
+    theme(legend.position = c(0.99, 0.99), legend.justification = c(1, 1),
+    #legend.background = element_blank(),  # Make legend background transparent
+    legend.title = element_blank()  ) +
+    scale_color_manual(values=c("red", "orange", "dark gray")) + 
+    geom_vline(xintercept=lubridate::date("2020-03-01"), color="orange", linetype="dashed") +
+    geom_vline(xintercept=lubridate::date("2021-01-01"), color="red", linetype="dashed") +
+    ylab("Relative Birthrate") + xlab("Time") 
+ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/placebo/placebo_relative_birthrate.png", width=8, height=5)
+
+
+
+```
+
+
+
+
+```{r}
+categories_list <- list(age = c("age1524", "age2534", "age3544"), 
+    edu = c("nohs", "hs", "somecoll", "coll"),
+    #edu = c("hs_less", "somecoll_more"),
+    insurance = c("medicaid", "nonmedicaid"),
+    marital = c("married", "unmarried"),
+    race = c("nhwhite", "nhblack", "hisp", "otherraceeth"),
+    total = c("total"))
+
+df <- df %>% group_by(state) %>% 
+mutate(ban = ifelse(any(exposed_births == 1), TRUE, FALSE))
+
+```
+
+```{r load_data}
+source("plot_utilities.R")
+
+## Load all datasets
+# file_dir <- "~/Downloads/hierarchy"
+file_dir <- "~/Dropbox/abortion_results_and_data/posterior_samples/2020_placebo"
+suffix <- "placebo_2020"
+types <- c("total")
+ranks <- c(7)
+
+all_samples <- tibble()
+for(i in 1:length(types)) {
+    type <- types[i]
+    model_rank <- ranks[i]
+    print(sprintf("%s %i", type, model_rank))
+    df2 <- df
+    if(type == "marital")
+        df2 <- df2 %>% filter(state != "California")
+    
+    categories <- categories_list[[type]]
+    type_samples <- read_csv(sprintf("%s/NB_births_%s_%i_%s.csv", file_dir, type, model_rank, suffix))
+
+    categories <- categories_list[[type]]
+
+    agg_category_name = "total"
+    merged_df <- merge_draws_and_data(df2, type_samples,  categories=categories, agg_category_name=agg_category_name)
+    df_ban_no_tx_treat_time <- merged_df %>% 
+        filter(!(state %in% c("Texas", "Ban States")),  exposure_code==1) %>% 
+        pull(time) %>% min()
+    df_ban_no_tx <- merged_df %>% filter(state == "Ban States" ) %>% 
+        mutate(exposure_code = ifelse(time >= df_ban_no_tx_treat_time, 1, 0))
+    df_tx <- merged_df %>% filter(state == "Texas")
+    df_ban_no_tx <- df_ban_no_tx %>% 
+        mutate(state = "Ban States (excl. Texas)",
+        ban = TRUE, 
+        exposure_code = ifelse(time >= df_ban_no_tx_treat_time, 1, 0),
+        ypred = df_ban_no_tx$ypred - df_tx$ypred,
+        mu = log(exp(df_ban_no_tx$mu) - exp(df_tx$mu)),
+        mu_treated = log(exp(df_ban_no_tx$mu_treated) - exp(df_tx$mu_treated)),
+        pop = df_ban_no_tx$pop - df_tx$pop,
+        births = df_ban_no_tx$births - df_tx$births,
+        D = max(merged_df$D) + 1
+        )
+    merged_df <- merged_df %>% bind_rows(df_ban_no_tx)
+
+    
+    merged_df$type <- type
+    merged_df$rank <- model_rank
+    all_samples <- bind_rows(all_samples, merged_df)
+}
+
+all_samples <- all_samples %>% mutate(category = fct_recode(category, "Total" = "total")) 
+
+quantiles_df <- all_samples %>% group_by(category, type, state, time) %>%
+  summarize(ypred_mean=mean(ypred), 
+            ypred_lower=quantile(ypred, 0.025), ypred_upper=quantile(ypred, 0.975), 
+            births=mean(births), 
+            exposure_code = first(exposure_code),
+            ban = first(ban)) %>% ungroup()
+```
+
+## Fit and Gap Plots
+
+```{r}
+make_state_fit_plot(quantiles_df %>% filter(type=="total"), state_name="Ban States", category="Total", target="births") + theme_bw(base_size=16) 
+ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/placebo/ban_states_placebo_fit_2020.png", width=10, height=10)
+
+make_gap_plot(quantiles_df %>% filter(type=="total"), state_name="Ban States", category="Total", target="births") + theme_bw(base_size=16)
+ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/placebo/ban_states_placebo_gap_2020.png", width=10, height=10)
+```
+
+## Interval Plots
+
+```{r}
+
+make_interval_plot(all_samples %>% filter(type == "total"), 
+                         group_var = c("state", "category"),
+                         target="births", denom="pop",
+                         rate_normalizer=1000,
+                         estimand = "ratio", 
+                         method="mu") + labs(color="Total") + ylim(c(-1, 3)) + ggtitle("Placebo (2020-03)")
+ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/placebo/placebo_interval_plot.png", width=10, height=10)
+
+
+```
+
+
