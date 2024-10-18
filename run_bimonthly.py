@@ -13,10 +13,11 @@ from numpyro_to_draws_df_csv import dict_to_tidybayes
 
 import pandas as pd
 
+## Some defaults for testing
 dist = "NB"
 outcome_type = "births"
 cat_name = "race"
-rank = 9
+rank = 5
 drop_dobbs = False
 sample_disp = False
 missingness=True
@@ -24,9 +25,14 @@ disp_param = 1e-4
 model_treated = True
 dobbs_donor_sensitivity = False
 placebo_time = None
+num_chains = 1
 def main(dist, outcome_type="births", cat_name="total", rank=5, missingness=True, 
          disp_param=1e-4, sample_disp=False, placebo_state = None, placebo_time = None, 
-         drop_dobbs=False, dobbs_donor_sensitivity=False, model_treated=False):
+         drop_dobbs=False, dobbs_donor_sensitivity=False, model_treated=True,
+         num_chains=num_chains, num_warmup=1000, num_samples=1000):
+    
+    numpyro.set_host_device_count(num_chains)
+
     df = pd.read_csv('data/dobbsbimonthlybirths_10_15_24.csv')
     
     from clean_monthly_birth_data import prep_data, clean_dataframe, create_unit_placebo_dataset, create_time_placebo_dataset
@@ -60,7 +66,6 @@ def main(dist, outcome_type="births", cat_name="total", rank=5, missingness=True
     # split the random key
     rng_key, rng_key_ = random.split(rng_key)
     # Setup the sampler
-    num_warmup, num_samples, num_chains = 1000, 1000, 1
     kernel = NUTS(model)
 
     mcmc = MCMC(
@@ -161,5 +166,5 @@ if __name__ == '__main__':
                                                 disp_param=i[4],
                                                 sample_disp=sample_disp, placebo_state=i[5], placebo_time = i[6], 
                                                 drop_dobbs=drop_dobbs, dobbs_donor_sensitivity=dobbs_donor_sensitivity, 
-                                                model_treated=True) for i in args)
+                                                model_treated=True, num_chains=4, num_samples=2500, num_warmup=1000) for i in args)
     
