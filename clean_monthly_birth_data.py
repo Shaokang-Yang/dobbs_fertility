@@ -36,16 +36,11 @@ def clean_dataframe(dat:pd.DataFrame, outcome_type="births", cat_name="total",
     # Set time variable for bimonths
     dat['time'] = pd.to_datetime(dat.year.astype(str) + '-' + (dat.bmcode * 2 - 1).astype(str) + "-01")
 
-    dat['deaths_nonneo'] = dat['deaths_total'] - dat['deaths_neo']
-    dat['deaths_noncon'] = dat['deaths_total'] - dat['deaths_con']
-    dat['births_con'] = dat['births_noncon'] = dat['births_total']
-    dat['births_neo'] = dat['births_nonneo'] = dat['births_total']
-    
     # Convert "births_nhblack" column to numeric, replacing "Suppressed" with NaN
     dat['births_nhblack'] = pd.to_numeric(dat['births_nhblack'].replace("Suppressed", pd.NA))
 
     # Create a new column 'partial_ban' based on conditions from 'dobbscodev3' column
-    dat['partial_ban'] = dat['dobbscodev3'].apply(lambda x: 1 if x == 2 else 0)
+    # dat['partial_ban'] = dat['dobbscodev3'].apply(lambda x: 1 if x == 2 else 0)
     #dat['time'] = pd.to_datetime(dat.year.astype(str) + '-' + dat.month, format="%Y-%B")
 
     def fill_in_missing_denoms(dat):

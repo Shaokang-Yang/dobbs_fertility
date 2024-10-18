@@ -8,7 +8,6 @@ import numpyro
 from numpyro.handlers import scope
 
 from models.panel_nmf_model import model
-from models.trends import spline_trend, seasonal_trend, linear_trend, global_seasonal_trend
 from models.utils import missingness_adjustment
 from numpyro_to_draws_df_csv import dict_to_tidybayes
 
@@ -19,16 +18,16 @@ outcome_type = "births"
 cat_name = "race"
 rank = 9
 drop_dobbs = False
-sample_disp = True
+sample_disp = False
 missingness=True
 disp_param = 1e-4
 model_treated = True
 dobbs_donor_sensitivity = False
-placebo_time = "2020-01-01"
+placebo_time = None
 def main(dist, outcome_type="births", cat_name="total", rank=5, missingness=True, 
          disp_param=1e-4, sample_disp=False, placebo_state = None, placebo_time = None, 
          drop_dobbs=False, dobbs_donor_sensitivity=False, model_treated=False):
-    df = pd.read_csv('data/dobbsbimonthlybirthsdeaths_7_16_24.csv')
+    df = pd.read_csv('data/dobbsbimonthlybirths_10_15_24.csv')
     
     from clean_monthly_birth_data import prep_data, clean_dataframe, create_unit_placebo_dataset, create_time_placebo_dataset
     
@@ -53,7 +52,6 @@ def main(dist, outcome_type="births", cat_name="total", rank=5, missingness=True
     import numpy as np
     from jax import random
     from numpyro.infer import MCMC, NUTS, Predictive
-    from statsmodels.tsa.deterministic import CalendarFourier
 
     #from models.monthly_model import monthly_model
 
@@ -153,7 +151,7 @@ if __name__ == '__main__':
     placebo_states = [None]
     sample_disp = False
     drop_dobbs = False
-    dobbs_donor_sensitivity = True
+    dobbs_donor_sensitivity = False
 
     args = [(dist, cat, rank, m, disp, p, tm) for dist in dists for rank in inputs for cat in cats 
             for m in missing_flags for disp in disp_params for p in placebo_states 
