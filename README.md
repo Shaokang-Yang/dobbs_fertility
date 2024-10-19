@@ -4,7 +4,7 @@ This repository includes replication code for "National and state-specific estim
 - The data we analyzed was pulled from CDC Wonder and can be found in `data/fertility_data.csv`
 
 ## Model fit
-You can fit the model by running the python file `run_bimonthly.py`. The result of this call is a csv file containing posterior samples.
+You can fit the model by running the python file `run_model.py`. The result of this call is a csv file containing posterior samples.
 
 The following flags can be set at the bottom of this file in the `main` call:
 - `cat_name`: One of `total`, `age`, `race`, `edu`, `insurance`, or `marital`. 
