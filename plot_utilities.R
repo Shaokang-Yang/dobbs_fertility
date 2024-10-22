@@ -1217,41 +1217,6 @@ make_abs_res_ppc_plot <- function(merged_df,
 
 }
 
-make_sign_change_ppc_plot <- function(merged_df, 
-                                      outcome = "births",
-                                      categories=NULL) {
-
-  if(is.null(categories)) {
-    categories <- unique(merged_df$category)
-  }
-
-  sign_change_stats <- merged_df %>%
-    mutate(pred_sign = sign(ypred - exp(mu))) %>%
-    mutate(obs_sign = sign(.data[[outcome]] - exp(mu))) %>%
-    group_by(state, category, D, K, .draw) %>%
-    summarise(
-       sign_changes_pred = length(rle(pred_sign[exposure_code == 0])[[1]]),
-       sign_changes_obs = length(rle(obs_sign[exposure_code == 0])[[1]]),
-    ) %>% mutate(diff_in_sc =  sign_changes_obs - sign_changes_pred)
-    
-  ban_states <- merged_df %>%
-   filter(ban == 1) %>%
-   pull(state) %>%
-   unique()
-
-  sign_change_stats %>% 
-    filter(state %in% ban_states) %>%
-    filter(category %in% categories) %>%
-    ggplot() +
-    geom_histogram(aes(x = diff_in_sc), alpha=0.5) +
-    geom_vline(xintercept = 0, col = "red", linetype = "dashed") +
-    facet_wrap(~ state + category, scales="free") +
-    theme_bw() +
-    ggtitle("Difference in Number of Sign Changes")
-
-
-}
-
 make_unit_corr_ppc_plot <- function(merged_df,
                                     max_treat_date = "2022-04-01", 
                                     categories = NULL,
@@ -1304,135 +1269,164 @@ make_unit_corr_ppc_plot <- function(merged_df,
 }
 
 
-get_factor_arrays <- function(draws_mat, category="all", subgroup_factors=TRUE) {
 
-  
-  category_code <- 1
-  state <- 1
+make_fertility_table <- function(merged_df, 
+                       target_state = "Texas", target="births", denom="pop",
+                       rate_normalizer=1000, plot_type="exploratory",
+                       tab_caption = "Table 1. Estimated difference in cumulative observed vs expected births (count and rate) in all states that banned abortion in months affected by bans (January 2023 through December 2023), overall and by socioeconomic characteristics") {
 
-  if(subgroup_factors==TRUE) {
-    latent_factor_df <- draws_mat %>% spread_draws(local_draw[n_k_f, K, N])
-    max_K <- max(latent_factor_df$K)
-    N <- max(latent_factor_df$N)
-    NL <- max(latent_factor_df$n_k_f)
-    ndraws <- max(latent_factor_df$.draw)
-    
+ if(target_state == "Ban States") {
+    merged_df <- merged_df %>% filter(!state %in% c("Ban States", "Ban States (excl. Texas)"))
+    merged_df <- merged_df %>%
+      filter(exposure_code == 1) %>%
+      ## Aggregate over all banned states
+      group_by(type, category, .draw, time) %>% 
+      summarise({{target}} := sum(.data[[target]]), 
+                denom = sum(.data[[denom]]), 
+                ypred=sum(ypred), 
+                mu = log(sum(exp(mu))),
+                mu_treated = log(sum(exp(mu_treated))),
+                years=mean(interval(start_date, end_date) / years(1)))
+      
+  } else if(target_state == "Ban States (excl.Texas)") {
+    merged_df <- merged_df %>% filter(!state %in% c("Ban States", "Ban States (excl. Texas)"))
+    merged_df <- merged_df %>%
+      filter(state != "Texas") %>%
+      filter(exposure_code == 1) %>%
+      ## Aggregate over all banned states
+      group_by(type, category, .draw, time) %>% 
+      summarise({{target}} := sum(.data[[target]]), 
+                denom = sum(.data[[denom]]), 
+                ypred=sum(ypred), 
+                mu = log(sum(exp(mu))),
+                mu_treated = log(sum(exp(mu_treated))),
+                years=mean(interval(start_date, end_date) / years(1)))
+
   } else {
-    error()
+    merged_df <- merged_df %>%
+      filter(state == target_state, exposure_code == 1) %>%
+      mutate(years = interval(start_date, end_date) / years(1), denom=.data[[denom]])
   }
-  loadings_df <- draws_mat %>% spread_draws(k_f[D, K, n_k_f])
-  D <- max(loadings_df$D)
-
-  ## Arrays to store aligned samples
-  lf_array <- array(dim=c(max_K, N, NL, ndraws))
-  fl_array <- array(dim=c(max_K, NL, D, ndraws))
-
-  for (k in 1:K) {
-    ## Baseline to align factor loadings to
-    fl_baseline <- loadings_df %>%
-      filter(.draw == 500, K == k) %>%
-      ungroup() %>%
-      pivot_wider(names_from = n_k_f, names_prefix = "fact", values_from = k_f) %>%
-      select(contains("fact")) %>%
-      as.matrix()
-
-    ## Baseline to align latent factors to
-    lf_baseline <- latent_factor_df %>%
-      filter(.draw == 500, K == k) %>%
-      ungroup() %>%
-      pivot_wider(names_from = n_k_f, names_prefix = "fact", values_from = local_draw) %>%
-      select(contains("fact")) %>%
-      as.matrix()
-
-    ## Run SVD to make baseline ordered by variance
-    svd_baseline <- svd(fl_baseline %*% t(lf_baseline))
-
-    ## Update baseline
-    lf_baseline <- svd_baseline$u[, 1:NL] %*% diag(svd_baseline$d[1:NL])
-    fl_baseline <- svd_baseline$v[, 1:NL]
-
-    for (i in 1:ndraws) {
-      ## Get current factor loadings and latent factors sample
-      factor_loading <- loadings_df %>%
-        filter(.draw == i, K == k) %>%
-        pull(k_f)
-      latent_factor <- latent_factor_df %>%
-        filter(.draw == i, K == k) %>%
-        pull(local_draw)
-
-      fl_ij <- matrix(factor_loading, nrow = NL)
-      lf_ij <- matrix(latent_factor, ncol = NL, byrow = TRUE)
-
-      ## Run svd
-      svdF <- svd(lf_ij %*% fl_ij)
-
-      F <- svdF$u[, 1:NL] %*% diag(svdF$d[1:NL])
-
-      ## Align to baseline according to https://en.wikipedia.org/wiki/Orthogonal_Procrustes_problem
-      ## R is the rotation matrix
-      svd_res <- svd(t(lf_baseline) %*% F)
-      R <- svd_res$u[, 1:NL] %*% t(svd_res$v[, 1:NL])
-
-      ## Rotate latent factors by R transpose and factor loadings by R
-      lf_array[k, , i] <- F %*% t(R)
-      fl_array[k, , i] <- R %*% t(svdF$v[, 1:NL])
-    }
-  }
-  return(list("lf_array"=lf_array, "fl_array"=fl_array))
-
-}
-
-## Texas is 44
-make_latent_factors_plot <- function(factor_list,
-                                     focus_state = "Texas",
-                                     include_treat_line = TRUE) {
   
-  focus_state_index <- which(unique(df$state) == focus_state)
+  table_df <- merged_df %>%
+    ungroup() %>%
+    ## Aggregate over time
+    group_by(type, category, .draw) %>%
+    summarize(
+      ypred = sum(ypred),
+      outcome = sum(.data[[target]]), years = mean(years),
+      treated = sum(exp(mu_treated)), untreated = sum(exp(mu)),
+      denom = ifelse(target == "births", sum(denom * years, na.rm = TRUE), sum(denom, na.rm = TRUE)),
+      treated_rate = treated / denom * rate_normalizer,
+      untreated_rate = untreated / denom * rate_normalizer,
+      outcome_rate = round(outcome / denom * rate_normalizer, 2),
+      outcome_diff = round(treated - untreated)
+    ) %>%
+    ungroup() %>%
+    ## Compute quantiles of effects
+    group_by(type, category) %>%
+    summarize(
+      ypred_mean = mean(ypred),
+      outcome = mean(outcome),
+      outcome_diff_mean = round(mean(outcome_diff)), 
+      outcome_diff_lower = round(quantile(outcome_diff, 0.025)), 
+      outcome_diff_upper = round(quantile(outcome_diff, 0.975)),
+      outcome_rate = mean(outcome_rate),
+      ypred_lower = quantile(ypred, 0.025), ypred_upper = quantile(ypred, 0.975),
+      treated_mean = mean(treated), treated_lower = quantile(treated, 0.025), treated_upper = quantile(treated, 0.975),
+      untreated_mean = mean(untreated), untreated_lower = quantile(untreated, 0.025), untreated_upper = quantile(untreated, 0.975),      
+      treated_rate_mean = mean(treated_rate), treated_rate_lower = quantile(treated_rate, 0.025), treated_rate_upper = quantile(treated_rate, 0.975),
+      untreated_rate_mean = mean(untreated_rate), untreated_rate_lower = quantile(untreated_rate, 0.025), untreated_rate_upper = quantile(untreated_rate, 0.975), 
+      causal_effect_diff_mean = mean(treated_rate - untreated_rate), causal_effect_diff_lower = quantile(treated_rate - untreated_rate, 0.025), causal_effect_diff_upper = quantile(treated_rate - untreated_rate, 0.975),
+      causal_effect_ratio_mean = mean(treated_rate / untreated_rate), causal_effect_ratio_lower = quantile(treated_rate / untreated_rate, 0.025), causal_effect_ratio_upper = quantile(treated_rate / untreated_rate, 0.975),
+      denom = mean(denom),
+      pval = 2*min(mean(untreated_rate > treated_rate), mean(untreated < treated))
+     )
+    
+  table_df <- table_df %>%
+  mutate(
+    # ypred_mean_rate = ypred_mean / years / (denom / rate_normalizer),
+    rate_diff = round(causal_effect_diff_mean, 2),
+    rate_diff_lower = round(causal_effect_diff_lower, 2),
+    rate_diff_upper = round(causal_effect_diff_upper, 2),
+    mult_change = causal_effect_ratio_mean,
+    mult_change_lower = causal_effect_ratio_lower,
+    mult_change_upper = causal_effect_ratio_upper)
+
+  table_df <- table_df %>%
+    mutate(birth_counts_str = paste0(outcome_diff_mean, " (", outcome_diff_lower, ", ", outcome_diff_upper, ")")) %>%
+    mutate(birth_rate_abs_str = paste0(rate_diff, " (", rate_diff_lower, ", ", rate_diff_upper, ")")) %>%
+    mutate(birth_rate_pct_str = paste0(round(100*(mult_change-1), 2), " (", round(100*(mult_change_lower-1), 2), ", ", round(100*(mult_change_upper-1), 2), ")")) %>%
+    ungroup() %>%
+    filter((type != "total" & category !="Total")|type == "total")
   
-  ## Array of Latent Factors Samples
-  lf_array <- factor_list[["lf_array"]]
-  ## Array of Latent Factors Samples
-  fl_array <- factor_list[["fl_array"]]  
 
-  NL <- dim(factors_list[["lf_array"]])[2]
-
-  lf_post_mean <- apply(lf_array, 1:2, median)
-  fl_post_mean <- apply(fl_array, 1:2, median)
-
-  lf_post_lower <- apply(lf_array, 1:2, function(x) quantile(x, 0.025))
-  lf_post_upper <- apply(lf_array, 1:2, function(x) quantile(x, 0.975))
-
-
-  fact <- exp(as.numeric(matrix(fl_post_mean[, focus_state_index], nrow=nrow(lf_post_mean), ncol = NL, byrow=TRUE) * lf_post_mean))
-  fact_lower <- exp(as.numeric(matrix(fl_post_mean[, focus_state_index], nrow=nrow(lf_post_mean), ncol = NL, byrow=TRUE) * lf_post_lower))
-  fact_upper <- exp(as.numeric(matrix(fl_post_mean[, focus_state_index], nrow=nrow(lf_post_mean), ncol = NL, byrow=TRUE) * lf_post_upper))
-  tibble(time=rep(1:nrow(lf_post_mean), NL), 
-        factor= fact,
-        factor_lower=fact_lower,
-        factor_upper=fact_upper,
-        factor_id=rep(1:NL, each=nrow(lf_post_mean))) %>% 
-    ggplot() + 
-    geom_ribbon(aes(x=time, ymax=factor_upper, ymin=factor_lower), fill="gray", alpha=0.5) + facet_wrap(~factor_id) + theme_bw() + 
-    geom_line(aes(x=time, y=factor)) + facet_wrap(~factor_id) + theme_bw() + 
-    geom_hline(yintercept=1, linetype="dashed") + 
-    #geom_vline(xintercept = 76, linetype="dashed", col="red")+
-    ggtitle(sprintf("Factors (%s)", focus_state))
-
-}
-
-make_factor_loadings_plot <- function(factor_list, state_names,
-                                      factor1 = 1, factor2 = 2) {
-
-  fl <- apply(factor_list[["fl_array"]], 1:2, median)
+  pvals <- pval_rows <- table_df %>% pull(pval)
+  pval_rows <- which(pvals < 0.05)
+  table_df <- table_df %>% mutate(category = paste0(category, ifelse(pval <= 0.05, "*", "")))
   
-  ggplot(tibble(x=fl[factor1, ], 
-                y=fl[factor2, ],
-                label=state_names)) + 
-                geom_text_repel(aes(x=x, y=y, 
-                label=label), max.overlaps=20) + 
-                theme_bw() + ggtitle("Factor Loadings") + 
-                xlab(sprintf("Factor %i", factor1)) + 
-                ylab(sprintf("Factor %i", factor2))
+  table_df %>%
+    select(type, category, outcome, outcome_rate, birth_counts_str, birth_rate_abs_str, birth_rate_pct_str) %>%
+    gt(rowname_col = "category") |>
+  tab_header(
+    title = tab_caption
+  ) |> 
+  ## ROW OPERATIONS
+  tab_row_group(
+    label = "Insurance type",
+    rows = type == "insurance"
+  ) |>
+  tab_row_group(
+    label = "Education",
+    rows = type == "edu"
+  ) |>
+  tab_row_group(
+    label = "Marital status",
+    rows = type == "marital"
+  ) |>
+  tab_row_group(
+    label = "Race/ethnicity",
+    rows = type == "race"
+  ) |>
+  tab_row_group(
+    label = "Age",
+    rows = type == "age"
+  ) |>
+  row_group_order(groups = c(NA, "Age", "Race/ethnicity", "Marital status",
+                             "Education", "Insurance type")) |>
+  ### COLUMN OPERATIONS
+  tab_spanner(
+    label = "Birth rate (per 1,000 women per year)",
+    columns = c(outcome_rate, birth_rate_abs_str, birth_rate_pct_str)) |>
+  tab_spanner(
+    label = "Birth count",
+    columns = c(outcome, birth_counts_str)) |>
+  cols_label(
+    outcome_rate = "Observed",
+    birth_rate_abs_str = html("Difference from expected <br>(95% CI)"),
+    birth_rate_pct_str = html("Percent change from expected<br>(95% CI)"),
+    outcome = "Observed",
+    birth_counts_str = html("Difference from expected<br>(95% CI)"),
+    category = ""
+  ) |>
+  tab_stub_indent(
+    rows = category != "Total",
+    indent = 5
+  ) -> table_df
+  
+  ## Styling
+  table_df |>
+  tab_options(table.align = "left", heading.align = "left") |>
+  cols_align(align = "left") |>
+  cols_hide(c(type, category)) |>
+  tab_options(table.font.size=8) |>
+  opt_vertical_padding(scale = 0.5) |>
+  cols_width(category ~ px(125),
+             birth_rate_abs_str ~ px(100),
+             birth_rate_pct_str ~ px(100),
+             outcome_rate ~ px(50),
+             birth_counts_str ~ px(100),
+             outcome ~ px(50)) -> table_df_final
 
+  table_df_final
 }
-

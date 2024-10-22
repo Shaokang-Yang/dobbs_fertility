@@ -33,7 +33,8 @@ library(gt)
 
 
 
-df <- read_csv("data/dobbsbimonthlybirthsdeaths_7_16_24.csv")
+df <- read_csv("data/dobbsbimonthlybirths_10_15_24.csv")
+df <- read_csv("results/df_end_june.csv")
 df |>
   mutate(
           start_date = ym(paste(year, "-", bmcode * 2 - 1)),
@@ -70,13 +71,8 @@ relative_birth_rate <- df %>% group_by(state) %>%
     mutate(mean_br = mean(births_total[time < "2022-03-01"]/pop_total[time < "2022-03-01"])) %>%
     mutate(birthrate = (births_total/pop_total)/mean_br) 
 
-    ggplot(data=relative_birth_rate %>% filter(exposed_births == 0)) + 
+    ggplot(data=relative_birth_rate) + 
     geom_smooth(aes(x=time, y=birthrate, group=ban, col=ban), se=FALSE) + 
-    geom_smooth(aes(x=time, y=birthrate, group=ban, col=ban), se=FALSE, span=10, method="lm",
-                data=relative_birth_rate %>% filter(time >= "2022-03-01", ban == "Texas")) +
-    geom_smooth(aes(x=time, y=birthrate, group=ban, col=ban), se=FALSE, 
-                data=relative_birth_rate %>% filter(time >= "2023-01-01", ban == "Exposed (excl. Texas)"),
-                method=smooth, span=100) +
     geom_jitter(aes(x=time, y=birthrate, col=ban), alpha=0.5, data=relative_birth_rate) +
     theme_bw(base_size=16) + 
     theme(legend.position = c(0.99, 0.99), legend.justification = c(1, 1),
@@ -86,26 +82,11 @@ relative_birth_rate <- df %>% group_by(state) %>%
     ylab("Relative Birth Rate") + xlab("Year") + 
     geom_vline(xintercept=lubridate::date("2022-02-01"), color="orange", linetype="dashed") +
     geom_vline(xintercept=lubridate::date("2022-12-01"), color="red", linetype="dashed")
-ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/main_figures/relative_birthrate.png", width=8, height=5)
+  ggsave("figs/main_figures/relative_birthrate.png", width=8, height=5)
 
-  ratio_br <- relative_birth_rate %>% pivot_wider(names_from = "ban", values_from = c("birthrate", "exposed_births"), id_cols = time) %>% 
-  mutate(texas_ratio = birthrate_Texas/birthrate_Unexposed, other_ratio = `birthrate_Exposed (excl. Texas)`/birthrate_Unexposed) 
   
-  method <- "loess"
-  ratio_br %>% ggplot() + 
-  geom_smooth(aes(x=time, y=other_ratio), se=FALSE, data = ratio_br %>% filter(time < "2023-01-01"), col="red", method=method) +
-  geom_smooth(aes(x=time, y=texas_ratio), se=FALSE, data = ratio_br %>% filter(`exposed_births_Texas`==0), col="orange", method=method) +
-  geom_smooth(aes(x=time, y=other_ratio), se=FALSE, data = ratio_br %>% filter(time >= "2023-01-01"), col="red", method=method, span=2) +
-  geom_smooth(aes(x=time, y=texas_ratio), se=FALSE, data = ratio_br %>% filter(`exposed_births_Texas`==1), col="orange", method=method, span=4) +
-  theme_bw(base_size=16) + 
-  theme(legend.position = c(0.01, 0.99), legend.justification = c(0, 1),
-    #legend.background = element_blank(),  # Make legend background transparent
-  legend.title = element_blank()  ) +
-  scale_color_manual(values=c("red", "orange", "dark gray")) + 
-  ylab("Relative Birth Rate (Exposed/Unexposed)") + xlab("Year") + 
-  geom_vline(xintercept=lubridate::date("2022-02-01"), color="orange", linetype="dashed") +
-  geom_vline(xintercept=lubridate::date("2022-12-01"), color="red", linetype="dashed") + 
-  geom_hline(yintercept=1, linetype="dashed", color="black") + scale_color_manual(values=c("red", "orange"), labels=c("Texas", "Other Exposed")) +
+  
+  
 
 
 categories_list <- list(age = c("age1524", "age2534", "age3544"), 
@@ -125,10 +106,11 @@ mutate(ban = ifelse(any(exposed_births == 1), TRUE, FALSE))
 source("plot_utilities.R")
 
 ## Load all datasets
-# file_dir <- "~/Downloads/hierarchy"
-file_dir <- "~/Dropbox/abortion_results_and_data/posterior_samples/ij_interaction"
-suffix <- "prior_check"
+file_dir <- "results/"
+suffix <- "end_june"
 types <- c("race", "total", "age", "edu", "insurance", "marital")
+
+## These are the optimal ranks after PPCs
 ranks <- c(10, 7, 10, 10, 11, 8)
 
 all_samples <- tibble()
@@ -211,10 +193,10 @@ quantiles_df <- all_samples %>% group_by(category, type, state, time) %>%
 
 ```{r fit_and_gap_plots}
 make_state_fit_plot(quantiles_df %>% filter(type=="total"), state_name="Ban States", category="Total", target="births") + theme_bw(base_size=16) 
-ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/main_figures/ban_states_fit_plot.png", width=8, height=5)
+ggsave("figs/main_figures/ban_states_fit_plot.png", width=8, height=5)
 
 make_gap_plot(quantiles_df %>% filter(type=="total"), state_name="Ban States", category="Total", target="births") + theme_bw(base_size=16)
-ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/main_figures/ban_states_gap_plot.png", width=8, height=5)
+ggsave("figs/main_figures/ban_states_gap_plot.png", width=8, height=5)
 ```
 
 ## Interval Plots
@@ -226,7 +208,7 @@ make_interval_plot(all_samples %>% filter(type == "age", category !="Total"),
                          rate_normalizer=1000,
                          estimand = "ratio", 
                          method="mu") + labs(color="Age Group")
-ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/main_figures/age_interval_plot.png", width=10, height=10)
+ggsave("figs/main_figures/age_interval_plot.png", width=10, height=10)
 
 make_interval_plot(all_samples %>% filter(type == "race", category !="Total"), 
                          group_var = c("state", "category"),
@@ -234,7 +216,7 @@ make_interval_plot(all_samples %>% filter(type == "race", category !="Total"),
                          rate_normalizer=1000,
                          estimand = "ratio", 
                          method="mu") + labs(color="Race/Ethnicity")
-ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/main_figures/race_interval_plot.png", width=10, height=10)
+ggsave("figs/main_figures/race_interval_plot.png", width=10, height=10)
 
 make_interval_plot(all_samples %>% filter(type == "edu", category !="Total"), 
                          group_var = c("state", "category"),
@@ -242,7 +224,7 @@ make_interval_plot(all_samples %>% filter(type == "edu", category !="Total"),
                          rate_normalizer=1000,
                          estimand = "ratio", 
                          method="mu") + labs(color="Education")
-ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/main_figures/education_interval_plot.png", width=10, height=10)
+ggsave("figs/main_figures/education_interval_plot.png", width=10, height=10)
 
 make_interval_plot(all_samples %>% filter(type == "insurance", category !="Total"), 
                          group_var = c("state", "category"),
@@ -250,7 +232,7 @@ make_interval_plot(all_samples %>% filter(type == "insurance", category !="Total
                          rate_normalizer=1000,
                          estimand = "ratio", 
                          method="mu") + labs(color="Insurance")
-ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/main_figures/insurance_interval_plot.png", width=10, height=10)
+ggsave("figs/main_figures/insurance_interval_plot.png", width=10, height=10)
 
 make_interval_plot(all_samples %>% filter(type == "marital", category !="Total"), 
                          group_var = c("state", "category"),
@@ -258,14 +240,14 @@ make_interval_plot(all_samples %>% filter(type == "marital", category !="Total")
                          rate_normalizer=1000,
                          estimand = "ratio", 
                          method="mu") + labs(color="Marital Status")
-ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/main_figures/marital_interval_plot.png", width=10, height=10)
+ggsave("figs/main_figures/marital_interval_plot.png", width=10, height=10)
 make_interval_plot(all_samples %>% filter(type == "total"), 
                          group_var = c("state", "category"),
                          target="births", denom="pop",
                          rate_normalizer=1000,
                          estimand = "ratio", 
                          method="mu") + labs(color="Total")
-ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/main_figures/total_interval_plot.png", width=10, height=10)
+ggsave("figs/main_figures/total_interval_plot.png", width=10, height=10)
 
 
 ```
@@ -273,178 +255,15 @@ ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/main_figures/total
 ## Table
 
 ```{r tables}
-make_fertility_table <- function(merged_df, 
-                       target_state = "Texas", target="births", denom="pop",
-                       rate_normalizer=1000, plot_type="exploratory",
-                       tab_caption = "Table 1. Estimated difference in cumulative observed vs expected births (count and rate) in all states that banned abortion in months affected by bans (January 2023 through December 2023), overall and by socioeconomic characteristics") {
-
- if(target_state == "Ban States") {
-    merged_df <- merged_df %>% filter(!state %in% c("Ban States", "Ban States (excl. Texas)"))
-    merged_df <- merged_df %>%
-      filter(exposure_code == 1) %>%
-      ## Aggregate over all banned states
-      group_by(type, category, .draw, time) %>% 
-      summarise({{target}} := sum(.data[[target]]), 
-                denom = sum(.data[[denom]]), 
-                ypred=sum(ypred), 
-                mu = log(sum(exp(mu))),
-                mu_treated = log(sum(exp(mu_treated))),
-                years=mean(interval(start_date, end_date) / years(1)))
-      
-  } else if(target_state == "Ban States (excl.Texas)") {
-    merged_df <- merged_df %>% filter(!state %in% c("Ban States", "Ban States (excl. Texas)"))
-    merged_df <- merged_df %>%
-      filter(state != "Texas") %>%
-      filter(exposure_code == 1) %>%
-      ## Aggregate over all banned states
-      group_by(type, category, .draw, time) %>% 
-      summarise({{target}} := sum(.data[[target]]), 
-                denom = sum(.data[[denom]]), 
-                ypred=sum(ypred), 
-                mu = log(sum(exp(mu))),
-                mu_treated = log(sum(exp(mu_treated))),
-                years=mean(interval(start_date, end_date) / years(1)))
-
-  } else {
-    merged_df <- merged_df %>%
-      filter(state == target_state, exposure_code == 1) %>%
-      mutate(years = interval(start_date, end_date) / years(1), denom=.data[[denom]])
-  }
-  
-  table_df <- merged_df %>%
-    ungroup() %>%
-    ## Aggregate over time
-    group_by(type, category, .draw) %>%
-    summarize(
-      ypred = sum(ypred),
-      outcome = sum(.data[[target]]), years = mean(years),
-      treated = sum(exp(mu_treated)), untreated = sum(exp(mu)),
-      denom = ifelse(target == "births", sum(denom * years, na.rm = TRUE), sum(denom, na.rm = TRUE)),
-      treated_rate = treated / denom * rate_normalizer,
-      untreated_rate = untreated / denom * rate_normalizer,
-      outcome_rate = round(outcome / denom * rate_normalizer, 2),
-      outcome_diff = round(treated - untreated)
-    ) %>%
-    ungroup() %>%
-    ## Compute quantiles of effects
-    group_by(type, category) %>%
-    summarize(
-      ypred_mean = mean(ypred),
-      outcome = mean(outcome),
-      outcome_diff_mean = round(mean(outcome_diff)), 
-      outcome_diff_lower = round(quantile(outcome_diff, 0.025)), 
-      outcome_diff_upper = round(quantile(outcome_diff, 0.975)),
-      outcome_rate = mean(outcome_rate),
-      ypred_lower = quantile(ypred, 0.025), ypred_upper = quantile(ypred, 0.975),
-      treated_mean = mean(treated), treated_lower = quantile(treated, 0.025), treated_upper = quantile(treated, 0.975),
-      untreated_mean = mean(untreated), untreated_lower = quantile(untreated, 0.025), untreated_upper = quantile(untreated, 0.975),      
-      treated_rate_mean = mean(treated_rate), treated_rate_lower = quantile(treated_rate, 0.025), treated_rate_upper = quantile(treated_rate, 0.975),
-      untreated_rate_mean = mean(untreated_rate), untreated_rate_lower = quantile(untreated_rate, 0.025), untreated_rate_upper = quantile(untreated_rate, 0.975), 
-      causal_effect_diff_mean = mean(treated_rate - untreated_rate), causal_effect_diff_lower = quantile(treated_rate - untreated_rate, 0.025), causal_effect_diff_upper = quantile(treated_rate - untreated_rate, 0.975),
-      causal_effect_ratio_mean = mean(treated_rate / untreated_rate), causal_effect_ratio_lower = quantile(treated_rate / untreated_rate, 0.025), causal_effect_ratio_upper = quantile(treated_rate / untreated_rate, 0.975),
-      denom = mean(denom),
-      pval = 2*min(mean(untreated_rate > treated_rate), mean(untreated < treated))
-     )
-    
-  table_df <- table_df %>%
-  mutate(
-    # ypred_mean_rate = ypred_mean / years / (denom / rate_normalizer),
-    rate_diff = round(causal_effect_diff_mean, 2),
-    rate_diff_lower = round(causal_effect_diff_lower, 2),
-    rate_diff_upper = round(causal_effect_diff_upper, 2),
-    mult_change = causal_effect_ratio_mean,
-    mult_change_lower = causal_effect_ratio_lower,
-    mult_change_upper = causal_effect_ratio_upper)
-
-  table_df <- table_df %>%
-    mutate(birth_counts_str = paste0(outcome_diff_mean, " (", outcome_diff_lower, ", ", outcome_diff_upper, ")")) %>%
-    mutate(birth_rate_abs_str = paste0(rate_diff, " (", rate_diff_lower, ", ", rate_diff_upper, ")")) %>%
-    mutate(birth_rate_pct_str = paste0(round(100*(mult_change-1), 2), " (", round(100*(mult_change_lower-1), 2), ", ", round(100*(mult_change_upper-1), 2), ")")) %>%
-    ungroup() %>%
-    filter((type != "total" & category !="Total")|type == "total")
-  
-
-  pvals <- pval_rows <- table_df %>% pull(pval)
-  pval_rows <- which(pvals < 0.05)
-  table_df <- table_df %>% mutate(category = paste0(category, ifelse(pval <= 0.05, "*", "")))
-  
-  table_df %>%
-    select(type, category, outcome, outcome_rate, birth_counts_str, birth_rate_abs_str, birth_rate_pct_str) %>%
-    gt(rowname_col = "category") |>
-  tab_header(
-    title = tab_caption
-  ) |> 
-  ## ROW OPERATIONS
-  tab_row_group(
-    label = "Insurance type",
-    rows = type == "insurance"
-  ) |>
-  tab_row_group(
-    label = "Education",
-    rows = type == "edu"
-  ) |>
-  tab_row_group(
-    label = "Marital status",
-    rows = type == "marital"
-  ) |>
-  tab_row_group(
-    label = "Race/ethnicity",
-    rows = type == "race"
-  ) |>
-  tab_row_group(
-    label = "Age",
-    rows = type == "age"
-  ) |>
-  row_group_order(groups = c(NA, "Age", "Race/ethnicity", "Marital status",
-                             "Education", "Insurance type")) |>
-  ### COLUMN OPERATIONS
-  tab_spanner(
-    label = "Birth rate (per 1,000 women per year)",
-    columns = c(outcome_rate, birth_rate_abs_str, birth_rate_pct_str)) |>
-  tab_spanner(
-    label = "Birth count",
-    columns = c(outcome, birth_counts_str)) |>
-  cols_label(
-    outcome_rate = "Observed",
-    birth_rate_abs_str = html("Difference from expected <br>(95% CI)"),
-    birth_rate_pct_str = html("Percent change from expected<br>(95% CI)"),
-    outcome = "Observed",
-    birth_counts_str = html("Difference from expected<br>(95% CI)"),
-    category = ""
-  ) |>
-  tab_stub_indent(
-    rows = category != "Total",
-    indent = 5
-  ) -> table_df
-  
-  ## Styling
-  table_df |>
-  tab_options(table.align = "left", heading.align = "left") |>
-  cols_align(align = "left") |>
-  cols_hide(c(type, category)) |>
-  tab_options(table.font.size=8) |>
-  opt_vertical_padding(scale = 0.5) |>
-  cols_width(category ~ px(125),
-             birth_rate_abs_str ~ px(100),
-             birth_rate_pct_str ~ px(100),
-             outcome_rate ~ px(50),
-             birth_counts_str ~ px(100),
-             outcome ~ px(50)) -> table_df_final
-
-  table_df_final
-}
 
 ftab <- make_fertility_table(all_samples, target_state="Ban States")
-ftab |> gtsave("~/Dropbox/abortion_results_and_data/fertility_figures/main_figures/ban_states_table.png", zoom=4)
-
-
+ftab |> gtsave("figs/main_figures/ban_states_table.png", zoom=4)
 
 state_and_treat_times <- all_samples %>% filter(exposure_code==1, state != "Ban States") %>% 
                         group_by(state) %>% summarize(treatment_start = min(time))
 
 treated_states <- state_and_treat_times %>% pull(state)
 treated_times <- state_and_treat_times %>% pull(treatment_start)
-
 
 for(i in 1:length(treated_states)) {
   target_state <- treated_states[i]
@@ -454,13 +273,13 @@ for(i in 1:length(treated_states)) {
   } else {
     tab_caption = sprintf("Supplementary Table %i. Estimated difference in cumulative observed vs expected births (count and rate) in %s (%s %s through December 2023), overall and by socioeconomic characteristics.", i, target_state, month(treated_times[i], label=TRUE, abbr=FALSE), year(treated_times[i]))
   }
-  make_fertility_table(all_samples, target_state=target_state, tab_caption=tab_caption) |> gtsave(filename=sprintf("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/tables/%s_table.png", target_state), zoom=4)
+  make_fertility_table(all_samples, target_state=target_state, tab_caption=tab_caption) |> gtsave(filename=sprintf("figs/supplement_figures/tables/%s_table.png", target_state), zoom=4)
 
   make_state_fit_plot(quantiles_df %>% filter(type=="total"), state_name=target_state, category="Total", target="births") + theme_bw(base_size=16) + ggtitle(paste("Model Fit -", target_state, sep=" "))
-  ggsave(filename=sprintf("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/fit_and_gap_plots/%s_fit_plot.png", target_state), width=8, height=5)
+  ggsave(filename=sprintf("figs/supplement_figures/fit_and_gap_plots/%s_fit_plot.png", target_state), width=8, height=5)
 
   make_gap_plot(quantiles_df %>% filter(type=="total"), state_name=target_state, category="Total", target="births") + theme_bw(base_size=16) + ggtitle(paste("Gap Plot -", target_state, sep=" "))
-  ggsave(sprintf("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/fit_and_gap_plots/%s_gap_plot.png", target_state), width=8, height=5)
+  ggsave(sprintf("figs/supplement_figures/fit_and_gap_plots/%s_gap_plot.png", target_state), width=8, height=5)
 
 }
 
@@ -476,24 +295,24 @@ for(t in types) {
 
 
   rmse_res <- make_rmse_ppc_plot(all_samples %>% filter(state %in% ppc_states, type == t), outcome="births")
-  ggsave(rmse_res$rmse_plt, filename=sprintf("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/ppc/%s_rmse_plot.png", t), width=10, height=figure_height)
+  ggsave(rmse_res$rmse_plt, filename=sprintf("figs/supplement_figures/ppc/%s_rmse_plot.png", t), width=10, height=figure_height)
 
   abs_res <- make_abs_res_ppc_plot(all_samples %>% filter(state %in% ppc_states, type == t), outcome="births")
-  ggsave(abs_res$max_plt, filename=sprintf("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/ppc/%s_abs_plot.png", t), width=10, height=figure_height)
+  ggsave(abs_res$max_plt, filename=sprintf("figs/supplement_figures/ppc/%s_abs_plot.png", t), width=10, height=figure_height)
 
   acf_ppc6 <- make_acf_ppc_plot(all_samples %>% filter(state %in% ppc_states, type == t),
                   lag=6, outcome="births") 
-  ggsave(acf_ppc6$acf_plt, filename=sprintf("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/ppc/%s_acf6_plot.png", t), width=10, height=figure_height)
+  ggsave(acf_ppc6$acf_plt, filename=sprintf("figs/supplement_figures/ppc/%s_acf6_plot.png", t), width=10, height=figure_height)
 
   acf_ppc3 <- make_acf_ppc_plot(all_samples %>% filter(state %in% ppc_states, type == t),
                   lag=3, outcome="births") 
-  ggsave(acf_ppc3$acf_plt, filename=sprintf("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/ppc/%s_acf3_plot.png", t), width=10, height=figure_height)
+  ggsave(acf_ppc3$acf_plt, filename=sprintf("figs/supplement_figures/ppc/%s_acf3_plot.png", t), width=10, height=figure_height)
 
   acf_ppc1 <- make_acf_ppc_plot(all_samples %>% filter(state %in% ppc_states, type == t), lag=1, outcome="births") 
-  ggsave(acf_ppc1$acf_plt, filename=sprintf("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/ppc/%s_acf1_plot.png", t), width=10, height=figure_height)
+  ggsave(acf_ppc1$acf_plt, filename=sprintf("figs/supplement_figures/ppc/%s_acf1_plot.png", t), width=10, height=figure_height)
 
   uc_ppcs_obj <- make_unit_corr_ppc_plot(all_samples %>% filter(type == t), outcome="births")
-  ggsave(uc_ppcs_obj$eval_plt, filename=sprintf("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/ppc/%s_unit_corr_plot.png", t), width=7, height=figure_height)
+  ggsave(uc_ppcs_obj$eval_plt, filename=sprintf("figs/supplement_figures/ppc/%s_unit_corr_plot.png", t), width=7, height=figure_height)
 
 }
 

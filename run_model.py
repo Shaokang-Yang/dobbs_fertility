@@ -25,6 +25,8 @@ model_treated = True
 dobbs_donor_sensitivity = False
 placebo_time = None
 num_chains = 1
+start_time = '2016-01-01'
+end_time = '2023-6-30'
 def main(dist, outcome_type="births", cat_name="total", rank=5, missingness=True, 
          disp_param=1e-4, sample_disp=False, placebo_state = None, 
          start_time = '2016-01-01', end_time = '2023-12-31',
@@ -120,9 +122,13 @@ def main(dist, outcome_type="births", cat_name="total", rank=5, missingness=True
     all_samples = params.merge(preds, left_on = ['.draw', '.chain'], right_on = ['.draw', '.chain'])
     results_df = pd.DataFrame(all_samples)
 
+    ## save input df
+    df.to_csv('results/df_{}.csv'.format(results_file_suffix))
+    ## save posterior samples
     results_df.to_csv(
         'results/{}_{}_{}_{}_{}.csv'.format(dist, "births", cat_name, rank, results_file_suffix)
     )
+
     
 if __name__ == '__main__':
     from clean_monthly_birth_data import subgroup_definitions
@@ -150,5 +156,5 @@ if __name__ == '__main__':
                                                 disp_param=i[4],
                                                 sample_disp=sample_disp, placebo_state=i[5], placebo_time = i[6], 
                                                 dobbs_donor_sensitivity=dobbs_donor_sensitivity, end_time = "2023-06-30",
-                                                results_file_suffix="end_june", num_chains=4, num_samples=2500, num_warmup=1000) for i in args)
+                                                results_file_suffix="end_june", num_chains=1, num_samples=1000, num_warmup=1000) for i in args)
     
