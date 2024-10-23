@@ -25,6 +25,8 @@ model_treated = True
 dobbs_donor_sensitivity = False
 placebo_time = None
 num_chains = 1
+num_samples = 100
+num_warmup=100
 start_time = '2016-01-01'
 end_time = '2023-6-30'
 def main(dist, outcome_type="births", cat_name="total", rank=5, missingness=True, 
@@ -36,7 +38,7 @@ def main(dist, outcome_type="births", cat_name="total", rank=5, missingness=True
     
     numpyro.set_host_device_count(num_chains)
 
-    df = pd.read_csv('data/dobbsbimonthlybirths_10_15_24.csv')
+    df = pd.read_csv('data/dobbsbimonthlybirths_10_23_24.csv')
     
     from clean_monthly_birth_data import prep_data, clean_dataframe, create_unit_placebo_dataset, create_time_placebo_dataset
     
@@ -155,6 +157,6 @@ if __name__ == '__main__':
     results = Parallel(n_jobs=100)(delayed(main)(dist=i[0], outcome_type=outcome_type, cat_name=i[1], rank=i[2], missingness=i[3], 
                                                 disp_param=i[4],
                                                 sample_disp=sample_disp, placebo_state=i[5], placebo_time = i[6], 
-                                                dobbs_donor_sensitivity=dobbs_donor_sensitivity, end_time = "2023-06-30",
-                                                results_file_suffix="end_june", num_chains=1, num_samples=1000, num_warmup=1000) for i in args)
+                                                dobbs_donor_sensitivity=dobbs_donor_sensitivity, 
+                                                results_file_suffix="main_analysis", num_chains=1, num_samples=1000, num_warmup=1000) for i in args)
     
