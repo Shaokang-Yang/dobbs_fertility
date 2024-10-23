@@ -2,11 +2,11 @@
 params:
   type: "race"
   model_rank: NA
-  csv_prefix: "~/Downloads/joint_bimonthly_results/joint_bimonthly_gamma_overdispersed"
+  csv_prefix: NA
   suffix: NA 
   model_fits_file: "model_fit_births.csv" 
 title: "Texas `r params$type` analysis - rank `r params$model_rank`"
-author: Alex Franks
+author: 
 format: 
   html:
    code-fold: true
