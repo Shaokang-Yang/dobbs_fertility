@@ -80,18 +80,23 @@ def model(
         treatment_it_scale = numpyro.sample('treatment_it_scale', dist.HalfNormal(scale=0.1))
         treatment_state_scale = numpyro.sample('treatment_state_scale', dist.HalfNormal(scale=1))
         treatment_category_scale = numpyro.sample('treatment_category_scale', dist.HalfNormal(scale=1))
+        state_category_scale = numpyro.sample('state_category_scale', dist.HalfNormal(scale=1))
 
         with numpyro.plate('num_treated', num_treated):
             treatment_kt = numpyro.sample('treatment_kt', dist.Normal(scale=treatment_it_scale))
         with numpyro.plate('num_states', D):
             state_treatment_effect = numpyro.sample('state_treatment_effect', dist.Normal(scale=treatment_state_scale))
+            with numpyro.plate('num_cats', K):
+                state_category_te = numpyro.sample('state_category_te', dist.Normal(scale=state_category_scale))
         with numpyro.plate('num_cats', K):
             category_treatment_effect = numpyro.sample('category_treatment_effect', dist.Normal(scale=treatment_category_scale))
-        
+            
+
+        print(state_category_te.shape)
         #treatment_kt_tensor = numpyro.deterministic('tkt', jnp.zeros_like(control_idx_array))
         #treatment_kt_tensor[~control_idx_array] = treatment_kt
         #print(treatment_kt_tensor.shape)
-        te = numpyro.deterministic('te', jnp.zeros_like(control_idx_array, dtype=float).at[~control_idx_array].add(treatment_kt) + ((~control_idx_array) * state_treatment_effect[None, :, None] + (~control_idx_array) * category_treatment_effect[:, None, None]))
+        te = numpyro.deterministic('te', jnp.zeros_like(control_idx_array, dtype=float).at[~control_idx_array].add(treatment_kt) + ((~control_idx_array) * state_treatment_effect[None, :, None] + (~control_idx_array) * category_treatment_effect[:, None, None] + (~control_idx_array) * state_category_te[:, :, None]))
         mu = numpyro.deterministic('mu', f_all + te)
         #mu = numpyro.deterministic('mu', f_all.at[~control_idx_array].add(treatment_kt) + (~control_idx_array) * state_treatment_effect[None, :, None] + (~control_idx_array) * category_treatment_effect[:, None, None])
     else:
