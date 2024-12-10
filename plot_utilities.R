@@ -637,7 +637,9 @@ make_interval_plot <- function(merged_df, states=NULL, treatment_date=NULL,
                          categories=NULL, target="births", denom="pop",
                          rate_normalizer=1000,
                          estimand = "diff", 
-                         method="pred"){
+                         method="pred",
+                         x_var = "state",
+                         color_group = setdiff(group_var, "state")){
   
   
   if(is.null(states)) { 
@@ -764,7 +766,19 @@ make_interval_plot <- function(merged_df, states=NULL, treatment_date=NULL,
   
   state_df <- state_df %>%
     mutate(state = factor(state)) %>%
-    mutate(state = fct_relevel(state, "Ban States", "Ban States (excl. Texas)")) 
+    mutate(state = fct_reorder(state, causal_effect, .fun = median)) %>%
+    mutate(type = fct_relevel(type, "total", "age", "edu", "insurance", "marital", "race")) %>%    
+    mutate(category = fct_relevel(category, "Non-Medicaid", "Medicaid", "Other", "Non-Hispanic White", "Non-Hispanic Black", "Hispanic")) %>%
+    mutate(state = fct_relevel(
+      state,
+      "Ban States (excl. Texas)",
+      "Ban States",
+    )) %>%
+    mutate(state = fct_recode(state,
+      "States w/ bans" = "Ban States",
+      "States w/ bans (excl. Texas)" = "Ban States (excl. Texas)"
+    ))
+
 
   stats_df <- state_df %>%
     group_by_at(group_var) %>%
@@ -776,10 +790,10 @@ make_interval_plot <- function(merged_df, states=NULL, treatment_date=NULL,
     ungroup()
   
   
-  color_group <- setdiff(group_var, "state")
+  
   state_df %>%
     #filter(category != "total") %>%
-    ggplot(aes(x = state, y = causal_effect, color = fct_rev(!!sym(color_group)))) +
+    ggplot(aes(x = !!sym(x_var), y = causal_effect, color = fct_rev(!!sym(color_group)))) +
     ggdist::stat_pointinterval(aes(
       alpha = after_stat(level)
     ), position = "dodge", .width = c(0.95, 0.67)) +
@@ -788,10 +802,10 @@ make_interval_plot <- function(merged_df, states=NULL, treatment_date=NULL,
     scale_alpha_manual(values = c(0.5, 1), ) +
     theme_bw(base_size = 16) +
     geom_hline(yintercept = 0, linetype = "dashed") +
-    ylab("Percent Change From Expected") +
+    ylab("Expected Percent Change") +
     xlab("") +
     guides(colour = guide_legend(reverse=T)) + 
-    coord_flip() + facet_grid(state ~ ., scales = "free_y") + theme(strip.text.y = element_blank())
+    coord_flip() + theme(strip.text.y = element_blank())
     
 
 
@@ -903,150 +917,6 @@ make_violin_diffs <- function(merged_df, state="Texas", treatment_date=NULL,
 
 }
 
-make_table <- function(merged_df, 
-                       target_state = "Texas", target="births", denom="pop",
-                       rate_normalizer=1000, plot_type="exploratory") {
-  
-  if(target_state == "Ban States") {
-    merged_df <- merged_df %>% filter(!state %in% c("Ban States", "Ban States (excl. Texas)"))
-    merged_df <- merged_df %>%
-      filter(exposure_code == 1) %>%
-      ## Aggregate over all banned states
-      group_by(category, .draw, time) %>% 
-      summarise({{target}} := sum(.data[[target]]), 
-                denom = sum(.data[[denom]]), 
-                ypred=sum(ypred), 
-                mu = log(sum(exp(mu))),
-                mu_treated = log(sum(exp(mu_treated))),
-                years=mean(interval(start_date, end_date) / years(1)))
-      
-  } else if(target_state == "Ban States (excl.Texas)") {
-    merged_df <- merged_df %>% filter(!state %in% c("Ban States", "Ban States (excl. Texas)"))
-    merged_df <- merged_df %>%
-      filter(state != "Texas") %>%
-      filter(exposure_code == 1) %>%
-      ## Aggregate over all banned states
-      group_by(category, .draw, time) %>% 
-      summarise({{target}} := sum(.data[[target]]), 
-                denom = sum(.data[[denom]]), 
-                ypred=sum(ypred), 
-                mu = log(sum(exp(mu))),
-                mu_treated = log(sum(exp(mu_treated))),
-                years=mean(interval(start_date, end_date) / years(1)))
-
-  } else {
-    merged_df <- merged_df %>%
-      filter(state == target_state, exposure_code == 1) %>%
-      mutate(years = interval(start_date, end_date) / years(1), denom=.data[[denom]])
-  }
-  
-  table_df <- merged_df %>%
-    ungroup() %>%
-    ## Aggregate over time
-    group_by(category, .draw) %>%
-    summarize(
-      ypred = sum(ypred),
-      outcome = sum(.data[[target]]), years = mean(years),
-      treated = sum(exp(mu_treated)), untreated = sum(exp(mu)),
-      denom = ifelse(target == "births", sum(denom * years, na.rm = TRUE), sum(denom, na.rm = TRUE)),
-      treated_rate = treated / denom * rate_normalizer,
-      untreated_rate = untreated / denom * rate_normalizer,
-      outcome_rate = round(outcome / denom * rate_normalizer, 2),
-      outcome_diff = round(treated - untreated)
-    ) %>%
-    ungroup() %>%
-    ## Compute quantiles of effects
-    group_by(category) %>%
-    summarize(
-      ypred_mean = mean(ypred),
-      outcome = mean(outcome),
-      outcome_diff_mean = round(mean(outcome_diff)), 
-      outcome_diff_lower = round(quantile(outcome_diff, 0.025)), 
-      outcome_diff_upper = round(quantile(outcome_diff, 0.975)),
-      outcome_rate = mean(outcome_rate),
-      ypred_lower = quantile(ypred, 0.025), ypred_upper = quantile(ypred, 0.975),
-      treated_mean = mean(treated), treated_lower = quantile(treated, 0.025), treated_upper = quantile(treated, 0.975),
-      untreated_mean = mean(untreated), untreated_lower = quantile(untreated, 0.025), untreated_upper = quantile(untreated, 0.975),      
-      treated_rate_mean = mean(treated_rate), treated_rate_lower = quantile(treated_rate, 0.025), treated_rate_upper = quantile(treated_rate, 0.975),
-      untreated_rate_mean = mean(untreated_rate), untreated_rate_lower = quantile(untreated_rate, 0.025), untreated_rate_upper = quantile(untreated_rate, 0.975), 
-      causal_effect_diff_mean = mean(treated_rate - untreated_rate), causal_effect_diff_lower = quantile(treated_rate - untreated_rate, 0.025), causal_effect_diff_upper = quantile(treated_rate - untreated_rate, 0.975),
-      causal_effect_ratio_mean = mean(treated_rate / untreated_rate), causal_effect_ratio_lower = quantile(treated_rate / untreated_rate, 0.025), causal_effect_ratio_upper = quantile(treated_rate / untreated_rate, 0.975),
-      denom = mean(denom),
-      pval = 2*mean(untreated > treated)
-     )
-    
-    
-  table_df <- table_df %>%
-  mutate(
-    # ypred_mean_rate = ypred_mean / years / (denom / rate_normalizer),
-    rate_diff = round(causal_effect_diff_mean, 2),
-    rate_diff_lower = round(causal_effect_diff_lower, 2),
-    rate_diff_upper = round(causal_effect_diff_lower, 2),
-    mult_change = round(causal_effect_ratio_mean, 3),
-    mult_change_lower = round(causal_effect_ratio_lower, 3),
-    mult_change_upper = round(causal_effect_ratio_upper, 3)
-  )
-  
-  table_df <- table_df %>%        
-    select(category, outcome, outcome_diff_mean, outcome_diff_lower, outcome_diff_upper, outcome_rate, 
-           mult_change, rate_diff, mult_change_lower, mult_change_upper, pval) %>%
-    relocate(c("pval"), .after = "category") %>%
-    arrange(desc(mult_change))
-  
-  table_out <- table_df %>%
-  gt() |>
-  tab_spanner(
-    label = "Count",
-    columns = c("outcome", "outcome_diff_mean", "outcome_diff_lower", "outcome_diff_upper")
-  ) |>
-  tab_spanner(
-    label = "Rate",
-    columns = c("outcome_rate", "rate_diff", "mult_change", "mult_change_lower", "mult_change_upper")
-  )
-  if(target == "births") {
-    table_out <- table_out %>% cols_label(
-      category = "Category", outcome = "Births", 
-      outcome_diff_lower = "Lower", outcome_diff_upper = "Upper", 
-      outcome_diff_mean = "Birth Diff.", outcome_rate = "Birth Rate", 
-      mult_change_lower = "Lower", mult_change_upper = "Upper", 
-      rate_diff = "Rate Diff.",
-      mult_change = "Rate Mult.",
-      pval = "Pval"
-    )
-  } else {
-    table_out <- table_out %>% cols_label(
-      category = "Category", outcome = "Deaths", outcome_diff_lower = "Lower", 
-      outcome_diff_upper = "Upper", outcome_diff = "Death Diff.",
-      outcome_rate = "Death Rate", mult_change_lower = "Lower", 
-      mult_change_upper = "Upper", rate_diff = "Rate Diff.",
-      mult_change = "Rate Mult.",
-      pval = "Pval"
-    )
-  }
-
-  if (any(table_df$mult_change > 1)) {
-   table_out <- table_out |> data_color(
-      columns = mult_change,
-      rows = mult_change > 1,
-      method = "numeric",
-      domain = c(1, max(table_df$mult_change)),
-      palette = "OrRd"
-    )
-  }
-  if(any(table_df$pval < 0.05)) {
-    table_out <- table_out |>
-      data_color(
-        columns = pval,
-        target_columns = c("category", "pval"),
-        rows = pval < 0.05,
-        method = "numeric",
-        domain = c(0, .05),
-        palette = "OrRd",
-        reverse = TRUE
-      )
-  }
-  table_out
-}
 
 
 make_all_states_plot <- function(dat, focus_state = "Texas") {
@@ -1273,7 +1143,7 @@ make_unit_corr_ppc_plot <- function(merged_df,
 make_fertility_table <- function(merged_df, 
                        target_state = "Texas", target="births", denom="pop",
                        rate_normalizer=1000, plot_type="exploratory",
-                       tab_caption = "Table 1. Estimated difference in cumulative observed vs expected births (count and rate) in all states that banned abortion in months affected by bans (January 2023 through December 2023), overall and by socioeconomic characteristics") {
+                       tab_caption = "Table 1. Estimated difference in cumulative observed vs expected births (count and rate) in all states that banned abortion in months affected by bans, overall and by socioeconomic characteristics.") {
 
  if(target_state == "Ban States") {
     merged_df <- merged_df %>% filter(!state %in% c("Ban States", "Ban States (excl. Texas)"))
@@ -1356,9 +1226,13 @@ make_fertility_table <- function(merged_df,
   table_df <- table_df %>%
     mutate(birth_counts_str = paste0(outcome_diff_mean, " (", outcome_diff_lower, ", ", outcome_diff_upper, ")")) %>%
     mutate(birth_rate_abs_str = paste0(rate_diff, " (", rate_diff_lower, ", ", rate_diff_upper, ")")) %>%
-    mutate(birth_rate_pct_str = paste0(round(100*(mult_change-1), 2), " (", round(100*(mult_change_lower-1), 2), ", ", round(100*(mult_change_upper-1), 2), ")")) %>%
+    mutate(birth_rate_pct_str = paste0(round(100 * (mult_change - 1), 2), " (", round(100 * (mult_change_lower - 1), 2), ", ", round(100 * (mult_change_upper - 1), 2), ")")) %>%
     ungroup() %>%
-    filter((type != "total" & category !="Total")|type == "total")
+    filter((type != "total" & category != "Total") | type == "total") |>
+    mutate(category = fct_relevel(
+      category, "Non-Medicaid", "Medicaid",
+      "Other", "Non-Hispanic White", "Non-Hispanic Black", "Hispanic"
+    ))
   
 
   pvals <- pval_rows <- table_df %>% pull(pval)
@@ -1366,47 +1240,52 @@ make_fertility_table <- function(merged_df,
   table_df <- table_df %>% mutate(category = paste0(category, ifelse(pval <= 0.05, "*", "")))
   
   table_df %>%
-    select(type, category, outcome, outcome_rate, birth_counts_str, birth_rate_abs_str, birth_rate_pct_str) %>%
+    select(type, category, denom, outcome, outcome_rate, outcome_diff_mean, rate_diff, birth_counts_str, birth_rate_abs_str, birth_rate_pct_str) %>%
+    mutate(expected_outcome = outcome - outcome_diff_mean, expected_rate = outcome_rate - rate_diff) %>%
+    select(-c("outcome_diff_mean", "rate_diff")) %>%
     gt(rowname_col = "category") |>
-  tab_header(
-    title = tab_caption
-  ) |> 
-  ## ROW OPERATIONS
-  tab_row_group(
-    label = "Insurance type",
-    rows = type == "insurance"
-  ) |>
-  tab_row_group(
-    label = "Education",
-    rows = type == "edu"
-  ) |>
-  tab_row_group(
-    label = "Marital status",
-    rows = type == "marital"
-  ) |>
-  tab_row_group(
-    label = "Race/ethnicity",
-    rows = type == "race"
-  ) |>
-  tab_row_group(
-    label = "Age",
-    rows = type == "age"
-  ) |>
-  row_group_order(groups = c(NA, "Age", "Race/ethnicity", "Marital status",
-                             "Education", "Insurance type")) |>
+    tab_header(
+      title = tab_caption
+    ) |>
+    ## ROW OPERATIONS
+    tab_row_group(
+      label = "Race and ethnicity",
+      rows = type == "race"
+    ) |>
+    tab_row_group(
+      label = "Marital status",
+      rows = type == "marital"
+    ) |>
+    tab_row_group(
+      label = "Insurance type",
+      rows = type == "insurance"
+    ) |>
+    tab_row_group(
+      label = "Education",
+      rows = type == "edu"
+    ) |>
+    tab_row_group(
+      label = "Age",
+      rows = type == "age"
+    ) |>
+  row_group_order(groups = c(NA, "Age", "Education", "Insurance type", 
+                             "Marital status", "Race and ethnicity")) |>
   ### COLUMN OPERATIONS
   tab_spanner(
     label = "Birth rate (per 1,000 women per year)",
-    columns = c(outcome_rate, birth_rate_abs_str, birth_rate_pct_str)) |>
+    columns = c(outcome_rate, expected_rate, birth_rate_abs_str, birth_rate_pct_str)) |>
   tab_spanner(
     label = "Birth count",
-    columns = c(outcome, birth_counts_str)) |>
+    columns = c(outcome, expected_outcome, birth_counts_str)) |>
   cols_label(
+    denom = "Person-Years",
     outcome_rate = "Observed",
-    birth_rate_abs_str = html("Difference from expected <br>(95% CI)"),
-    birth_rate_pct_str = html("Percent change from expected<br>(95% CI)"),
+    expected_rate = "Expected",
+    birth_rate_abs_str = html("Expected difference<br>(95% CI)"),
+    birth_rate_pct_str = html("Expected percent change<br>(95% CI)"),
     outcome = "Observed",
-    birth_counts_str = html("Difference from expected<br>(95% CI)"),
+    expected_outcome = "Expected",
+    birth_counts_str = html("Expected difference<br>(95% CI)"),
     category = ""
   ) |>
   tab_stub_indent(
@@ -1416,17 +1295,21 @@ make_fertility_table <- function(merged_df,
   
   ## Styling
   table_df |>
-  tab_options(table.align = "left", heading.align = "left") |>
-  cols_align(align = "left") |>
-  cols_hide(c(type, category)) |>
-  tab_options(table.font.size=8) |>
-  opt_vertical_padding(scale = 0.5) |>
-  cols_width(category ~ px(125),
-             birth_rate_abs_str ~ px(100),
-             birth_rate_pct_str ~ px(100),
-             outcome_rate ~ px(50),
-             birth_counts_str ~ px(100),
-             outcome ~ px(50)) -> table_df_final
+    tab_options(table.align = "left", heading.align = "left") |>
+    cols_align(align = "left") |>
+    cols_hide(c(type, category)) |>
+    tab_options(table.font.size = 8) |>
+    opt_vertical_padding(scale = 0.5) |>
+    cols_width(
+      category ~ px(125),
+      birth_rate_abs_str ~ px(100),
+      birth_rate_pct_str ~ px(100),
+      outcome_rate ~ px(50),
+      expected_rate ~ px(50),
+      expected_outcome ~ px(50),
+      birth_counts_str ~ px(100),
+      outcome ~ px(50),
+    denom ~ px(60) ) -> table_df_final
 
   table_df_final
 }
