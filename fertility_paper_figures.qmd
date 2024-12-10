@@ -323,13 +323,11 @@ for(i in 1:length(treated_states)) {
   target_state <- treated_states[i]
 
   if (target_state == "Ban States (excl. Texas)") {
-    tab_caption = sprintf("Supplementary Table %i. Estimated difference in cumulative observed vs expected births (count and rate) in all banned states excluding Texas (January 2023 through December 2023), overall and by socioeconomic characteristics. * denotes categories for which the 95% credible intervals excludes zero.", i)
+    tab_caption = sprintf("Supplementary Table %i. Estimated difference in cumulative observed vs expected births (count and rate) in all banned states excluding Texas (January 2023 through December 2023), overall and by socioeconomic characteristics. * denotes categories for which the 95%% credible intervals excludes zero.", i)
   } else {
-    tab_caption = sprintf("Supplementary Table %i. Estimated difference in cumulative observed vs expected births (count and rate) in %s (%s %s through December 2023), overall and by socioeconomic characteristics. * denotes categories for which the 95% credible intervals excludes zero.", i, target_state, month(treated_times[i], label=TRUE, abbr=FALSE), year(treated_times[i]))
+    tab_caption = sprintf("Supplementary Table %i. Estimated difference in cumulative observed vs expected births (count and rate) in %s (%s %s through December 2023), overall and by socioeconomic characteristics. * denotes categories for which the 95%% credible intervals excludes zero.", i, target_state, month(treated_times[i], label=TRUE, abbr=FALSE), year(treated_times[i]))
   }
   make_fertility_table(all_samples, target_state=target_state, tab_caption=tab_caption) |> 
-  |> 
-  tab_footnote("* denotes estimated treatment effects with 95% credible intervals that exclude zero.")
   gtsave(filename=sprintf("figs/supplement_figures/tables/%s_table.png", target_state), zoom=4)
 
   make_state_fit_plot(quantiles_df %>% filter(type=="total"), state_name=target_state, category="Total", target="births") + theme_bw(base_size=16) + ggtitle(paste("Model Fit -", target_state, sep=" "))
@@ -353,7 +351,7 @@ make_state_table <- function(merged_df,
                        footnote_text="Exposed months include January 2022 through December 2023 for Texas and January 2023 through December 2023 for other 13 states that banned abortion at 6 weeks or completely.<br>
         † Expected differences are computed using the Bayesian hierarchical panel data model described in the methods section. We report expected counts and rates as the observed count (or rate) minus the expected difference.
         The estimates for each row are computed using the same Bayesian model; note however that the expected percent change will not necessarily equal the percent change in expected(known as Jensen’s inequality). States are ordered by expected percent change.<br>
-        * Categories for which the 95% credible intervals of the expected difference excludes zero.") {
+        * Categories for which the 95%% credible intervals of the expected difference excludes zero.") {
 
   merged_df <- merged_df %>% filter(exposure_code == 1, category == target_category) %>% mutate(denom = pop)
   merged_df <- merged_df %>% filter(!state %in% c("Ban States", "Ban States (excl. Texas)"))
@@ -567,14 +565,8 @@ file.create("figs/main_figures/summaries_for_paper.txt", overwrite=TRUE)
 
 all_samples %>% filter(!is.na(te), exposure_code == 1) %>% group_by(state, time, category) %>% summarize(es=coda::effectiveSize(te)) %>% pull(es) %>% quantile(., c(0.025, 0.5, 0.975))
 
-
-
-
-
 ## Trace plots.
 all_samples %>% filter(exposure_code == 1, time=="2023-01-01") %>% filter(.chain %in% c(1,2)) %>% ggplot(aes(x=.iteration, y=te)) + geom_line(aes(color=as.factor(.chain)), alpha=0.5) + facet_wrap(~category) + theme_bw()
-
-
 
 
 cov_dat <- read_csv("data/dobbscovariates_2024_02_07.csv")
@@ -825,6 +817,47 @@ mi_causal %>%
 write_lines("------ Posterior Prob Medicaid > Non-Medicaid ------- ", "figs/main_figures/summaries_for_paper.txt", append=TRUE)
 write_lines(capture.output(print(pr_medicaid_greater)), "figs/main_figures/summaries_for_paper.txt", append=TRUE)
 
+## Portion of excess deaths in Texas from pre Dobbs
+
+texas_df <- merged_df %>% filter(exposure_code == 1, state == "Texas", category == target_category) %>% 
+                          mutate(denom = pop, pre_dobbs = time <= "2023-01-01") %>% 
+                          
+texas_df %>% mutate(denom = pop * interval(start_date, end_date) / years(1)) %>%
+    group_by(pre_dobbs, .draw) %>%
+    summarize(
+      ypred = sum(ypred),
+      outcome = sum(ifelse(is.na(.data[[target]]), round(exp(mu)), .data[[target]])), 
+      treated = sum(exp(mu_treated)), untreated = sum(exp(mu)),
+      denom = sum(denom, na.rm = TRUE)
+    ) |>
+    mutate(
+      treated_rate = treated / denom  * rate_normalizer,
+      untreated_rate = untreated / denom * rate_normalizer,
+      outcome_rate = round(outcome / denom * rate_normalizer, 2),
+      outcome_diff = round(treated - untreated),
+    ) %>%
+    ungroup() %>%
+    ## Compute quantiles of effects
+    group_by(state) %>%
+    summarize(
+      ypred_mean = mean(ypred),
+      outcome = round(mean(outcome), digits=ifelse(mean(outcome < 1), 2, 0)),
+      outcome_diff_mean = round(mean(outcome_diff), digits=ifelse(mean(outcome < 1), 2, 0)), 
+      outcome_diff_lower = round(quantile(outcome_diff, 0.025)), 
+      outcome_diff_upper = round(quantile(outcome_diff, 0.975)),
+      outcome_rate = mean(outcome_rate),
+      ypred_lower = quantile(ypred, 0.025), ypred_upper = quantile(ypred, 0.975),
+      treated_mean = mean(treated), treated_lower = quantile(treated, 0.025), treated_upper = quantile(treated, 0.975),
+      untreated_mean = mean(untreated), untreated_lower = quantile(untreated, 0.025), untreated_upper = quantile(untreated, 0.975),      
+      treated_rate_mean = mean(treated_rate), treated_rate_lower = quantile(treated_rate, 0.025), treated_rate_upper = quantile(treated_rate, 0.975),
+      untreated_rate_mean = mean(untreated_rate), untreated_rate_lower = quantile(untreated_rate, 0.025), untreated_rate_upper = quantile(untreated_rate, 0.975), 
+      causal_effect_diff_mean = mean(treated_rate - untreated_rate), causal_effect_diff_lower = quantile(treated_rate - untreated_rate, 0.025), causal_effect_diff_upper = quantile(treated_rate - untreated_rate, 0.975),
+      causal_effect_ratio_mean = mean(treated_rate / untreated_rate), causal_effect_ratio_lower = quantile(treated_rate / untreated_rate, 0.025), causal_effect_ratio_upper = quantile(treated_rate / untreated_rate, 0.975),
+      denom = mean(denom),
+      pval = 2*min(mean(untreated_rate > treated_rate), mean(untreated < treated))
+     )
+
+
 ```
 
 
@@ -864,5 +897,7 @@ all_samples %>% filter(ban==1, !(state %in% c("Ban States", "Ban States (excl. T
     theme_bw() +
     geom_hline(yintercept = 0, col = "black", linetype = "dashed", alpha=0.75) +
     xlab("Event Time")
+
+
 
 ```
