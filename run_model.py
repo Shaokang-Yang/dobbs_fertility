@@ -34,7 +34,7 @@ def main(dist, outcome_type="births", cat_name="total", rank=5, missingness=True
          start_time = '2016-01-01', end_time = '2023-12-31',
          placebo_time = None, 
          dobbs_donor_sensitivity=False, model_treated=True, results_file_suffix = "",
-         num_chains=num_chains, num_warmup=1000, num_samples=1000):
+         num_chains=num_chains, num_warmup=1000, num_samples=1000, thinning=1):
     
     numpyro.set_host_device_count(num_chains)
 
@@ -79,7 +79,8 @@ def main(dist, outcome_type="births", cat_name="total", rank=5, missingness=True
         num_warmup=num_warmup,
         num_samples=num_samples,
         num_chains=num_chains,
-        progress_bar=True
+        progress_bar=True,
+        thinning=thinning
     )
 
     mcmc.run(
@@ -112,7 +113,7 @@ def main(dist, outcome_type="births", cat_name="total", rank=5, missingness=True
         model_treated = False
     )['y_obs']
     K, D, N = data_dict_cat['denominators'].shape
-    pred_mat = predictions.reshape(mcmc.num_chains, mcmc.num_samples, K, D, N)
+    pred_mat = predictions.reshape(mcmc.num_chains, int(mcmc.num_samples / mcmc.thinning), K, D, N)
    
     ## Take Python output and convert to draws matrix form
     params = dict_to_tidybayes({'mu': samples['mu_ctrl'], 'te': samples['te'], 'disp' : samples['disp']})
@@ -138,7 +139,7 @@ if __name__ == '__main__':
 
     # Define the inputs for the function
     inputs = [6, 7, 8, 9, 10, 11, 12]
-    outcome_type = "births"
+    outcome_type = "births" 
     cats = list(subgroup_definitions[outcome_type].keys())
     dists = ['NB'] # Poisson or NB
     missing_flags = [True]
@@ -158,5 +159,5 @@ if __name__ == '__main__':
                                                 disp_param=i[4],
                                                 sample_disp=sample_disp, placebo_state=i[5], placebo_time = i[6], 
                                                 dobbs_donor_sensitivity=dobbs_donor_sensitivity, 
-                                                results_file_suffix="main_analysis", num_chains=1, num_samples=1000, num_warmup=1000) for i in args)
+                                                results_file_suffix="through_june", num_chains=4, num_samples=2500, num_warmup=1000, thinning=10) for i in args)
     
