@@ -16,35 +16,36 @@ import pandas as pd
 ## Some defaults for testing
 dist = "NB"
 outcome_type = "births"
-cat_name = "race"
+cat_name = "total"
 rank = 5
 sample_disp = False
 missingness=True
 disp_param = 1e-4
 model_treated = True
-dobbs_donor_sensitivity = False
-placebo_time = None
+placebo_time = "2019-03-01"
 num_chains = 1
 num_samples = 100
 num_warmup=100
 start_time = '2016-01-01'
-end_time = '2023-6-30'
-def main(dist, outcome_type="births", cat_name="total", rank=5, missingness=True, 
+end_time = '2024-01-01'
+def run_model(dist, outcome_type="births", cat_name="total", rank=5, missingness=True, 
          disp_param=1e-4, sample_disp=False, placebo_state = None, 
          start_time = '2016-01-01', end_time = '2023-12-31',
          placebo_time = None, 
-         dobbs_donor_sensitivity=False, model_treated=True, results_file_suffix = "",
+         model_treated=True, results_file_suffix = "",
          num_chains=num_chains, num_warmup=1000, num_samples=1000, thinning=1):
     
     numpyro.set_host_device_count(num_chains)
 
-    df = pd.read_csv('data/dobbsbimonthlybirths_10_23_24.csv')
+    # df = pd.read_csv('data/dobbsbimonthlybirths_10_23_24.csv')
+    df = pd.read_csv('data/dobbsbimonthlybirths_12_04_24.csv')
     
     from clean_monthly_birth_data import prep_data, clean_dataframe, create_unit_placebo_dataset, create_time_placebo_dataset
     
-    df = clean_dataframe(df, outcome_type, cat_name, csv_filename=None, 
-                         dobbs_donor_sensitivity=dobbs_donor_sensitivity)
+    df = clean_dataframe(df, outcome_type, cat_name, csv_filename=None)
     df = df[df['time'] <= pd.to_datetime(end_time)]
+    df = df.sort_values(by=['state', 'year', 'bmcode']) 
+    df = df.drop_duplicates()
 
     if placebo_state is not None and placebo_state != "Texas":
         df = create_unit_placebo_dataset(df, placebo_state = placebo_state)
@@ -155,9 +156,10 @@ if __name__ == '__main__':
             for m in missing_flags for disp in disp_params for p in placebo_states 
             for tm in placebo_times]
     # Run the function in parallel
-    results = Parallel(n_jobs=100)(delayed(main)(dist=i[0], outcome_type=outcome_type, cat_name=i[1], rank=i[2], missingness=i[3], 
+    results = Parallel(n_jobs=100)(delayed(run_model)(dist=i[0], outcome_type=outcome_type, cat_name=i[1], rank=i[2], missingness=i[3], 
                                                 disp_param=i[4],
                                                 sample_disp=sample_disp, placebo_state=i[5], placebo_time = i[6], 
                                                 dobbs_donor_sensitivity=dobbs_donor_sensitivity, 
                                                 results_file_suffix="through_june", num_chains=4, num_samples=2500, num_warmup=1000, thinning=10) for i in args)
     
+
