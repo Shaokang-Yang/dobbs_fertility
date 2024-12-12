@@ -94,7 +94,7 @@ merge_draws_and_data <- function(dat, samples,
     start <- Sys.time()
     merged_draws %>%
       ungroup() %>%
-      group_by(D, N, .draw) %>%
+      group_by(D, N, .draw, .chain) %>%
       summarize(
         ypred = sum(ypred),
         mu = log(sum(exp(mu))),
@@ -113,7 +113,7 @@ merge_draws_and_data <- function(dat, samples,
   merged_draws %>%
     ungroup() %>%
     filter(D %in% ban_indices) %>%
-    group_by(K, N, .draw) %>%
+    group_by(K, N, .draw, .chain) %>%
     summarize(ypred = sum(ypred), 
               mu=log(sum(exp(mu))), 
               mu_treated = log(sum(exp(mu_treated)))) %>%
@@ -299,14 +299,14 @@ make_violins <- function(merged_df, states=NULL, treatment_date=NULL,
     if (target == "births") {
       ## Compute ratio of birth rates (rates per 1000 people per year (or the rate_normalizer))
       state_df <- merged_df %>%
-        group_by_at(c(".draw", group_var, "time")) %>%
+        group_by_at(c(".draw", ".chain", group_var, "time")) %>%
         mutate(outcome = sum(.data[[target]]), ypred = sum(ypred), denom = mean(.data[[denom]])) %>%
         mutate(
           outcome_rate = (outcome / years) / (denom / rate_normalizer),
           ypred_rate = ypred / years / (denom / rate_normalizer)
         ) %>%
         ungroup() %>%
-        group_by_at(c(".draw", group_var)) %>%
+        group_by_at(c(".draw", ".chain", group_var)) %>%
         summarize(
           causal_effect_diff = mean(outcome_rate - ypred_rate),
           causal_effect_ratio = mean(outcome_rate / ypred_rate),
@@ -316,7 +316,7 @@ make_violins <- function(merged_df, states=NULL, treatment_date=NULL,
     } else {
       ## Compute difference in death rate per 1000 births (or the rate_normalizer)
       state_df <- merged_df %>%
-        group_by_at(c(".draw", group_var, "time")) %>%
+        group_by_at(c(".draw", ".chain", group_var, "time")) %>%
         mutate(outcome = sum(.data[[target]]), ypred = sum(ypred), denom = sum(.data[[denom]])) %>%
         mutate(
           outcome_rate = outcome / (denom / rate_normalizer),
@@ -336,17 +336,17 @@ make_violins <- function(merged_df, states=NULL, treatment_date=NULL,
       
       ## Compute ratio of birth rates (rates per 1000 people per year (or the rate_normalizer))
       state_df <- merged_df %>%
-        group_by_at(c(".draw", group_var, "time", "state")) %>%
+        group_by_at(c(".draw", ".chain", group_var, "time", "state")) %>%
         mutate(treated = sum(exp(mu_treated)), untreated = sum(exp(mu)), denom = mean(.data[[denom]] * years)) %>%
         ungroup()
       
       ban_states_df <- state_df %>%
-        group_by_at(c(".draw", "category", "time")) %>%
+        group_by_at(c(".draw", ".chain", "category", "time")) %>%
         summarize(treated = sum(treated), untreated = sum(untreated), denom = sum(denom)) %>%
         mutate(D = max(state_df$D) + 1, state = "Ban States", ban = TRUE)
       ban_states_no_tx_df <- state_df %>%
         filter(state != "Texas") %>%
-        group_by_at(c(".draw", "category", "time")) %>%
+        group_by_at(c(".draw", ".chain", "category", "time")) %>%
         summarize(treated = sum(treated), untreated = sum(untreated), denom = sum(denom)) %>%
         mutate(D = max(state_df$D) + 2, state = "Ban States (excl. Texas)", ban = TRUE)
       
@@ -356,7 +356,7 @@ make_violins <- function(merged_df, states=NULL, treatment_date=NULL,
       # state_df <- bind_rows(state_df, ban_states_df, ban_states_no_tx_df)
       # state_df <- state_df %>% filter(state %in% states)
             
-      state_df <- state_df %>% group_by_at(c(".draw", group_var)) %>%
+      state_df <- state_df %>% group_by_at(c(".draw", ".chain", group_var)) %>%
         summarize(
           treated_rate = sum(treated) / sum(denom) * rate_normalizer,
           untreated_rate = sum(untreated) / sum(denom) * rate_normalizer,
