@@ -93,7 +93,7 @@ df %>% group_by(state) %>%
   mutate(birthrate = births_total/pop_total*1000*6) %>%
   ungroup() %>% 
   ggplot() + 
-  geom_smooth(aes(x=time, y=birthrate, col=ban), span=0.4, se=FALSE) + 
+  geom_smooth(aes(x=time, y=birthrate, col=ban), span=0.5, se=FALSE) + 
   geom_line(aes(x=time, y=birthrate, col=ban), alpha=0.5) +
   theme_bw(base_size=16) + 
   theme(legend.position = c(0.75, 0.99), legend.justification = c(1, 1),
@@ -121,38 +121,6 @@ ggsave(sprintf("figs/%smain_figures/absolute_fertility.%s", fig_prefix, fig_form
 
 df <- df %>% group_by(state) %>% 
 mutate(ban = ifelse(any(exposed_births == 1), TRUE, FALSE))
-
-########################
-## Missing Data Table
-########################
-
-df %>% select(time, state, starts_with("births"), ban) %>% 
-  filter(ban == 0) %>%                   
-  pivot_longer(cols=starts_with('births'), names_pattern="births_(.*)", 
-                    names_to="category", 
-                    values_to="births") %>%
-  group_by(category) %>% 
-  summarize(count_missing = sum(is.na(births)), fraction_missing = round(100*count_missing / n(), 1)) %>%
-  mutate(state = "States without bans") -> frac_missing_unexposed
-
-df %>% select(time, state, starts_with("births"), ban) %>% 
-  filter(ban == 1 & state != "Texas") %>%                   
-  pivot_longer(cols=starts_with('births'), names_pattern="births_(.*)", 
-                    names_to="category", 
-                    values_to="births") %>%
-  group_by(category) %>% 
-  summarize(count_missing = sum(is.na(births)), fraction_missing = round(100*count_missing / n(), 1)) %>%
-  mutate(state = "States with bans (excl. Texas)") -> frac_missing_ban_no_tx
-
-df %>% select(time, state, starts_with("births"), ban) %>% 
-  filter(ban == 1) %>%                   
-  pivot_longer(cols=starts_with('births'), names_pattern="births_(.*)", 
-                    names_to="category", 
-                    values_to="births") %>%
-  group_by(category) %>% 
-  summarize(count_missing = sum(is.na(births)), fraction_missing = round(100*count_missing / n(), 1)) %>% 
-  mutate(state = "States with bans") -> frac_missing_ban_states
-
 
 categories_list <- list(age = c("age1524", "age2534", "age3544"), 
     edu = c("nohs", "hs", "somecoll", "coll"),
@@ -237,10 +205,10 @@ all_samples <- all_samples %>% mutate(category = fct_recode(category,
                                 )) %>% 
                                 mutate(category = fct_relevel(category,
                                 "15-24", "25-34", "35-44",
-                                "College degree", "Some college", "High school diploma", "Less than high school",
-                                "Non-Medicaid", "Medicaid",
+                                "Less than high school", "High school diploma", "Some college", "College degree", 
+                                "Medicaid", "Non-Medicaid",
                                 "Married", "Unmarried",
-                                "Non-Hispanic White", "Non-Hispanic Black", "Hispanic", "Other",
+                                "Hispanic", "Non-Hispanic Black", "Non-Hispanic White", "Other",
                                 "Total"
                                 ))
 
@@ -339,7 +307,7 @@ ggsave(sprintf("figs/%smain_figures/ban_states_interval_plot.png", fig_prefix), 
 
 ```{r tables}
 
-ftab <- make_fertility_table(all_samples, target_state="Ban States") |>
+ftab <- make_fertility_table(all_samples, target_state="Ban States", tab_caption="") |>
  fmt_number(columns=c("denom", "outcome", "expected_outcome"), sep=",", decimals=0)
 ftab |>
   gtsave(sprintf("figs/%smain_figures/ban_states_table.png", fig_prefix), zoom=4)
@@ -647,7 +615,6 @@ left_join(edu_ci_mean, cov_dat, by="state") %>% lm(causal_effect_ratio ~ categor
 
 ## Compute the causal effect for southern states vs northern states
 region_df <- all_samples %>% 
-  filter(type == "total") %>% 
   filter(!state %in% c("Ban States", "Ban States (excl. Texas)")) %>% 
   mutate(region = ifelse(state %in% c("Wisconsin", "South Dakota", "Idaho", "Missouri"), "Non-south", "South"))
 
@@ -840,6 +807,10 @@ mi_causal %>%
               lower_diff = quantile(causal_effect_ratio_diff, 0.025), 
               upper_diff = quantile(causal_effect_ratio_diff, 0.975),
               pr_unmarried_greater = mean(Unmarried > Married))
+write_lines("------ Posterior Prob Unmarried > Married ------- ", "figs/main_figures/summaries_for_paper.txt", append=TRUE)
+write_lines(capture.output(print(pr_unmarried_greater)), "figs/main_figures/summaries_for_paper.txt", append=TRUE)
+
+
 mi_causal %>% 
     mutate(causal_effect_ratio_diff = Medicaid - `Non-Medicaid`) %>% ungroup() %>%
     summarize(mean_rate_medicaid = mean(Medicaid), mean_rate_nonmedicaid = mean(`Non-Medicaid`),
