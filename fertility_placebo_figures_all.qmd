@@ -41,14 +41,21 @@ dates <- c("2016-03-01", "2016-05-01", "2016-07-01",  "2016-09-01", "2016-11-01"
             "2017-03-01", "2017-05-01", "2017-07-01", "2017-09-01", "2017-11-01",
             "2018-03-01", "2018-05-01", "2018-07-01", "2018-09-01", "2018-11-01",
             "2019-03-01", "2019-05-01", "2019-07-01", "2019-09-01", "2019-11-01",
-            "2020-03-01")
+            "2020-03-01", "2022-03-01")
 all_samples <- tibble()
 type <- "total"
 rank <- 7
 
+
+
+
 for(date in dates) {
 
-    df <- read_csv(sprintf("results/placebo/df_%s_%s.csv", suffix, date))
+    if(date == "2022-03-01") {
+        df <- read_csv(sprintf("results/df_%s.csv", "main_analysis"))
+    } else {
+        df <- read_csv(sprintf("results/placebo/df_%s_%s.csv", suffix, date))
+    }
     df |>
     mutate(
             start_date = ym(paste(year, "-", bmcode * 2 - 1)),
@@ -88,8 +95,11 @@ for(date in dates) {
     model_rank <- rank
     df2 <- df
     
-    type_samples <- read_csv(sprintf("results/placebo/NB_births_%s_%i_%s_%s.csv", type, model_rank, suffix, date))
-
+    if(date == "2022-03-01") {
+        type_samples <- read_csv(sprintf("results/NB_births_%s_%i_%s.csv", type, model_rank, "main_analysis"))
+    } else {
+        type_samples <- read_csv(sprintf("results/placebo/NB_births_%s_%i_%s_%s.csv", type, model_rank, suffix, date))
+    }
     categories <- categories_list[[type]]
 
     agg_category_name = "total"
@@ -128,43 +138,71 @@ all_samples <- all_samples %>% mutate(exposure_code = ifelse(is.na(exposure_code
 ## Event-Time Gap Plots
 
 ```{r}
-all_samples %>% filter(ban==1, !(state %in% c("Ban States", "Ban States (excl. Texas)")), type=="total") %>% 
-  group_by(state, placebo_time) %>% 
-  mutate(event_time = as.numeric(factor(time, levels=unique(time)))) %>%
-  mutate(min_event_time = min(event_time[exposure_code == 1])) %>%
-  mutate(event_time = event_time - min_event_time) %>% 
-  ungroup() %>% 
-  group_by(event_time, placebo_time, .draw) %>% 
-  summarize(births = sum(births), pop=sum(pop), 
-            ypred = sum(ypred), mu = log(sum(exp(mu))), 
-            mu_treated = log(sum(exp(mu_treated)))) %>% 
-  ungroup() %>%
-  group_by(event_time, placebo_time) %>%
-  summarize(ypred_mean=mean(ypred), 
-            ypred_lower=quantile(ypred, 0.025), ypred_upper=quantile(ypred, 0.975), 
-            births=mean(births),
-            pop = mean(pop)) %>% 
-  ungroup() %>%
-  mutate(pre_ban = event_time < 0) -> event_time_df
+
+for(s in c("Texas", "Ban States", "Ban States (excl. Texas)")) {
+
+    if(s == "Texas") {
+        sub_samples <- all_samples %>% filter(ban==1, state == "Texas", type=="total")
+    } else if(s == "Ban States (excl. Texas)") {
+        sub_samples <- all_samples %>% 
+            filter(ban==1, !(state %in% c("Ban States", "Ban States (excl. Texas)", "Texas")), type=="total")
+    } else{
+        sub_samples <- all_samples %>% 
+            filter(ban==1, !(state %in% c("Ban States", "Ban States (excl. Texas)")), type=="total")
+    }
+
+    sub_samples %>% filter(ban==1, type=="total") %>%
+    group_by(time, placebo_time, .draw) %>% 
+    summarize(births = sum(births), pop=sum(pop), 
+                ypred = sum(ypred), mu = log(sum(exp(mu))), 
+                mu_treated = log(sum(exp(mu_treated))),
+                exposure_code = max(exposure_code)) %>% 
+    ungroup() %>%
+    group_by(time, placebo_time) %>%
+    summarize(ypred_mean=mean(ypred), 
+                ypred_lower=quantile(ypred, 0.025), ypred_upper=quantile(ypred, 0.975), 
+                births=mean(births),
+                pop = mean(pop),
+                exposure_code = max(exposure_code)) %>% 
+    ungroup() %>%
+    group_by(placebo_time) %>% 
+        mutate(event_time = rank(time)) %>% 
+        mutate(min_event_time = min(event_time[exposure_code == 1])) %>%
+        mutate(event_time = event_time - min_event_time) %>% 
+    ungroup() %>%
+    mutate(pre_ban = event_time < 0) -> event_time_df
 
   # event_time_df %>% write_csv("results/event_time_results.csv")
 
-  event_time_df %>%
-  ggplot() +
-    geom_ribbon(aes(
-      x = event_time,
-      ymax = log(births) - log(ypred_lower),
-      ymin = log(births) - log(ypred_upper),
-      group = pre_ban
-    ), alpha = 0.25) +
-    geom_line(aes(x = event_time, y = log(births) - log(ypred_mean), group=pre_ban), color = "red") +
-    theme_bw() +
-    geom_hline(yintercept = 0, col = "black", linetype = "dashed", alpha=0.75) +
-    xlab("Event Time") + 
-    facet_wrap(~placebo_time, scales="free") 
+    event_time_df %>%
+    ggplot() +
+        geom_ribbon(aes(
+        x = event_time,
+        ymax = log(births) - log(ypred_lower),
+        ymin = log(births) - log(ypred_upper),
+        group = pre_ban
+        ), alpha = 0.25) +
+        geom_line(aes(x = event_time, y = log(births) - log(ypred_mean), group=pre_ban), color = "red") +
+        theme_bw() +
+        geom_hline(yintercept = 0, col = "black", linetype = "dashed", alpha=0.75) +
+        xlab("Event Time") + 
+        facet_wrap(~placebo_time, scales="free") 
 
-ggsave("figs/supplement_figures/placebo/placebo_gap_plot.png", width=10, height=10)
+    ggsave(sprintf("figs/supplement_figures/placebo/placebo_gap_facet_%s.png", s), width=10, height=10)
 
+    event_time_df %>%
+    mutate(placebo = placebo_time < "2022-01-01") %>%
+    ggplot() +
+        geom_line(aes(x = event_time, y = log(births) - log(ypred_mean), group= interaction(placebo_time, pre_ban), color = placebo, alpha=placebo)) +
+        theme_bw(base_size=16) +
+        scale_color_manual(values=c("red", "gray"), labels=c("Realized Treatment", "Placebo")) +
+        scale_alpha_manual(values=c(1, 0.5)) +
+        guides(group = "none", alpha="none", color = guide_legend(title="")) +
+        theme(legend.position=c(0.2, 0.85)) +
+        ylab("log(observed births) - log(expected births)")
+        xlab("Event Time") + ggtitle(s) -> p
+    ggsave(p, filename=sprintf("figs/supplement_figures/placebo/placebo_gap_overlayed_%s.png", s), width=7, height=5)
+}
 ```
 
 
@@ -249,7 +287,8 @@ state_df %>%
     summarize(mean_effect = mean(causal_effect)) %>%
     ggplot() +
     geom_point(aes(x=placebo_time, y=mean_effect)) + 
-    geom_vline(xintercept = 1.7, linetype="dashed", col="red")
+    geom_hline(yintercept = 1.7, linetype="dashed", col="red") +
+    geom_hline(yintercept = 1.0, linetype="dashed", col="blue") + ylim(c(-2, 2)) + theme_bw()
 ggsave("~/Desktop/tmp.png")
 
     ggplot(aes(x = placebo_time, y = causal_effect)) +
@@ -266,7 +305,7 @@ ggsave("~/Desktop/tmp.png")
     guides(colour = guide_legend(reverse=T)) + 
     theme(strip.text.y = element_blank()) + 
     geom_hline(yintercept = 1.7, linetype="dashed", color="red")
-
+}
 ```
 
 
