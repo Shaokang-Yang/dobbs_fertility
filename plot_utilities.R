@@ -1126,7 +1126,7 @@ make_unit_corr_ppc_plot <- function(merged_df,
       geom_vline(xintercept = 0, col = "red", linetype = "dashed") +
       facet_wrap(~category, scales = "free", ncol=2) +
       theme_bw() +
-      ggtitle("Differnece in State Correlations") +
+      ggtitle("Difference in State Correlations") +
       xlab("Observed - Predicted Spectral Norm")
     
 
