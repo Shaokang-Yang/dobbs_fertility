@@ -22,6 +22,8 @@ format:
 ---
 
 ```{r packages, message=FALSE}
+source("plot_utilities.R")
+
 options(dplyr.summarise.inform = FALSE)
 
 library(tidyverse)
@@ -31,129 +33,73 @@ library(jsonlite)
 library(kableExtra)
 library(gt)
 
-df <- read_csv("data/dobbsbimonthlybirthsdeaths_7_16_24.csv")
-df |>
-  mutate(
-          start_date = ym(paste(year, "-", bmcode * 2 - 1)),
-          end_date = start_date + months(2) - days(1)
-        ) -> df
-
-
-fill_in_missing_denoms <- function(dat) {
-    pop_index_2022 <- which.max(dat$year == 2022)
-    pop_index_2021 <- which.max(dat$year == 2021)
-    dat %>% mutate_at(vars(contains("pop")), ~ ifelse(is.na(.), .[pop_index_2022]^2 / .[pop_index_2021], .))
-}
-
-## Hacky imputation
-df <- df %>%
-    group_by(state) %>%
-    group_modify(~ fill_in_missing_denoms(.)) %>%
-    ungroup()
-
-df$time <- lubridate::ymd(paste0(df$year, "-", 2*df$bmcode-1, "-01"))
-
-df <- df %>% filter(time < "2024-01-01") 
-df$dobbs_code <- df$dobbscodev2
-df <- df %>% group_by(state) %>% fill(exposed_births, .direction="down") %>% ungroup()
-df <- df %>% group_by(state) %>% fill(exposed_infdeaths, .direction="down") %>% ungroup()
-
-placebo_time <- "2020-03-01"
-if(!is.null(placebo_time)) {
-  new_treatment_start = lubridate::date(placebo_time)
-  end_date = df %>% filter(exposed_births == 1) %>% pull(time) %>% max
-  original_treatment_start = df %>% filter(exposed_births == 1) %>% pull(time) %>% min
-
-  new_end = new_treatment_start + (end_date - original_treatment_start)
-
-  original_time_length = end_date - lubridate::date("2016-01-01")
-  new_start = new_end - original_time_length
-  if(new_start < min(df$time))
-    new_start = min(df$time)
-  new_start = round_date(new_start, unit="month")
-  new_end = round_date(new_end, unit="month")
-  new_time_length = new_end - new_start
-    
-  # Get the columns that start with 'exposure_code' for the end part of the time series
-  exposure_column_date <- (end_date-new_time_length)
-  exposure_code_values <- df %>% filter(time >= exposure_column_date) %>% pull(exposed_births)
-
-  df <- df %>% filter(time <= new_end & time >= new_start)
-
-  if(length(exposure_code_values) == nrow(df)){
-    df$exposed_births = exposure_code_values
-  } else{
-    stop("The length of new exposure_code values does not match the number of rows in df")
-  }
-
-} else {
-  df <- df %>% filter(time >= "2016-01-01")
-}
-
-df %>% group_by(state) %>% 
-    mutate(ban = ifelse(any(exposed_births == 1), "Exposed (excl. Texas)", "Unexposed")) %>%
-    mutate(ban = ifelse(is.na(ban), "Unexposed", ban)) %>% 
-    mutate(ban = ifelse(state == "Texas", "Texas", ban)) %>%
-    group_by(ban, time) %>% 
-    summarize(births_total = sum(births_total), pop_total=sum(pop_total)) %>% 
-    ungroup() %>% group_by(ban) %>% 
-    mutate(mean_br = mean(births_total[time < placebo_time]/pop_total[time < placebo_time])) %>%
-    mutate(birthrate = (births_total/pop_total)/mean_br) %>% 
-    ggplot() + geom_smooth(aes(x=time, y=birthrate, group=ban, col=ban), se=FALSE, span=0.4) + 
-    geom_jitter(aes(x=time, y=birthrate, col=ban), alpha=0.5) +
-    theme_bw(base_size=16) + 
-    theme(legend.position = c(0.99, 0.99), legend.justification = c(1, 1),
-    #legend.background = element_blank(),  # Make legend background transparent
-    legend.title = element_blank()  ) +
-    scale_color_manual(values=c("red", "orange", "dark gray")) + 
-    geom_vline(xintercept=lubridate::date("2020-03-01"), color="orange", linetype="dashed") +
-    geom_vline(xintercept=lubridate::date("2021-01-01"), color="red", linetype="dashed") +
-    ylab("Relative Birthrate") + xlab("Time") 
-ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/placebo/placebo_relative_birthrate.png", width=8, height=5)
-
-
-
-```
-
-
-
-
-```{r}
-categories_list <- list(age = c("age1524", "age2534", "age3544"), 
-    edu = c("nohs", "hs", "somecoll", "coll"),
-    #edu = c("hs_less", "somecoll_more"),
-    insurance = c("medicaid", "nonmedicaid"),
-    marital = c("married", "unmarried"),
-    race = c("nhwhite", "nhblack", "hisp", "otherraceeth"),
-    total = c("total"))
-
-df <- df %>% group_by(state) %>% 
-mutate(ban = ifelse(any(exposed_births == 1), TRUE, FALSE))
-
-```
-
-```{r load_data}
-source("plot_utilities.R")
-
-## Load all datasets
-# file_dir <- "~/Downloads/hierarchy"
-file_dir <- "~/Dropbox/abortion_results_and_data/posterior_samples/2020_placebo"
-suffix <- "placebo_2020"
-types <- c("total")
-ranks <- c(7)
-
+suffix <- "placebo"
+fig_format <- "png"
+## fig_prefix <- paste(suffix, "/", sep="")
+fig_prefix <- ""
+dates <- c("2016-03-01", "2016-05-01", "2016-07-01",  "2016-09-01", "2016-11-01",
+            "2017-03-01", "2017-05-01", "2017-07-01", "2017-09-01", "2017-11-01",
+            "2018-03-01", "2018-05-01", "2018-07-01", "2018-09-01", "2018-11-01",
+            "2019-03-01", "2019-05-01", "2019-07-01", "2019-09-01", "2019-11-01",
+            "2020-03-01", "2022-03-01")
 all_samples <- tibble()
-for(i in 1:length(types)) {
-    type <- types[i]
-    model_rank <- ranks[i]
-    print(sprintf("%s %i", type, model_rank))
-    df2 <- df
-    if(type == "marital")
-        df2 <- df2 %>% filter(state != "California")
-    
-    categories <- categories_list[[type]]
-    type_samples <- read_csv(sprintf("%s/NB_births_%s_%i_%s.csv", file_dir, type, model_rank, suffix))
+type <- "total"
+rank <- 7
 
+
+
+
+for(date in dates) {
+
+    if(date == "2022-03-01") {
+        df <- read_csv(sprintf("results/df_%s.csv", "main_analysis"))
+    } else {
+        df <- read_csv(sprintf("results/placebo/df_%s_%s.csv", suffix, date))
+    }
+    df |>
+    mutate(
+            start_date = ym(paste(year, "-", bmcode * 2 - 1)),
+            end_date = start_date + months(2) - days(1)
+            ) -> df
+    df$exposed_births = df$exposure_code
+
+    # fill_in_missing_denoms <- function(dat) {
+    #     pop_index_2022 <- which.max(dat$year == 2022)
+    #     pop_index_2021 <- which.max(dat$year == 2021)
+    #     dat %>% mutate_at(vars(contains("pop")), ~ ifelse(is.na(.), .[pop_index_2022]^2 / .[pop_index_2021], .))
+    # }
+
+    # ## Hacky imputation
+    # df <- df %>%
+    #     group_by(state) %>%
+    #     group_modify(~ fill_in_missing_denoms(.)) %>%
+    #     ungroup()
+
+    df$time <- lubridate::ymd(paste0(df$year, "-", 2*df$bmcode-1, "-01"))
+
+    df$dobbs_code <- df$dobbscodev2
+    # df <- df %>% group_by(state) %>% fill(exposed_births, .direction="down") %>% ungroup()
+    # df <- df %>% group_by(state) %>% fill(exposed_infdeaths, .direction="down") %>% ungroup()
+
+    categories_list <- list(age = c("age1524", "age2534", "age3544"), 
+        edu = c("nohs", "hs", "somecoll", "coll"),
+        #edu = c("hs_less", "somecoll_more"),
+        insurance = c("medicaid", "nonmedicaid"),
+        marital = c("married", "unmarried"),
+        race = c("nhwhite", "nhblack", "hisp", "otherraceeth"),
+        total = c("total"))
+
+    df <- df %>% group_by(state) %>% 
+    mutate(ban = ifelse(any(exposure_code == 1), TRUE, FALSE))
+
+    model_rank <- rank
+    df2 <- df
+    
+    if(date == "2022-03-01") {
+        type_samples <- read_csv(sprintf("results/NB_births_%s_%i_%s.csv", type, model_rank, "main_analysis"))
+    } else {
+        type_samples <- read_csv(sprintf("results/placebo/NB_births_%s_%i_%s_%s.csv", type, model_rank, suffix, date))
+    }
     categories <- categories_list[[type]]
 
     agg_category_name = "total"
@@ -180,41 +126,166 @@ for(i in 1:length(types)) {
     
     merged_df$type <- type
     merged_df$rank <- model_rank
+    merged_df$placebo_time <- date
     all_samples <- bind_rows(all_samples, merged_df)
+
 }
+all_samples <- all_samples %>% mutate(exposure_code = ifelse(is.na(exposure_code), 0, exposure_code))
 
-all_samples <- all_samples %>% mutate(category = fct_recode(category, "Total" = "total")) 
-
-quantiles_df <- all_samples %>% group_by(category, type, state, time) %>%
-  summarize(ypred_mean=mean(ypred), 
-            ypred_lower=quantile(ypred, 0.025), ypred_upper=quantile(ypred, 0.975), 
-            births=mean(births), 
-            exposure_code = first(exposure_code),
-            ban = first(ban)) %>% ungroup()
 ```
 
-## Fit and Gap Plots
 
-```{r}
-make_state_fit_plot(quantiles_df %>% filter(type=="total"), state_name="Ban States", category="Total", target="births") + theme_bw(base_size=16) 
-ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/placebo/ban_states_placebo_fit_2020.png", width=10, height=10)
-
-make_gap_plot(quantiles_df %>% filter(type=="total"), state_name="Ban States", category="Total", target="births") + theme_bw(base_size=16)
-ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/placebo/ban_states_placebo_gap_2020.png", width=10, height=10)
-```
-
-## Interval Plots
+## Event-Time Gap Plots
 
 ```{r}
 
-make_interval_plot(all_samples %>% filter(type == "total"), 
-                         group_var = c("state", "category"),
-                         target="births", denom="pop",
-                         rate_normalizer=1000,
-                         estimand = "ratio", 
-                         method="mu") + labs(color="Total") + ylim(c(-1, 3)) + ggtitle("Placebo (2020-03)")
-ggsave("~/Dropbox/abortion_results_and_data/fertility_figures/supplement_figures/placebo/placebo_interval_plot.png", width=10, height=10)
+for(s in c("Texas", "Ban States", "Ban States (excl. Texas)")) {
 
+    if(s == "Texas") {
+        sub_samples <- all_samples %>% filter(ban==1, state == "Texas", type=="total")
+        title <- "Texas"
+    } else if(s == "Ban States (excl. Texas)") {
+        sub_samples <- all_samples %>% 
+            filter(ban==1, !(state %in% c("Ban States", "Ban States (excl. Texas)", "Texas")), type=="total")
+        title <- "States with bans (excl. Texas)"
+    } else{
+        sub_samples <- all_samples %>% 
+            filter(ban==1, !(state %in% c("Ban States", "Ban States (excl. Texas)")), type=="total")
+        title <- "States with bans"
+    }
+
+    sub_samples %>% filter(ban==1, type=="total") %>%
+    group_by(time, placebo_time, .draw) %>% 
+    summarize(births = sum(births), pop=sum(pop), 
+                ypred = sum(ypred), mu = log(sum(exp(mu))), 
+                mu_treated = log(sum(exp(mu_treated))),
+                exposure_code = max(exposure_code)) %>% 
+    ungroup() %>%
+    group_by(time, placebo_time) %>%
+    summarize(ypred_mean=mean(ypred), 
+                ypred_lower=quantile(ypred, 0.025), ypred_upper=quantile(ypred, 0.975), 
+                births=mean(births),
+                pop = mean(pop),
+                exposure_code = max(exposure_code)) %>% 
+    ungroup() %>%
+    group_by(placebo_time) %>% 
+        mutate(event_time = rank(time)) %>% 
+        mutate(min_event_time = min(event_time[exposure_code == 1])) %>%
+        mutate(event_time = event_time - min_event_time) %>% 
+    ungroup() %>%
+    mutate(pre_ban = event_time < 0) -> event_time_df
+
+  # event_time_df %>% write_csv("results/event_time_results.csv")
+
+    event_time_df %>%
+    ggplot() +
+        geom_ribbon(aes(
+        x = event_time,
+        ymax = log(births) - log(ypred_lower),
+        ymin = log(births) - log(ypred_upper),
+        group = pre_ban
+        ), alpha = 0.25) +
+        geom_line(aes(x = event_time, y = log(births) - log(ypred_mean), group=pre_ban), color = "red") +
+        theme_bw() +
+        geom_hline(yintercept = 0, col = "black", linetype = "dashed", alpha=0.75) +
+        xlab("Event Time") + 
+        facet_wrap(~placebo_time) 
+
+    ggsave(sprintf("figs/supplement_figures/placebo/placebo_gap_facet_%s.png", s), width=10, height=10)
+
+    
+    event_time_df %>%
+    mutate(placebo = placebo_time < "2022-01-01") %>%
+    ggplot() +
+        geom_line(aes(x = event_time, y = log(births) - log(ypred_mean), group= interaction(placebo_time, pre_ban), color = placebo, alpha=placebo)) +
+        theme_bw(base_size=16) +
+        scale_color_manual(values=c("red", "gray"), labels=c("Realized Exposure", "Placebo")) +
+        scale_alpha_manual(values=c(1, 0.5)) +
+        guides(group = "none", alpha="none", color = guide_legend(title="")) +
+        theme(legend.position=c(0.2, 0.85)) +
+        ylab("log(observed births / expected births)") + 
+        geom_vline(xintercept = 0, linetype="dashed", color="black") +
+        xlab("Event Time") + ggtitle(title) -> p
+    ggsave(p, filename=sprintf("figs/supplement_figures/placebo/placebo_gap_overlayed_%s.png", s), width=7, height=5)
+}
+```
+
+
+## Caterpillar Plot
+
+```{r}
+merged_df <- all_samples
+merged_df <- merged_df %>%
+    filter(exposure_code == 1) %>%
+    mutate(years = mean(interval(start_date, end_date) / years(1)))
+
+## Remove Ban States, these will be recomputed below
+merged_df <- merged_df %>% filter(!state %in% c("Ban States", "Ban States (excl. Texas)"))
+  
+
+  ## Compute ratio of birth rates (rates per 1000 people per year (or the rate_normalizer))
+state_df <- merged_df %>%
+    group_by_at(c("placebo_time", ".draw", "time", "state")) %>%
+    mutate(treated = sum(exp(mu_treated)), untreated = sum(exp(mu)), denom = mean(pop * years)) %>%
+    ungroup()
+      
+ban_states_df <- state_df %>%
+    group_by_at(c(".draw", "placebo_time", "time")) %>%
+    summarize(treated = sum(treated), untreated = sum(untreated), denom = sum(denom)) %>%
+    mutate(D = max(state_df$D) + 1, state = "Ban States", ban = TRUE)
+
+ban_states_no_tx_df <- state_df %>%
+    filter(state != "Texas") %>%
+    group_by_at(c(".draw", "placebo_time", "time")) %>%
+    summarize(treated = sum(treated), untreated = sum(untreated), denom = sum(denom)) %>%
+    mutate(D = max(state_df$D) + 2, state = "Ban States (excl. Texas)", ban = TRUE)
+      
+      
+state_df <- bind_rows(state_df %>% select_at(colnames(ban_states_df)), ban_states_df, ban_states_no_tx_df)
+state_df <- state_df %>% filter(state == "Ban States")
+
+rate_normalizer <- 1000            
+state_df <- state_df %>% group_by_at(c(".draw", "placebo_time")) %>%
+    summarize(
+        treated_rate = sum(treated) / sum(denom) * rate_normalizer,
+        untreated_rate = sum(untreated) / sum(denom) * rate_normalizer,
+        causal_effect_diff = treated_rate - untreated_rate,
+        causal_effect_ratio = 100*(treated_rate / untreated_rate - 1),
+        causal_effect = causal_effect_ratio
+    ) %>% ungroup()
+        
+state_df <- state_df %>%
+    mutate(state = fct_relevel(
+        state,
+        "Ban States (excl. Texas)",
+        "Ban States",
+    )) %>%
+    mutate(state = fct_recode(state,
+        "States w/ bans" = "Ban States",
+        "States w/ bans (excl. Texas)" = "Ban States (excl. Texas)"
+    ))
+
+
+state_df %>%
+    mutate(realized = factor(placebo_time >= "2022-01-01", levels = c(FALSE, TRUE), labels = c("Placebos", ""))) %>%
+    ggplot(aes(x = placebo_time, y = causal_effect, col=realized)) +
+    ggdist::stat_pointinterval(aes(
+        alpha = after_stat(level)
+    ), position = "dodge", .width = c(0.95, 0.67)) +
+    ggdist::scale_interval_alpha_continuous(range = c(0.75, 1)) +
+    colorspace::scale_color_discrete_qualitative() +
+    scale_alpha_manual(values = c(0.5, 1), ) +
+    theme_bw(base_size = 16) +
+    geom_hline(yintercept = 0, linetype = "dashed") +
+    ylab("Expected Percent Change") +
+    xlab("") +
+    guides(colour = guide_legend(reverse=T, title="Type")) + 
+    scale_color_manual(values=c("black", "red"), labels=c("Placebo", "Realized Exposure")) +
+    theme(strip.text.y = element_blank(), axis.text.x = element_text(angle=45, hjust=1)) + 
+     ggforce::facet_row(realized ~ ., scales = "free_x", space = "free") +
+     theme(panel.spacing = unit(2, "lines"))
+
+ggsave("figs/supplement_figures/placebo/placebo_caterpillar.png", width=15, height=10)
 
 ```
 
