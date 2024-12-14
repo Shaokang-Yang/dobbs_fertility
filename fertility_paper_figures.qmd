@@ -77,7 +77,7 @@ relative_birth_rate <- df %>% group_by(state) %>%
     legend.title = element_blank()  ) +
     scale_color_manual(values=c("red", "orange", "dark gray"),
                        labels = c("Banned States (excl. Texas)", "Texas", "Non-banned States")) + 
-    ylab("Relative Birth Rate") + xlab("Year") + 
+    ylab("Relative Fertility Rate") + xlab("Year") + 
     geom_vline(xintercept=lubridate::date("2022-02-01"), color="orange", linetype="dashed") +
     geom_vline(xintercept=lubridate::date("2022-12-01"), color="red", linetype="dashed") 
 
@@ -102,7 +102,7 @@ df %>% group_by(state) %>%
   scale_color_manual(values=c("red", "orange", "dark gray"),
                       labels=c("States with bans (excl. Texas)", "Texas", "States without bans")) + 
                 
-  ylab("Birth Rate (per 1,000 women per year)") + xlab("Year") +
+  ylab("Fertility rate") + xlab("Year") +
   scale_x_date(
       date_breaks = "1 year",  # Set axis labels at yearly intervals
       date_labels = "%Y",
@@ -238,7 +238,8 @@ make_interval_plot(all_samples %>% filter(type == "age", category !="Total"),
                          target="births", denom="pop",
                          rate_normalizer=1000,
                          estimand = "ratio", 
-                         method="mu") + labs(color="Age Group")
+                         method="mu") + labs(color="Age Group") +
+                         facet_grid(factor(!(state %in% c("States w/ bans", "States w/ bans (excl. Texas)"))) ~ . , scales="free_y", space='free')
 ggsave(sprintf("figs/%smain_figures/age_interval_plot.%s", fig_prefix, fig_format), width=10, height=10)
 
 make_interval_plot(all_samples %>% filter(type == "race", category !="Total"), 
@@ -246,7 +247,8 @@ make_interval_plot(all_samples %>% filter(type == "race", category !="Total"),
                          target="births", denom="pop",
                          rate_normalizer=1000,
                          estimand = "ratio", 
-                         method="mu") + labs(color="Race/Ethnicity")
+                         method="mu") + labs(color="Race/Ethnicity") +
+                         facet_grid(factor(!(state %in% c("States w/ bans", "States w/ bans (excl. Texas)"))) ~ . , scales="free_y", space='free')
 ggsave(sprintf("figs/%smain_figures/race_interval_plot.%s", fig_prefix, fig_format), width=10, height=10)
 
 make_interval_plot(all_samples %>% filter(type == "edu", category !="Total"), 
@@ -254,7 +256,8 @@ make_interval_plot(all_samples %>% filter(type == "edu", category !="Total"),
                          target="births", denom="pop",
                          rate_normalizer=1000,
                          estimand = "ratio", 
-                         method="mu") + labs(color="Education")
+                         method="mu") + labs(color="Education") +
+                         facet_grid(factor(!(state %in% c("States w/ bans", "States w/ bans (excl. Texas)"))) ~ . , scales="free_y", space='free')
 ggsave(sprintf("figs/%smain_figures/education_interval_plot.png", fig_prefix), width=10, height=10)
 
 make_interval_plot(all_samples %>% filter(type == "insurance", category !="Total"), 
@@ -262,7 +265,8 @@ make_interval_plot(all_samples %>% filter(type == "insurance", category !="Total
                          target="births", denom="pop",
                          rate_normalizer=1000,
                          estimand = "ratio", 
-                         method="mu") + labs(color="Insurance")
+                         method="mu") + labs(color="Insurance") +
+                         facet_grid(factor(!(state %in% c("States w/ bans", "States w/ bans (excl. Texas)"))) ~ . , scales="free_y", space='free')
 ggsave(sprintf("figs/%smain_figures/insurance_interval_plot.%s", fig_prefix, fig_format), width=10, height=10)
 
 make_interval_plot(all_samples %>% filter(type == "marital", category !="Total"), 
@@ -270,7 +274,8 @@ make_interval_plot(all_samples %>% filter(type == "marital", category !="Total")
                          target="births", denom="pop",
                          rate_normalizer=1000,
                          estimand = "ratio", 
-                         method="mu") + labs(color="Marital Status")
+                         method="mu") + labs(color="Marital Status") + 
+                         facet_grid(factor(!(state %in% c("States w/ bans", "States w/ bans (excl. Texas)"))) ~ . , scales="free_y", space='free')
 ggsave(sprintf("figs/%smain_figures/marital_interval_plot.%s", fig_prefix, fig_format), width=10, height=10)
 
 make_interval_plot(all_samples %>% filter(type == "total"), 
@@ -470,7 +475,7 @@ make_state_table <- function(merged_df,
 
   ### COLUMN OPERATIONS
   tab_spanner(
-    label = "Birth rate (per 1,000 women per year)",
+    label = "Fertility rate",
     columns = c(outcome_rate, expected_rate, birth_rate_abs_str, birth_rate_pct_str)) |>
   tab_spanner(
     label = "Birth count",
@@ -585,6 +590,16 @@ ci_df <- all_samples %>%
     outcome_diff = round(treated - untreated),
     causal_effect_ratio = treated_rate / untreated_rate
   )
+
+# ci_df %>% group_by(state, category) %>% summarize(median_ratio = median(causal_effect_ratio)) %>% group_by(category) %>% mutate(effect_rank = rank(median_ratio)) %>% arrange(desc(effect_rank)) %>% group_by(state) %>% 
+#     summarize(mean_rank = mean(effect_rank)) %>% arrange(mean_rank)
+
+ci_df %>% group_by(state, category) %>% summarize(median_ratio = median(causal_effect_ratio)) %>% 
+  group_by(category) %>% mutate(effect_rank = rank(median_ratio)) %>% 
+filter(!(state %in% c("Ban States", "Ban States (excl. Texas)"))) %>% 
+mutate(state = fct_reorder(state, effect_rank, .fun=mean)) %>% 
+ggplot() + ggdist::geom_dots(aes(y=state, x=effect_rank), binwidth = unit(c(2, Inf), "mm")) 
+  
 ci_df_mean <- ci_df%>% group_by(type, category, state) %>% 
   summarize(causal_effect_ratio = mean(causal_effect_ratio))
 
@@ -771,7 +786,7 @@ age_df %>%
 write_lines("------ Posterior Prob 35 and under > 35-44 ------- ", "figs/main_figures/summaries_for_paper.txt", append=TRUE)
 write_lines(capture.output(print(pr_young_greater)), "figs/main_figures/summaries_for_paper.txt", append=TRUE)
 
-## Compute Effect Differences for Medicaid vs Non-Medicaid
+## Compute Effect Differences for Marital and Medicaid
 m_i_df <- all_samples %>% filter(!state %in% c("Ban States", "Ban States (excl. Texas)")) %>% 
       filter(type %in% c("marital","insurance")) %>% 
       filter(exposure_code == 1) %>%
@@ -806,7 +821,7 @@ mi_causal %>%
               mean_diff = mean(causal_effect_ratio_diff), 
               lower_diff = quantile(causal_effect_ratio_diff, 0.025), 
               upper_diff = quantile(causal_effect_ratio_diff, 0.975),
-              pr_unmarried_greater = mean(Unmarried > Married))
+              pr_unmarried_greater = mean(Unmarried > Married)) -> pr_unmarried_greater
 write_lines("------ Posterior Prob Unmarried > Married ------- ", "figs/main_figures/summaries_for_paper.txt", append=TRUE)
 write_lines(capture.output(print(pr_unmarried_greater)), "figs/main_figures/summaries_for_paper.txt", append=TRUE)
 
