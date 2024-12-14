@@ -27,11 +27,6 @@ results = Parallel(n_jobs=100)(delayed(run_model)(dist=i[0], outcome_type=outcom
                                                   disp_param=i[4], sample_disp=sample_disp, placebo_state=i[5], 
                                                   placebo_time = i[6], results_file_suffix="placebo_" + i[6], 
                                                   num_chains=4, num_samples=2500, 
+                                                  dobbs_donor_sensitivity=False,
                                                   num_warmup=1000, thinning=10) for i in args)
 
-for date in placebo_times:
-    print(date)
-    run_model(dist = "NB", outcome_type="births", cat_name="total", rank=7, 
-            missingness=True, disp_param=1e-4, sample_disp=False, 
-            placebo_state=None, placebo_time=date, model_treated=True, 
-            results_file_suffix="tmp", num_chains=1, num_samples=100, num_warmup=100, thinning=1)
