@@ -27,6 +27,7 @@ subgroup_definitions = {
 }
 
 def clean_dataframe(dat:pd.DataFrame, outcome_type="births", cat_name="total", 
+                    dobbs_donor_sensitivity=False,
                     csv_filename='data/dat_quarterly.csv'):
     """
     Filters, imputes, and adds relevant columns to the dataframe
@@ -164,10 +165,12 @@ def clean_dataframe(dat:pd.DataFrame, outcome_type="births", cat_name="total",
     if cat_name == "marital":
         dat = dat[dat["state"] != "California"]
     
-    # Drop Vermont, Wyoming and Montana for mortality
-    if outcome_type == "deaths":
-        dat = dat[~dat["state"].isin(["Vermont", "Wyoming", "Montana"])]
+    if dobbs_donor_sensitivity:
+        sensitivity_states = dat[~dat["dobbscode_sensitivity"].isna()]['state'].unique()
+        sensitivity_states = [state for state in sensitivity_states if state not in ['Arizona', 'Pennsylvania', 'Florida', 'California']]
+        dat = dat[dat["state"].isin(sensitivity_states)]
     
+
     if csv_filename is not None:
         ## Save to csv so we don't have to do this every time 
         dat.to_csv(csv_filename)

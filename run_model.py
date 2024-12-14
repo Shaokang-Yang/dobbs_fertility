@@ -31,7 +31,7 @@ end_time = '2024-01-01'
 def run_model(dist, outcome_type="births", cat_name="total", rank=5, missingness=True, 
          disp_param=1e-4, sample_disp=False, placebo_state = None, 
          start_time = '2016-01-01', end_time = '2023-12-31',
-         placebo_time = None, 
+         placebo_time = None, dobbs_donor_sensitivity=False,
          model_treated=True, results_file_suffix = "",
          num_chains=num_chains, num_warmup=1000, num_samples=1000, thinning=1):
     
@@ -42,7 +42,8 @@ def run_model(dist, outcome_type="births", cat_name="total", rank=5, missingness
     
     from clean_monthly_birth_data import prep_data, clean_dataframe, create_unit_placebo_dataset, create_time_placebo_dataset
     
-    df = clean_dataframe(df, outcome_type, cat_name, csv_filename=None)
+    df = clean_dataframe(df, outcome_type, cat_name,  
+                         dobbs_donor_sensitivity=dobbs_donor_sensitivity, csv_filename=None)
     df = df[df['time'] <= pd.to_datetime(end_time)]
     df = df.sort_values(by=['state', 'year', 'bmcode']) 
     df = df.drop_duplicates()
