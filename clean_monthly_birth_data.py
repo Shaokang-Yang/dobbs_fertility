@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import re
-
+from datetime import timedelta
 
 births_subgroup_definitions = {
         'race': ("nhwhite", "hisp", "nhblack", "otherraceeth"),
@@ -27,8 +27,7 @@ subgroup_definitions = {
 }
 
 def clean_dataframe(dat:pd.DataFrame, outcome_type="births", cat_name="total", 
-                    csv_filename='data/dat_quarterly.csv', 
-                    dobbs_donor_sensitivity=False):
+                    csv_filename='data/dat_quarterly.csv'):
     """
     Filters, imputes, and adds relevant columns to the dataframe
     """
@@ -169,10 +168,6 @@ def clean_dataframe(dat:pd.DataFrame, outcome_type="births", cat_name="total",
     if outcome_type == "deaths":
         dat = dat[~dat["state"].isin(["Vermont", "Wyoming", "Montana"])]
     
-    if dobbs_donor_sensitivity:
-        sensitivity_states = dat[~dat["dobbscode_sensitivity"].isna()]['state'].unique()
-        dat = dat[dat["state"].isin(sensitivity_states)]
-
     if csv_filename is not None:
         ## Save to csv so we don't have to do this every time 
         dat.to_csv(csv_filename)
@@ -335,12 +330,13 @@ def create_time_placebo_dataset(df, new_treatment_start="2022-05-01"):
 
     end_date = df.loc[df['exposure_code'] == 1, 'time'].max()
     
-    new_end = new_treatment_start + (end_date - original_treatment_start)
+    # add 1 week to avoid rounding months down when date is the last day of month
+    new_end = new_treatment_start + (end_date - original_treatment_start) + timedelta(days=7) 
     
     original_time_length = end_date - pd.to_datetime("2016-01-01")
     new_start = new_end - original_time_length
     if new_start < df["time"].min():
-        new_start = df["time"].min()
+        new_start = df["time"].min() + timedelta(days=7) # add 1 week to avoid rounding down
     
     new_start = new_start.to_period('M').to_timestamp()
     new_end = new_end.to_period('M').to_timestamp()
@@ -348,7 +344,8 @@ def create_time_placebo_dataset(df, new_treatment_start="2022-05-01"):
     new_time_length = new_end - new_start
 
     # Get the columns that start with 'exposure_code'
-    exposure_code_values = df.loc[(df['time'] >= end_date - new_time_length), ['exposure_code']]
+
+    exposure_code_values = df.loc[df['time'] >= (end_date - new_time_length + timedelta(days=7)).to_period('M').to_timestamp(), ['exposure_code']]
 
     df = df[(df['time'] <= new_end) & (df['time'] >= new_start)]
 
