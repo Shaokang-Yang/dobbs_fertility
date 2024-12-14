@@ -425,10 +425,10 @@ make_violins <- function(merged_df, states=NULL, treatment_date=NULL,
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
   if (target == "births") {
     
-    vp <- vp + labs(title = ifelse(estimand == "diff", "Post. Pred. Difference in birth rate", "Posterior Predictive Mult. change in birth rate"), subtitle = "Per 1,000 women per year")
+    vp <- vp + labs(title = ifelse(estimand == "diff", "Post. Pred. Difference in fertility rate", "Posterior Predictive Mult. change in fertility rate"))
     vp <- vp + ylab("Causal Effect")
   } else {
-     vp <- vp + labs(title = ifelse(estimand == "diff", "Post. Pred. Difference in mortality rate", "Post. Pred. Mult. change in mortality rate"), subtitle = "Per 1,000 live births")
+     vp <- vp + labs(title = ifelse(estimand == "diff", "Post. Pred. Difference in mortality rate", "Post. Pred. Mult. change in mortality rate"))
      vp <- vp + ylab("Mult. Change in deaths (per 1k live births)")
   }
   vp
@@ -607,10 +607,10 @@ make_violins <- function(merged_df, states=NULL, treatment_date=NULL,
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
   if (target == "births") {
     
-    vp <- vp + labs(title = ifelse(estimand == "diff", "Post. Pred. Difference in birth rate", "Posterior Predictive Mult. change in birth rate"), subtitle = "Per 1,000 women per year")
+    vp <- vp + labs(title = ifelse(estimand == "diff", "Post. Pred. Difference in fertility rate", "Posterior Predictive Mult. change in fertility rate"))
     vp <- vp + ylab("Causal Effect")
   } else {
-     vp <- vp + labs(title = ifelse(estimand == "diff", "Post. Pred. Difference in mortality rate", "Post. Pred. Mult. change in mortality rate"), subtitle = "Per 1,000 live births")
+     vp <- vp + labs(title = ifelse(estimand == "diff", "Post. Pred. Difference in mortality rate", "Post. Pred. Mult. change in mortality rate"))
      vp <- vp + ylab("Mult. Change in deaths (per 1k live births)")
   }
   vp
@@ -1272,7 +1272,7 @@ make_fertility_table <- function(merged_df,
                              "Marital status", "Race and ethnicity")) |>
   ### COLUMN OPERATIONS
   tab_spanner(
-    label = "Birth rate (per 1,000 women per year)",
+    label = "Fertility rate",
     columns = c(outcome_rate, expected_rate, birth_rate_abs_str, birth_rate_pct_str)) |>
   tab_spanner(
     label = "Birth count",

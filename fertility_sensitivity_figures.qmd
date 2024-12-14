@@ -2,7 +2,7 @@
 params:
   suffix: NA 
   fig_format: "png"
-title: "Figures - Fertility"
+title: "Figures - Sensitivity to Spillover"
 author: Alex Franks
 format: 
   html:
@@ -26,12 +26,12 @@ library(jsonlite)
 library(kableExtra)
 library(gt)
 
-suffix <- "main_analysis"
+suffix <- "sensitivity"
 fig_format <- "png"
 ## fig_prefix <- paste(suffix, "/", sep="")
-fig_prefix <- ""
+fig_prefix <- "sensitivity_"
 
-df <- read_csv(sprintf("results/df_%s.csv", suffix))
+df <- read_csv(sprintf("results/sensitivity/df_%s.csv", suffix))
 df |>
   mutate(
           start_date = ym(paste(year, "-", bmcode * 2 - 1)),
@@ -81,7 +81,7 @@ relative_birth_rate <- df %>% group_by(state) %>%
     geom_vline(xintercept=lubridate::date("2022-02-01"), color="orange", linetype="dashed") +
     geom_vline(xintercept=lubridate::date("2022-12-01"), color="red", linetype="dashed") 
 
-  ggsave(sprintf("figs/%smain_figures/relative_birthrate.%s", fig_prefix, fig_format), width=8, height=5)
+  ggsave(sprintf("figs/%sfigures/relative_birthrate.%s", fig_prefix, fig_format), width=8, height=5)
 
   
 df %>% group_by(state) %>%
@@ -117,7 +117,7 @@ df %>% group_by(state) %>%
   # 12.5))
   coord_cartesian(xlim=c(as.Date("2015-12-01"), as.Date("2023-04-01")))
 
-ggsave(sprintf("figs/%smain_figures/absolute_fertility.%s", fig_prefix, fig_format), width=8, height=5)  
+ggsave(sprintf("figs/%sfigures/absolute_fertility.%s", fig_prefix, fig_format), width=8, height=5)  
 
 df <- df %>% group_by(state) %>% 
 mutate(ban = ifelse(any(exposed_births == 1), TRUE, FALSE))
@@ -138,7 +138,7 @@ categories_list <- list(age = c("age1524", "age2534", "age3544"),
 source("plot_utilities.R")
 
 ## Load all datasets
-file_dir <- "results/"
+file_dir <- "results/sensitivity"
 types <- c("race", "total", "age", "edu", "insurance", "marital")
 
 ## These are the optimal ranks after PPCs
@@ -224,10 +224,10 @@ quantiles_df <- all_samples %>% group_by(category, type, state, time) %>%
 
 ```{r fit_and_gap_plots}
 make_state_fit_plot(quantiles_df %>% filter(type=="total"), state_name="Ban States", category="Total", target="births") + theme_bw(base_size=16) 
-ggsave(sprintf("figs/%smain_figures/ban_states_fit_plot.%s", fig_prefix, fig_format), width=8, height=5)
+ggsave(sprintf("figs/%sfigures/ban_states_fit_plot.%s", fig_prefix, fig_format), width=8, height=5)
 
 make_gap_plot(quantiles_df %>% filter(type=="total"), state_name="Ban States", category="Total", target="births") + theme_bw(base_size=16)
-ggsave(sprintf("figs/%smain_figures/ban_states_gap_plot.%s", fig_prefix, fig_format), width=8, height=5)
+ggsave(sprintf("figs/%sfigures/ban_states_gap_plot.%s", fig_prefix, fig_format), width=8, height=5)
 ```
 
 ## Interval Plots
@@ -240,7 +240,7 @@ make_interval_plot(all_samples %>% filter(type == "age", category !="Total"),
                          estimand = "ratio", 
                          method="mu") + labs(color="Age Group") +
                          facet_grid(factor(!(state %in% c("States w/ bans", "States w/ bans (excl. Texas)"))) ~ . , scales="free_y", space='free')
-ggsave(sprintf("figs/%smain_figures/age_interval_plot.%s", fig_prefix, fig_format), width=10, height=10)
+ggsave(sprintf("figs/%sfigures/age_interval_plot.%s", fig_prefix, fig_format), width=10, height=10)
 
 make_interval_plot(all_samples %>% filter(type == "race", category !="Total"), 
                          group_var = c("state", "category"),
@@ -249,7 +249,7 @@ make_interval_plot(all_samples %>% filter(type == "race", category !="Total"),
                          estimand = "ratio", 
                          method="mu") + labs(color="Race/Ethnicity") +
                          facet_grid(factor(!(state %in% c("States w/ bans", "States w/ bans (excl. Texas)"))) ~ . , scales="free_y", space='free')
-ggsave(sprintf("figs/%smain_figures/race_interval_plot.%s", fig_prefix, fig_format), width=10, height=10)
+ggsave(sprintf("figs/%sfigures/race_interval_plot.%s", fig_prefix, fig_format), width=10, height=10)
 
 make_interval_plot(all_samples %>% filter(type == "edu", category !="Total"), 
                          group_var = c("state", "category"),
@@ -258,7 +258,7 @@ make_interval_plot(all_samples %>% filter(type == "edu", category !="Total"),
                          estimand = "ratio", 
                          method="mu") + labs(color="Education") +
                          facet_grid(factor(!(state %in% c("States w/ bans", "States w/ bans (excl. Texas)"))) ~ . , scales="free_y", space='free')
-ggsave(sprintf("figs/%smain_figures/education_interval_plot.png", fig_prefix), width=10, height=10)
+ggsave(sprintf("figs/%sfigures/education_interval_plot.png", fig_prefix), width=10, height=10)
 
 make_interval_plot(all_samples %>% filter(type == "insurance", category !="Total"), 
                          group_var = c("state", "category"),
@@ -267,7 +267,7 @@ make_interval_plot(all_samples %>% filter(type == "insurance", category !="Total
                          estimand = "ratio", 
                          method="mu") + labs(color="Insurance") +
                          facet_grid(factor(!(state %in% c("States w/ bans", "States w/ bans (excl. Texas)"))) ~ . , scales="free_y", space='free')
-ggsave(sprintf("figs/%smain_figures/insurance_interval_plot.%s", fig_prefix, fig_format), width=10, height=10)
+ggsave(sprintf("figs/%sfigures/insurance_interval_plot.%s", fig_prefix, fig_format), width=10, height=10)
 
 make_interval_plot(all_samples %>% filter(type == "marital", category !="Total"), 
                          group_var = c("state", "category"),
@@ -276,7 +276,7 @@ make_interval_plot(all_samples %>% filter(type == "marital", category !="Total")
                          estimand = "ratio", 
                          method="mu") + labs(color="Marital Status") + 
                          facet_grid(factor(!(state %in% c("States w/ bans", "States w/ bans (excl. Texas)"))) ~ . , scales="free_y", space='free')
-ggsave(sprintf("figs/%smain_figures/marital_interval_plot.%s", fig_prefix, fig_format), width=10, height=10)
+ggsave(sprintf("figs/%sfigures/marital_interval_plot.%s", fig_prefix, fig_format), width=10, height=10)
 
 make_interval_plot(all_samples %>% filter(type == "total"), 
                          group_var = c("state", "category"),
@@ -285,7 +285,7 @@ make_interval_plot(all_samples %>% filter(type == "total"),
                          estimand = "ratio", 
                          method="mu") + labs(color="Total")  +
                          facet_grid(factor(!(state %in% c("States w/ bans", "States w/ bans (excl. Texas)"))) ~ . , scales="free_y", space='free')
-ggsave(sprintf("figs/%smain_figures/total_interval_plot.%s", fig_prefix, fig_format), width=10, height=10)
+ggsave(sprintf("figs/%sfigures/total_interval_plot.%s", fig_prefix, fig_format), width=10, height=10)
 
 ## All categories for banned states
 ## Interval Plot For Table 1
@@ -304,7 +304,7 @@ make_interval_plot(all_samples %>%
                    labs(color="Total") + 
                    facet_grid(type ~ ., scales="free_y", space='free') +
                    theme(panel.spacing = unit(2, "lines"))
-ggsave(sprintf("figs/%smain_figures/ban_states_interval_plot.png", fig_prefix), width=10, height=6)
+ggsave(sprintf("figs/%sfigures/ban_states_interval_plot.png", fig_prefix), width=10, height=6)
 
 ```
 
@@ -315,32 +315,9 @@ ggsave(sprintf("figs/%smain_figures/ban_states_interval_plot.png", fig_prefix), 
 ftab <- make_fertility_table(all_samples, target_state="Ban States", tab_caption="") |>
  fmt_number(columns=c("denom", "outcome", "expected_outcome"), sep=",", decimals=0)
 ftab |>
-  gtsave(sprintf("figs/%smain_figures/ban_states_table.png", fig_prefix), zoom=4)
+  gtsave(sprintf("figs/%sfigures/ban_states_table.png", fig_prefix), zoom=4)
 
-state_and_treat_times <- all_samples %>% filter(exposure_code==1, state != "Ban States") %>% 
-                        group_by(state) %>% summarize(treatment_start = min(time))
 
-treated_states <- state_and_treat_times %>% pull(state)
-treated_times <- state_and_treat_times %>% pull(treatment_start)
-
-for(i in 1:length(treated_states)) {
-  target_state <- treated_states[i]
-
-  if (target_state == "Ban States (excl. Texas)") {
-    tab_caption = sprintf("Supplementary Table %i. Estimated difference in cumulative observed vs expected births (count and rate) in all banned states excluding Texas (January 2023 through December 2023), overall and by socioeconomic characteristics. * denotes categories for which the 95%% credible intervals excludes zero.", i)
-  } else {
-    tab_caption = sprintf("Supplementary Table %i. Estimated difference in cumulative observed vs expected births (count and rate) in %s (%s %s through December 2023), overall and by socioeconomic characteristics. * denotes categories for which the 95%% credible intervals excludes zero.", i, target_state, month(treated_times[i], label=TRUE, abbr=FALSE), year(treated_times[i]))
-  }
-  make_fertility_table(all_samples, target_state=target_state, tab_caption=tab_caption) |> 
-  gtsave(filename=sprintf("figs/supplement_figures/tables/%s_table.png", target_state), zoom=4)
-
-  make_state_fit_plot(quantiles_df %>% filter(type=="total"), state_name=target_state, category="Total", target="births") + theme_bw(base_size=16) + ggtitle(paste("Model Fit -", target_state, sep=" "))
-  ggsave(filename=sprintf("figs/%ssupplement_figures/fit_and_gap_plots/%s_fit_plot.%s", fig_prefix, target_state, fig_format), width=8, height=5)
-
-  make_gap_plot(quantiles_df %>% filter(type=="total"), state_name=target_state, category="Total", target="births") + theme_bw(base_size=16) + ggtitle(paste("Gap Plot -", target_state, sep=" "))
-  ggsave(sprintf("figs/%ssupplement_figures/fit_and_gap_plots/%s_gap_plot.%s", fig_prefix, target_state, fig_format), width=8, height=5)
-
-}
 
 ```
 
@@ -523,8 +500,11 @@ total_states_tab <- make_state_table(all_samples %>% filter(type == "total"),
 #         * Categories for which the 95% credible intervals of the expected difference excludes zero."
 
 total_states_tab                    
-total_states_tab |> gtsave(sprintf("figs/%smain_figures/states_table_total_births.%s", fig_prefix, fig_format), zoom=4)
+total_states_tab |> gtsave(sprintf("figs/%sfigures/states_table_total_births.%s", fig_prefix, fig_format), zoom=4)
 ```
+
+
+<!-- 
 ## PPC Figures
 
 ```{r}
@@ -535,384 +515,27 @@ for(t in types) {
 
 
   rmse_res <- make_rmse_ppc_plot(all_samples %>% filter(state %in% ppc_states, type == t), outcome="births")
-  ggsave(rmse_res$rmse_plt, filename=sprintf("figs/%ssupplement_figures/ppc/%s_rmse_plot.png", fig_prefix, t), width=10, height=figure_height)
+  ggsave(rmse_res$rmse_plt, filename=sprintf("figs/%sfigures/ppc/%s_rmse_plot.png", fig_prefix, t), width=10, height=figure_height)
 
   abs_res <- make_abs_res_ppc_plot(all_samples %>% filter(state %in% ppc_states, type == t), outcome="births")
-  ggsave(abs_res$max_plt, filename=sprintf("figs/%ssupplement_figures/ppc/%s_abs_plot.png", fig_prefix, t), width=10, height=figure_height)
+  ggsave(abs_res$max_plt, filename=sprintf("figs/%sfigures/ppc/%s_abs_plot.png", fig_prefix, t), width=10, height=figure_height)
 
   acf_ppc6 <- make_acf_ppc_plot(all_samples %>% filter(state %in% ppc_states, type == t),
                   lag=6, outcome="births") 
-  ggsave(acf_ppc6$acf_plt, filename=sprintf("figs/%ssupplement_figures/ppc/%s_acf6_plot.png", fig_prefix, t), width=10, height=figure_height)
+  ggsave(acf_ppc6$acf_plt, filename=sprintf("figs/%sfigures/ppc/%s_acf6_plot.png", fig_prefix, t), width=10, height=figure_height)
 
   acf_ppc3 <- make_acf_ppc_plot(all_samples %>% filter(state %in% ppc_states, type == t),
                   lag=3, outcome="births") 
-  ggsave(acf_ppc3$acf_plt, filename=sprintf("figs/%ssupplement_figures/ppc/%s_acf3_plot.png", fig_prefix, t), width=10, height=figure_height)
+  ggsave(acf_ppc3$acf_plt, filename=sprintf("figs/%sfigures/ppc/%s_acf3_plot.png", fig_prefix, t), width=10, height=figure_height)
 
   acf_ppc1 <- make_acf_ppc_plot(all_samples %>% filter(state %in% ppc_states, type == t), lag=1, outcome="births") 
-  ggsave(acf_ppc1$acf_plt, filename=sprintf("figs/%ssupplement_figures/ppc/%s_acf1_plot.png", fig_prefix, t), width=10, height=figure_height)
+  ggsave(acf_ppc1$acf_plt, filename=sprintf("figs/%sfigures/ppc/%s_acf1_plot.png", fig_prefix, t), width=10, height=figure_height)
 
   uc_ppcs_obj <- make_unit_corr_ppc_plot(all_samples %>% filter(type == t), outcome="births")
-  ggsave(uc_ppcs_obj$eval_plt, filename=sprintf("figs/%ssupplement_figures/ppc/%s_unit_corr_plot.png", fig_prefix, t), width=7, height=figure_height)
+  ggsave(uc_ppcs_obj$eval_plt, filename=sprintf("figs/%sfigures/ppc/%s_unit_corr_plot.png", fig_prefix, t), width=7, height=figure_height)
 
 }
 
 ```
 
-
-## Aggregation Computations for Paper
-```{r}
-file.create("figs/main_figures/summaries_for_paper.txt", overwrite=TRUE)
-
-## MCMC Diagnostics (Effective Sample Size)
-all_samples %>% filter(!is.na(te), exposure_code == 1) %>% group_by(state, time, category) %>% summarize(es=coda::effectiveSize(te)) %>% pull(es) %>% quantile(., c(0.025, 0.5, 0.975))
-
-## Trace plots.
-all_samples %>% filter(exposure_code == 1, time=="2023-05-01") %>% 
-  mutate(.iteration = .draw %% max(.draw/.chain)) %>%
-  ggplot(aes(x=.iteration, y=te)) + geom_line(aes(color=as.factor(.chain)), alpha=0.5) + facet_wrap(~category + state, scales="free") + theme_bw()
-ggsave("figs/supplement_figures/trace_plot_2023_05_01.png", width=30, height=30)
-
-### Variance Decomposition
-cov_dat <- read_csv("data/dobbscovariates_2024_02_07.csv")
-ci_df <- all_samples %>% 
-  filter(exposure_code == 1) %>% 
-  mutate(denom = pop, 
-         years=interval(start_date, end_date) / years(1)) %>% 
-  ungroup() %>% group_by(state, type, category, .draw) %>% 
-  summarize(
-    ypred = sum(ypred),
-    outcome = sum(births), years = mean(years),
-    treated = sum(exp(mu_treated)), untreated = sum(exp(mu)),
-    denom = sum(denom * years, na.rm = TRUE),
-    treated_rate = treated / denom * 1000,
-    untreated_rate = untreated / denom * 1000,
-    outcome_rate = round(outcome / denom * 100, 2),
-    outcome_diff = round(treated - untreated),
-    causal_effect_ratio = treated_rate / untreated_rate
-  )
-
-# ci_df %>% group_by(state, category) %>% summarize(median_ratio = median(causal_effect_ratio)) %>% group_by(category) %>% mutate(effect_rank = rank(median_ratio)) %>% arrange(desc(effect_rank)) %>% group_by(state) %>% 
-#     summarize(mean_rank = mean(effect_rank)) %>% arrange(mean_rank)
-
-ci_df %>% group_by(state, category) %>% summarize(median_ratio = median(causal_effect_ratio)) %>% 
-  group_by(category) %>% mutate(effect_rank = rank(median_ratio)) %>% 
-filter(!(state %in% c("Ban States", "Ban States (excl. Texas)"))) %>% 
-mutate(state = fct_reorder(state, effect_rank, .fun=mean)) %>% 
-ggplot() + ggdist::geom_dots(aes(y=state, x=effect_rank), binwidth = unit(c(2, Inf), "mm")) 
-  
-ci_df_mean <- ci_df%>% group_by(type, category, state) %>% 
-  summarize(causal_effect_ratio = mean(causal_effect_ratio))
-
-ci_df_mean %>% filter(type != "total") %>% 
-  group_by(type) %>% summarize(summary(lm(causal_effect_ratio ~ category))$adj.r.squared) -> rsquared_df
-write_lines("------ Adjusted R-squareds based on Category ------- ", "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-write_lines(capture.output(print(rsquared_df)), "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-
-
-race_ci_mean <- ci_df_mean %>% filter(type == "race")
-race_ci_mean$residual <- race_ci_mean %>% lm(causal_effect_ratio ~ category, data=.) %>% .$residual
-race_ci_mean %>% group_by(state) %>% summarize(mean_residual= mean(residual)) %>% arrange(desc(mean_residual))
-
-race_ci_mean %>% group_by(state) %>% summarize(mean_residual= mean(residual)) %>% arrange(desc(mean_residual)) %>% 
-left_join(cov_dat, by="state") %>% select(state, mean_residual, median_time_post_dobbs) %>% ggplot(aes(x=median_time_post_dobbs, y=mean_residual)) + geom_point() + geom_label(aes(label=state)) + theme_bw(base_size=16) + ylab("Mean Residual") + xlab("Median Time Post Dobbs") + geom_smooth(method="lm", se=FALSE)
-
-left_join(race_ci_mean, cov_dat, by="state") %>% filter(category != "Total") %>% 
-  mutate(median_time_post_dobbs = median_time_post_dobbs/60, 
-         median_time_pre_dobbs = median_time_pre_dobbs/60, 
-         driving_time_diff = median_time_post_dobbs - median_time_pre_dobbs) %>%
-  lm(100*(causal_effect_ratio-1) ~ category + driving_time_diff, data=.) %>% summary()
-
-edu_ci_mean <- ci_df_mean %>% filter(type == "edu") %>% filter(category != "Total")
-edu_ci_mean$residual <- edu_ci_mean %>% lm(causal_effect_ratio ~ category, data=.) %>% .$residual
-edu_ci_mean %>% group_by(state) %>% summarize(mean_residual= mean(residual)) %>% arrange(desc(mean_residual))
-left_join(edu_ci_mean, cov_dat, by="state") %>% lm(causal_effect_ratio ~ category+median_time_post_dobbs, data=.) %>% summary()
-
-
-## Compute the causal effect for southern states vs northern states
-region_df <- all_samples %>% 
-  filter(!state %in% c("Ban States", "Ban States (excl. Texas)")) %>% 
-  mutate(region = ifelse(state %in% c("Wisconsin", "South Dakota", "Idaho", "Missouri"), "Non-south", "South"))
-
-region_df <- region_df %>%
-  filter(exposure_code == 1) %>% 
-  ## Aggregate over south and nonsouth
-  group_by(type, category, .draw, time, region) %>% 
-  summarise(births := sum(births), 
-                denom = sum(pop), 
-                ypred=sum(ypred), 
-                mu = log(sum(exp(mu))),
-                mu_treated = log(sum(exp(mu_treated))),
-                years=mean(interval(start_date, end_date) / years(1)))
-
-region_df %>% 
-    ungroup() %>%
-    ## Aggregate over time
-    group_by(region, .draw) %>%
-    summarize(
-      ypred = sum(ypred),
-      outcome = sum(births), years = mean(years),
-      treated = sum(exp(mu_treated)), untreated = sum(exp(mu)),
-      denom = sum(denom * years, na.rm = TRUE),
-      treated_rate = treated / denom * 1000,
-      untreated_rate = untreated / denom * 1000,
-      outcome_rate = round(outcome / denom * 100, 2),
-      outcome_diff = round(treated - untreated),
-      causal_effect_ratio = treated_rate / untreated_rate
-    ) %>% pivot_wider(names_from = region, values_from = c(causal_effect_ratio), id_cols=c(.draw)) %>% 
-    mutate(causal_effect_ratio_diff = `South` - `Non-south`) %>% 
-    summarize(mean_rate_south = mean(`South`), mean_rate_nonsouth = mean(`Non-south`),
-              mean_diff = mean(causal_effect_ratio_diff), 
-              lower_diff = quantile(causal_effect_ratio_diff, 0.025), 
-              upper_diff = quantile(causal_effect_ratio_diff, 0.975),
-              pr_south_greater = mean(`South` > `Non-south`)) -> pr_south_greater
-
-write_lines("------ Posterior Prob Southern vs Non-Southern States ------- ", "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-write_lines(capture.output(print(pr_south_greater)), "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-
-## Compute Effect Differences for College vs Non-College
-edu_df <- all_samples %>% filter(!state %in% c("Ban States", "Ban States (excl. Texas)")) %>% 
-      filter(type == "edu") %>% 
-      mutate(college = ifelse(category == "College degree", "college", "noncollege")) %>%
-      filter(exposure_code == 1) %>%
-      ## Aggregate over all banned states
-      group_by(type, college, .draw, time) %>% 
-      summarise(births := sum(births), 
-                denom = sum(births), 
-                ypred=sum(ypred), 
-                mu = log(sum(exp(mu))),
-                mu_treated = log(sum(exp(mu_treated))),
-                years=mean(interval(start_date, end_date) / years(1)))
-  
-
-edu_df %>% 
-    ungroup() %>%
-    ## Aggregate over time
-    group_by(college, .draw) %>%
-    summarize(
-      ypred = sum(ypred),
-      outcome = sum(births), years = mean(years),
-      treated = sum(exp(mu_treated)), untreated = sum(exp(mu)),
-      denom = sum(denom * years, na.rm = TRUE),
-      treated_rate = treated / denom * 1000,
-      untreated_rate = untreated / denom * 1000,
-      outcome_rate = round(outcome / denom * 100, 2),
-      outcome_diff = round(treated - untreated),
-      causal_effect_ratio = treated_rate / untreated_rate
-    ) %>% pivot_wider(names_from = college, values_from = c(causal_effect_ratio), id_cols=c(.draw)) %>% 
-    mutate(causal_effect_ratio_diff = noncollege - college) %>% ungroup() %>%
-    summarize(mean_rate_college = mean(college), mean_rate_noncollege = mean(noncollege),
-              mean_diff = mean(causal_effect_ratio_diff), 
-              lower_diff = quantile(causal_effect_ratio_diff, 0.025), 
-              upper_diff = quantile(causal_effect_ratio_diff, 0.975),
-              pr_noncollege_greater = mean(noncollege > college)) -> pr_noncollege_greater
-
-write_lines("------ Posterior Prob Non-College > College ------- ", "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-write_lines(capture.output(print(pr_noncollege_greater)), "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-
-## Compute Effect Differences for NH White vs Non-White
-race_df <- all_samples %>% filter(!state %in% c("Ban States", "Ban States (excl. Texas)")) %>% 
-      filter(type == "race") %>% 
-      mutate(white = ifelse(category == "Non-Hispanic White", "white", "nonwhite")) %>%
-      filter(exposure_code == 1) %>%
-      ## Aggregate over all banned states
-      group_by(type, white, .draw, time) %>% 
-      summarise(births := sum(births), 
-                denom = sum(births), 
-                ypred=sum(ypred), 
-                mu = log(sum(exp(mu))),
-                mu_treated = log(sum(exp(mu_treated))),
-                years=mean(interval(start_date, end_date) / years(1)))
-
-race_df %>% 
-    ungroup() %>%
-    ## Aggregate over time
-    group_by(white, .draw) %>%
-    summarize(
-      ypred = sum(ypred),
-      outcome = sum(births), years = mean(years),
-      treated = sum(exp(mu_treated)), untreated = sum(exp(mu)),
-      denom = sum(denom * years, na.rm = TRUE),
-      treated_rate = treated / denom * 1000,
-      untreated_rate = untreated / denom * 1000,
-      outcome_rate = round(outcome / denom * 100, 2),
-      outcome_diff = round(treated - untreated),
-      causal_effect_ratio = treated_rate / untreated_rate
-    ) %>% pivot_wider(names_from = white, values_from = c(causal_effect_ratio), id_cols=c(.draw)) %>% 
-    mutate(causal_effect_ratio_diff = nonwhite - white) %>% ungroup() %>%
-    summarize(mean_rate_white = mean(white), mean_rate_nonwhite = mean(nonwhite),
-              mean_diff = mean(causal_effect_ratio_diff), 
-              lower_diff = quantile(causal_effect_ratio_diff, 0.025), 
-              upper_diff = quantile(causal_effect_ratio_diff, 0.975),
-              pr_nonwhite_greater = mean(nonwhite > white)) -> pr_nonwhite_greater
-
-write_lines("------ Posterior Prob Non-White > White ------- ", "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-write_lines(capture.output(print(pr_nonwhite_greater)), "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-
-## Compute Effect Differences for Less than 35 > 35-44
-age_df <- all_samples %>% filter(!state %in% c("Ban States", "Ban States (excl. Texas)")) %>% 
-      filter(type == "age") %>% 
-      mutate(age = ifelse(category == "35-44", "35_44", "less_than_35")) %>%
-      filter(exposure_code == 1) %>%
-      ## Aggregate over all banned states
-      group_by(type, age, .draw, time) %>% 
-      summarise(births := sum(births), 
-                denom = sum(births), 
-                ypred=sum(ypred), 
-                mu = log(sum(exp(mu))),
-                mu_treated = log(sum(exp(mu_treated))),
-                years=mean(interval(start_date, end_date) / years(1)))
-age_df %>% 
-    ungroup() %>%
-    ## Aggregate over time
-    group_by(age, .draw) %>%
-    summarize(
-      ypred = sum(ypred),
-      outcome = sum(births), years = mean(years),
-      treated = sum(exp(mu_treated)), untreated = sum(exp(mu)),
-      denom = sum(denom * years, na.rm = TRUE),
-      treated_rate = treated / denom * 1000,
-      untreated_rate = untreated / denom * 1000,
-      outcome_rate = round(outcome / denom * 100, 2),
-      outcome_diff = round(treated - untreated),
-      causal_effect_ratio = treated_rate / untreated_rate
-    ) %>% pivot_wider(names_from = age, values_from = c(causal_effect_ratio), id_cols=c(.draw)) %>% 
-    mutate(causal_effect_ratio_diff = `35_44` - less_than_35) %>% ungroup() %>%
-    summarize(mean_rate_35_44 = mean(`35_44`), mean_rate_lt_35 = mean(less_than_35),
-              mean_diff = mean(causal_effect_ratio_diff), 
-              lower_diff = quantile(causal_effect_ratio_diff, 0.025), 
-              upper_diff = quantile(causal_effect_ratio_diff, 0.975),
-              pr_young_greater = mean(less_than_35 > `35_44`)) -> pr_young_greater
-
-write_lines("------ Posterior Prob 35 and under > 35-44 ------- ", "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-write_lines(capture.output(print(pr_young_greater)), "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-
-## Compute Effect Differences for Marital and Medicaid
-m_i_df <- all_samples %>% filter(!state %in% c("Ban States", "Ban States (excl. Texas)")) %>% 
-      filter(type %in% c("marital","insurance")) %>% 
-      filter(exposure_code == 1) %>%
-      ## Aggregate over all banned states
-      group_by(type, category, .draw, time) %>% 
-      summarise(births := sum(births), 
-                denom = sum(births), 
-                ypred=sum(ypred), 
-                mu = log(sum(exp(mu))),
-                mu_treated = log(sum(exp(mu_treated))),
-                years=mean(interval(start_date, end_date) / years(1)))
-
-mi_causal <- m_i_df %>% 
-    ungroup() %>%
-    ## Aggregate over time
-    group_by(category, .draw) %>%
-    summarize(
-      ypred = sum(ypred),
-      outcome = sum(births), years = mean(years),
-      treated = sum(exp(mu_treated)), untreated = sum(exp(mu)),
-      denom = sum(denom * years, na.rm = TRUE),
-      treated_rate = treated / denom * 1000,
-      untreated_rate = untreated / denom * 1000,
-      outcome_rate = round(outcome / denom * 100, 2),
-      outcome_diff = round(treated - untreated),
-      causal_effect_ratio = treated_rate / untreated_rate
-    ) %>% pivot_wider(names_from = category, values_from = c(causal_effect_ratio), id_cols=c(.draw)) 
-
-mi_causal %>% 
-    mutate(causal_effect_ratio_diff = Unmarried - Married) %>% ungroup() %>%
-    summarize(mean_rate_married = mean(Married), mean_rate_unmarried = mean(Unmarried),
-              mean_diff = mean(causal_effect_ratio_diff), 
-              lower_diff = quantile(causal_effect_ratio_diff, 0.025), 
-              upper_diff = quantile(causal_effect_ratio_diff, 0.975),
-              pr_unmarried_greater = mean(Unmarried > Married)) -> pr_unmarried_greater
-write_lines("------ Posterior Prob Unmarried > Married ------- ", "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-write_lines(capture.output(print(pr_unmarried_greater)), "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-
-
-mi_causal %>% 
-    mutate(causal_effect_ratio_diff = Medicaid - `Non-Medicaid`) %>% ungroup() %>%
-    summarize(mean_rate_medicaid = mean(Medicaid), mean_rate_nonmedicaid = mean(`Non-Medicaid`),
-              mean_diff = mean(causal_effect_ratio_diff), 
-              lower_diff = quantile(causal_effect_ratio_diff, 0.025), 
-              upper_diff = quantile(causal_effect_ratio_diff, 0.975),
-              pr_medicaid_greater = mean(Medicaid > `Non-Medicaid`)) -> pr_medicaid_greater           
-
-write_lines("------ Posterior Prob Medicaid > Non-Medicaid ------- ", "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-write_lines(capture.output(print(pr_medicaid_greater)), "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-
-## Portion of excess births in Texas from pre Dobbs
-
-texas_df <- all_samples %>% filter(exposure_code == 1, state == "Texas", type == "total") %>% 
-                          mutate(denom = pop, pre_dobbs = time < "2023-01-01") 
-                          
-texas_df %>% mutate(denom = pop * interval(start_date, end_date) / years(1)) %>%
-    group_by(pre_dobbs, .draw) %>%
-    summarize(
-      ypred = sum(ypred),
-      outcome = sum(ifelse(is.na(births), round(exp(mu)), births)), 
-      treated = sum(exp(mu_treated)), untreated = sum(exp(mu)),
-      denom = sum(denom, na.rm = TRUE)
-    ) |>
-    mutate(
-      outcome_diff = round(treated - untreated),
-    ) %>%
-    ungroup() %>%
-    ## Compute quantiles of effects
-    group_by(pre_dobbs) %>%
-    summarize(
-      outcome = round(mean(outcome), digits=ifelse(mean(outcome < 1), 2, 0)),
-      outcome_diff_mean = round(mean(outcome_diff), digits=ifelse(mean(outcome < 1), 2, 0)), 
-      outcome_diff_lower = round(quantile(outcome_diff, 0.025)), 
-      outcome_diff_upper = round(quantile(outcome_diff, 0.975)),
-     ) -> texas_summary
-
-excess_births_pre <- texas_summary$outcome_diff_mean[texas_summary$pre_dobbs == TRUE]
-excess_births_post <- texas_summary$outcome_diff_mean[texas_summary$pre_dobbs == FALSE]
-
-write_lines("------ Fraction excess TX births from Pre Dobbs period ------- ", "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-write_lines(sprintf("Pre Dobbs: %i (%f), Post Dobbs: %i (%f)", 
-                    excess_births_pre, excess_births_pre/(excess_births_pre + excess_births_post),
-                    excess_births_post, excess_births_post/(excess_births_pre + excess_births_post)),
-                    "figs/main_figures/summaries_for_paper.txt", append=TRUE)
-
-
-```
-
-
-## Event-Time Gap Plot
-
-```{r}
-all_samples %>% filter(ban==1, !(state %in% c("Ban States", "Ban States (excl. Texas)")), type=="total") %>% 
-  mutate(event_time = as.numeric(factor(time, levels=unique(time)))) %>%
-  group_by(state) %>% 
-  mutate(min_event_time = min(event_time[exposure_code == 1])) %>%
-  mutate(event_time = event_time - min_event_time) %>% 
-  ungroup() %>% 
-  group_by(event_time, .draw) %>% 
-  summarize(births = sum(births), pop=sum(pop), 
-            ypred = sum(ypred), mu = log(sum(exp(mu))), 
-            mu_treated = log(sum(exp(mu_treated)))) %>% 
-  ungroup() %>%
-  group_by(event_time) %>%
-  summarize(ypred_mean=mean(ypred), 
-            ypred_lower=quantile(ypred, 0.025), ypred_upper=quantile(ypred, 0.975), 
-            births=mean(births),
-            pop = mean(pop)) %>% 
-  ungroup() %>%
-  mutate(pre_ban = event_time < 0) -> event_time_df
-
-  event_time_df %>% write_csv("results/event_time_results.csv")
-
-  event_time_df %>%
-  ggplot() +
-    geom_ribbon(aes(
-      x = event_time,
-      ymax = log(births) - log(ypred_lower),
-      ymin = log(births) - log(ypred_upper),
-      group = pre_ban
-    ), alpha = 0.25) +
-    geom_line(aes(x = event_time, y = log(births) - log(ypred_mean), group=pre_ban), color = "red") +
-    theme_bw() +
-    geom_hline(yintercept = 0, col = "black", linetype = "dashed", alpha=0.75) +
-    xlab("Event Time")
-ggsave("figs/supplement_figures/event_time_gap_plot.png", width=10, height=10)
-
-
-```
+ -->
