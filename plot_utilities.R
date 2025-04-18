@@ -1,9 +1,13 @@
+install.packages("tidybayes")
+install.packages("kableExtra")
+install.packages("ggrepel")
+install.packages("patchwork")
+install.packages("gt")
 library(tidybayes)
 library(kableExtra)
 library(ggrepel)
 library(patchwork)
 library(gt)
-
 
 merge_draws_and_data <- function(dat, samples,
                                  categories = c("black", "other", "hisp", "white"), 
