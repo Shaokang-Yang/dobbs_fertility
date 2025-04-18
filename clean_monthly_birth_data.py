@@ -3,6 +3,10 @@ import pandas as pd
 import re
 from datetime import timedelta
 
+
+outcome_type = "births"
+
+
 births_subgroup_definitions = {
         'race': ("nhwhite", "hisp", "nhblack", "otherraceeth"),
         'edu': ("nohs", "hs", "somecoll", "coll"),
@@ -166,9 +170,13 @@ def clean_dataframe(dat:pd.DataFrame, outcome_type="births", cat_name="total",
         dat = dat[dat["state"] != "California"]
     
     if dobbs_donor_sensitivity:
-        sensitivity_states = dat[~dat["dobbscode_sensitivity"].isna()]['state'].unique()
-        sensitivity_states = [state for state in sensitivity_states if state not in ['Arizona', 'Pennsylvania', 'Florida', 'California']]
-        dat = dat[dat["state"].isin(sensitivity_states)]
+        if "dobbscode_sensitivity" in dat.columns:
+            sensitivity_states = dat[~dat["dobbscode_sensitivity"].isna()]['state'].unique()
+            sensitivity_states = [state for state in sensitivity_states if state not in ['Arizona', 'Pennsylvania', 'Florida', 'California']]
+            dat = dat[dat["state"].isin(sensitivity_states)]
+        else:
+            print("⚠️ Warning: `dobbscode_sensitivity` column not found, skipping donor sensitivity filtering.")
+
     
 
     if csv_filename is not None:
@@ -366,7 +374,10 @@ if __name__ == '__main__':
     import pandas as pd
     import pickle 
     import os
-    import gzip 
+    import gzip
+    import sys
+    sys.argv = ['script.py', '/Users/shaokangyang/Downloads/df_through_june.csv', '--save-dict', '--group', 'race']
+ 
     
     parser = argparse.ArgumentParser(description='Script for cleaning and parsing quarterly births. We will assume that the file name is in the format quarterly_fertility_mortality_MMDDYY.csv where MM is month,DD is day, and YY is year.')
     parser.add_argument('filename', type=str, help='Name of the input file')
@@ -375,14 +386,16 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     # Create a directory to hold the parsed files
-    directory_name = 'model_data/' + args.filename.split('/')[-1].split('.')[0]
+    directory_name = '/Users/shaokangyang/Downloads/model_data/' + args.filename.split('/')[-1].split('.')[0]
     os.makedirs(directory_name, exist_ok=True)
     dat = clean_dataframe(pd.read_csv(args.filename))
     # Save the dataframe
     dat.to_csv(directory_name + '/data_frame.csv')
 
     if args.save_dict:
-        data_dict = prep_data(dat, subgroup_definitions[outcome_type][args.group])
+        # data_dict = prep_data(dat, subgroup_definitions[outcome_type][args.group])
+        data_dict = prep_data(dat, group=args.group, outcome_type="births")
+
         # Specify the filename for the gzipped pickle file
         dict_filename = 'births_{}_dict.pkl.gz'.format(args.group)
 

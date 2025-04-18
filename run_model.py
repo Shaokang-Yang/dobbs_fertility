@@ -128,10 +128,10 @@ def run_model(dist, outcome_type="births", cat_name="total", rank=5, missingness
     results_df = pd.DataFrame(all_samples)
 
     ## save input df
-    df.to_csv('results/df_{}.csv'.format(results_file_suffix))
+    df.to_csv('/Users/shaokangyang/Library/CloudStorage/GoogleDrive-sky.ang510@gmail.com/My Drive/Code/fertility_results/df_{}.csv'.format(results_file_suffix))
     ## save posterior samples
     results_df.to_csv(
-        'results/{}_{}_{}_{}_{}.csv'.format(dist, "births", cat_name, rank, results_file_suffix)
+        '/Users/shaokangyang/Library/CloudStorage/GoogleDrive-sky.ang510@gmail.com/My Drive/Code/fertility_results/{}_{}_{}_{}_{}.csv'.format(dist, "births", cat_name, rank, results_file_suffix)
     )
 
     
@@ -157,10 +157,9 @@ if __name__ == '__main__':
             for m in missing_flags for disp in disp_params for p in placebo_states 
             for tm in placebo_times]
     # Run the function in parallel
-    results = Parallel(n_jobs=100)(delayed(run_model)(dist=i[0], outcome_type=outcome_type, cat_name=i[1], rank=i[2], missingness=i[3], 
+    results = Parallel(n_jobs=8)(delayed(run_model)(dist=i[0], outcome_type=outcome_type, cat_name=i[1], rank=i[2], missingness=i[3], 
                                                 disp_param=i[4],
                                                 sample_disp=sample_disp, placebo_state=i[5], placebo_time = i[6], 
                                                 dobbs_donor_sensitivity=dobbs_donor_sensitivity, 
                                                 results_file_suffix="through_june", num_chains=4, num_samples=2500, num_warmup=1000, thinning=10) for i in args)
-    
 
