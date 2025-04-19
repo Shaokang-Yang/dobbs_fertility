@@ -14,7 +14,14 @@ def dict_to_tidybayes(samples_dict, output_file=None):
     # Get parameter names and dimensions
     param_names = list(samples_dict.keys())
     print(param_names)
-    param_dims = [samples_dict[param].shape[2:] for param in param_names]
+    param_dims = []
+    for param in param_names:
+        shape = samples_dict[param].shape
+        dims = shape[2:]
+        if param in ['mu', 'te', 'ypred'] and len(dims) == 2:
+            dims = (1,) + dims  # Force K dimension to exist
+        param_dims.append(dims)
+
 
     vals = {}
     # Extract chains, draws
