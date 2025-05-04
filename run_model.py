@@ -38,7 +38,7 @@ def run_model(dist, outcome_type="births", cat_name="total", rank=5, missingness
     numpyro.set_host_device_count(num_chains)
 
     # df = pd.read_csv('data/dobbsbimonthlybirths_10_23_24.csv')
-    df = pd.read_csv('/Users/shaokangyang/Library/CloudStorage/GoogleDrive-sky.ang510@gmail.com/My Drive/Code/dobbs_fertility/data/fertility_data.csv')
+    df = pd.read_csv('/Users/shaokangyang/Library/CloudStorage/GoogleDrive-sky.ang510@gmail.com/My Drive/Code/dobbs_fertility/data/fertility_data_fully_updated.csv')
     
     from clean_monthly_birth_data import prep_data, clean_dataframe, create_unit_placebo_dataset, create_time_placebo_dataset
     
@@ -128,10 +128,10 @@ def run_model(dist, outcome_type="births", cat_name="total", rank=5, missingness
     results_df = pd.DataFrame(all_samples)
 
     ## save input df
-    df.to_csv('/Users/shaokangyang/Library/CloudStorage/GoogleDrive-sky.ang510@gmail.com/My Drive/Code/fertility_results/df_{}.csv'.format(results_file_suffix))
+    df.to_csv('/Users/shaokangyang/Library/CloudStorage/GoogleDrive-sky.ang510@gmail.com/My Drive/Code/fertility_results/2024/df_{}.csv'.format(results_file_suffix))
     ## save posterior samples
     results_df.to_csv(
-        '/Users/shaokangyang/Library/CloudStorage/GoogleDrive-sky.ang510@gmail.com/My Drive/Code/fertility_results/{}_{}_{}_{}_{}.csv'.format(dist, "births", cat_name, rank, results_file_suffix)
+        '/Users/shaokangyang/Library/CloudStorage/GoogleDrive-sky.ang510@gmail.com/My Drive/Code/fertility_results/2024/{}_{}_{}_{}_{}.csv'.format(dist, "births", cat_name, rank, results_file_suffix)
     )
 
     
