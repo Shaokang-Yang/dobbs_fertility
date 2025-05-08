@@ -38,7 +38,7 @@ def run_model(dist, outcome_type="births", cat_name="total", rank=5, missingness
     numpyro.set_host_device_count(num_chains)
 
     # df = pd.read_csv('data/dobbsbimonthlybirths_10_23_24.csv')
-    df = pd.read_csv('/Users/shaokangyang/Library/CloudStorage/GoogleDrive-sky.ang510@gmail.com/My Drive/Code/dobbs_fertility/data/fertility_data_fully_updated.csv')
+    df = pd.read_csv('/Users/shaokangyang/Library/CloudStorage/GoogleDrive-sky.ang510@gmail.com/My Drive/Code/dobbs_fertility/data/fertility_data_birth_update.csv')
     
     from clean_monthly_birth_data import prep_data, clean_dataframe, create_unit_placebo_dataset, create_time_placebo_dataset
     
