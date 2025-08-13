@@ -1,0 +1,307 @@
+State,StateCode,TwoMonthGroup,Births
+Alabama,1,1,9450
+Alabama,1,2,9194
+Alabama,1,3,9248
+Alabama,1,4,10362
+Alabama,1,5,9966
+Alabama,1,6,9604
+Alaska,2,1,1498
+Alaska,2,2,1478
+Alaska,2,3,1490
+Alaska,2,4,1584
+Alaska,2,5,1460
+Alaska,2,6,1401
+Arizona,4,1,12649
+Arizona,4,2,12742
+Arizona,4,3,12215
+Arizona,4,4,13742
+Arizona,4,5,13833
+Arizona,4,6,13454
+Arkansas,5,1,5802
+Arkansas,5,2,5626
+Arkansas,5,3,5626
+Arkansas,5,4,6355
+Arkansas,5,5,6095
+Arkansas,5,6,5767
+California,6,1,63989
+California,6,2,65076
+California,6,3,65386
+California,6,4,70715
+California,6,5,70023
+California,6,6,66190
+Colorado,8,1,10154
+Colorado,8,2,10491
+Colorado,8,3,10694
+Colorado,8,4,11456
+Colorado,8,5,10941
+Colorado,8,6,10537
+Connecticut,9,1,5460
+Connecticut,9,2,5707
+Connecticut,9,3,5757
+Connecticut,9,4,6315
+Connecticut,9,5,5873
+Connecticut,9,6,5466
+Delaware,10,1,1663
+Delaware,10,2,1735
+Delaware,10,3,1776
+Delaware,10,4,1889
+Delaware,10,5,1768
+Delaware,10,6,1565
+District of Columbia,11,1,1220
+District of Columbia,11,2,1256
+District of Columbia,11,3,1285
+District of Columbia,11,4,1338
+District of Columbia,11,5,1251
+District of Columbia,11,6,1229
+Florida,12,1,35953
+Florida,12,2,35321
+Florida,12,3,35198
+Florida,12,4,39380
+Florida,12,5,39735
+Florida,12,6,38655
+Georgia,13,1,20492
+Georgia,13,2,20307
+Georgia,13,3,20287
+Georgia,13,4,22565
+Georgia,13,5,21402
+Georgia,13,6,21254
+Hawaii,15,1,2450
+Hawaii,15,2,2423
+Hawaii,15,3,2417
+Hawaii,15,4,2474
+Hawaii,15,5,2605
+Hawaii,15,6,2388
+Idaho,16,1,3527
+Idaho,16,2,3833
+Idaho,16,3,4094
+Idaho,16,4,4174
+Idaho,16,5,3936
+Idaho,16,6,3669
+Illinois,17,1,19940
+Illinois,17,2,20493
+Illinois,17,3,21261
+Illinois,17,4,22413
+Illinois,17,5,21325
+Illinois,17,6,20209
+Indiana,18,1,12751
+Indiana,18,2,13323
+Indiana,18,3,13301
+Indiana,18,4,14256
+Indiana,18,5,13717
+Indiana,18,6,12776
+Iowa,19,1,5798
+Iowa,19,2,6121
+Iowa,19,3,6127
+Iowa,19,4,6336
+Iowa,19,5,6231
+Iowa,19,6,5768
+Kansas,20,1,5433
+Kansas,20,2,5586
+Kansas,20,3,5508
+Kansas,20,4,6109
+Kansas,20,5,5810
+Kansas,20,6,5524
+Kentucky,21,1,8554
+Kentucky,21,2,8513
+Kentucky,21,3,8710
+Kentucky,21,4,9585
+Kentucky,21,5,9000
+Kentucky,21,6,8373
+Louisiana,22,1,8673
+Louisiana,22,2,8359
+Louisiana,22,3,8331
+Louisiana,22,4,9586
+Louisiana,22,5,9304
+Louisiana,22,6,8084
+Maine,23,1,1867
+Maine,23,2,1934
+Maine,23,3,1935
+Maine,23,4,2019
+Maine,23,5,1982
+Maine,23,6,1858
+Maryland,24,1,10606
+Maryland,24,2,10755
+Maryland,24,3,10930
+Maryland,24,4,11823
+Maryland,24,5,10992
+Maryland,24,6,10631
+Massachusetts,25,1,10788
+Massachusetts,25,2,11263
+Massachusetts,25,3,11555
+Massachusetts,25,4,12073
+Massachusetts,25,5,11499
+Massachusetts,25,6,10993
+Michigan,26,1,15705
+Michigan,26,2,16604
+Michigan,26,3,17211
+Michigan,26,4,17676
+Michigan,26,5,16740
+Michigan,26,6,15492
+Minnesota,27,1,9710
+Minnesota,27,2,10244
+Minnesota,27,3,10517
+Minnesota,27,4,10878
+Minnesota,27,5,10501
+Minnesota,27,6,10160
+Mississippi,28,1,5538
+Mississippi,28,2,5231
+Mississippi,28,3,5373
+Mississippi,28,4,5952
+Mississippi,28,5,5763
+Mississippi,28,6,5590
+Missouri,29,1,11112
+Missouri,29,2,10967
+Missouri,29,3,11164
+Missouri,29,4,12021
+Missouri,29,5,11721
+Missouri,29,6,10756
+Montana,30,1,1797
+Montana,30,2,1895
+Montana,30,3,1973
+Montana,30,4,1944
+Montana,30,5,1889
+Montana,30,6,1816
+Nebraska,31,1,4051
+Nebraska,31,2,4057
+Nebraska,31,3,4248
+Nebraska,31,4,4259
+Nebraska,31,5,4215
+Nebraska,31,6,3870
+Nevada,32,1,5163
+Nevada,32,2,5165
+Nevada,32,3,5231
+Nevada,32,4,5598
+Nevada,32,5,5674
+Nevada,32,6,5489
+New Hampshire,33,1,1908
+New Hampshire,33,2,1883
+New Hampshire,33,3,1952
+New Hampshire,33,4,2084
+New Hampshire,33,5,1980
+New Hampshire,33,6,1954
+New Jersey,34,1,16224
+New Jersey,34,2,16586
+New Jersey,34,3,16676
+New Jersey,34,4,18141
+New Jersey,34,5,17199
+New Jersey,34,6,16517
+New Mexico,35,1,3429
+New Mexico,35,2,3479
+New Mexico,35,3,3372
+New Mexico,35,4,3746
+New Mexico,35,5,3656
+New Mexico,35,6,2617
+New York,36,1,33093
+New York,36,2,33626
+New York,36,3,34464
+New York,36,4,36197
+New York,36,5,34293
+New York,36,6,32949
+North Carolina,37,1,19717
+North Carolina,37,2,19781
+North Carolina,37,3,20076
+North Carolina,37,4,21833
+North Carolina,37,5,20942
+North Carolina,37,6,20283
+North Dakota,38,1,1533
+North Dakota,38,2,1623
+North Dakota,38,3,1641
+North Dakota,38,4,1740
+North Dakota,38,5,1578
+North Dakota,38,6,1512
+Ohio,39,1,20246
+Ohio,39,2,20797
+Ohio,39,3,21462
+Ohio,39,4,22488
+Ohio,39,5,21458
+Ohio,39,6,20195
+Oklahoma,40,1,7608
+Oklahoma,40,2,7739
+Oklahoma,40,3,7784
+Oklahoma,40,4,8613
+Oklahoma,40,5,8229
+Oklahoma,40,6,7960
+Oregon,41,1,6043
+Oregon,41,2,6462
+Oregon,41,3,6605
+Oregon,41,4,6958
+Oregon,41,5,6649
+Oregon,41,6,5198
+Pennsylvania,42,1,20480
+Pennsylvania,42,2,21082
+Pennsylvania,42,3,21265
+Pennsylvania,42,4,22578
+Pennsylvania,42,5,21360
+Pennsylvania,42,6,20293
+Rhode Island,44,1,1567
+Rhode Island,44,2,1689
+Rhode Island,44,3,1672
+Rhode Island,44,4,1770
+Rhode Island,44,5,1755
+Rhode Island,44,6,1549
+South Carolina,45,1,9363
+South Carolina,45,2,9328
+South Carolina,45,3,9595
+South Carolina,45,4,10803
+South Carolina,45,5,9868
+South Carolina,45,6,9782
+South Dakota,46,1,1822
+South Dakota,46,2,1918
+South Dakota,46,3,1972
+South Dakota,46,4,2011
+South Dakota,46,5,1912
+South Dakota,46,6,1809
+Tennessee,47,1,13258
+Tennessee,47,2,13336
+Tennessee,47,3,13988
+Tennessee,47,4,15029
+Tennessee,47,5,14318
+Tennessee,47,6,13813
+Texas,48,1,62551
+Texas,48,2,60828
+Texas,48,3,62084
+Texas,48,4,70141
+Texas,48,5,68716
+Texas,48,6,65928
+Utah,49,1,7329
+Utah,49,2,7798
+Utah,49,3,7908
+Utah,49,4,8434
+Utah,49,5,7826
+Utah,49,6,7362
+Vermont,50,1,766
+Vermont,50,2,853
+Vermont,50,3,894
+Vermont,50,4,874
+Vermont,50,5,825
+Vermont,50,6,814
+Virginia,51,1,15140
+Virginia,51,2,15456
+Virginia,51,3,15490
+Virginia,51,4,16450
+Virginia,51,5,15902
+Virginia,51,6,13503
+Washington,53,1,13042
+Washington,53,2,13664
+Washington,53,3,14146
+Washington,53,4,14772
+Washington,53,5,14053
+Washington,53,6,13348
+West Virginia,54,1,2750
+West Virginia,54,2,2776
+West Virginia,54,3,2804
+West Virginia,54,4,3033
+West Virginia,54,5,2881
+West Virginia,54,6,2633
+Wisconsin,55,1,9404
+Wisconsin,55,2,9845
+Wisconsin,55,3,10280
+Wisconsin,55,4,10622
+Wisconsin,55,5,9884
+Wisconsin,55,6,9575
+Wyoming,56,1,970
+Wyoming,56,2,1050
+Wyoming,56,3,1050
+Wyoming,56,4,1071
+Wyoming,56,5,1007
+Wyoming,56,6,936
