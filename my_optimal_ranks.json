@@ -1,0 +1,25 @@
+{
+  "optimal_ranks": {
+    "race": 10,
+    "total": 7,
+    "age": 10,
+    "edu": 10,
+    "insurance": 11,
+    "marital": 8
+  },
+  "demographic_categories": [
+    "race",
+    "total",
+    "age",
+    "edu",
+    "insurance",
+    "marital"
+  ],
+  "summary": {
+    "total_categories": 6,
+    "average_rank": 9.333333333333334,
+    "min_rank": 7,
+    "max_rank": 11,
+    "total_estimated_params": 112
+  }
+}

@@ -1,0 +1,74 @@
+
+```{r, echo=FALSE}
+fh = length(categories)*8*length(ppc_states)/10
+```
+
+Let $\tilde y_itk$ be a posterior predictive draw for state $i$ at time $t$ and category $k$, and let $\mu_{itk}$ be the corresponding predicted mean birth rate.  We define the predictive residuals and the observed residuals as $\tilde r_{itk} = \tilde y_{itk} - \mu_{itk}$ and $r_{itk} = y_{itk} - \mu_{itk}$, respectively. 
+
+## RMSE
+
+Define the predictive root mean squared error as $\tilde \phi_{ik} = \sqrt{\frac{1}{T_0} \sum_{t=1}^{T_0} \tilde r_{itk}^2}$ and the observed root mean squared error as $\phi_{ik} = \sqrt{\frac{1}{T_0} \sum_{t=1}^{T_0} r_{itk}^2}$. Below we plot histograms of $\phi_{ik} - \tilde{\phi}_{ik}$ for each state and category.  If the histogram is covering zero the fit can be considered ``good''. 
+
+```{r rmse_plots, fig.height=fh}
+rmse_res <- make_rmse_ppc_plot(merged_df %>% filter(state %in% ppc_states), categories=categories, outcome=ppc_outcome)
+print(rmse_res$rmse_plt)
+rmse_pval_bool <- !(any(rmse_res$pval < 0.1) | any(rmse_res$pval > 0.9))
+
+```
+
+
+
+## Maximum Absolute Residuals
+
+Define the predictive maximum absolute residual as $\tilde \tau_{ik} =  \max_{t} |\tilde r_{itk}|$ and $\max_{itk} |r_{itk}|$ and the observed maximum absolute residual as $\tau_{ik} = \max_{t} |r_{itk}|$. Below we plot histograms of $\tau_{ik} - \tilde \tau_{ik}$ for each state and category.  If the histogram is covering zero the fit can be considered ``good''. 
+
+```{r absolute_residuals, fig.height=fh}
+abs_res <- make_abs_res_ppc_plot(merged_df %>% filter(state %in% ppc_states), categories=categories, outcome=ppc_outcome)
+print(abs_res$max_plt)
+
+abs_res_pval_bool <- !(any(abs_res$pval < 0.1) | any(abs_res$pval > 0.9))
+```
+
+
+## Autocorrelation
+
+Define the predictive residual autocorrelation at lag $l$ as $\tilde \alpha_{ik}^{(l)} =  cor(\tilde r_{itk}, \tilde r_{i,t+l,k})$ and the observed autocorrelation as $\alpha_{ik}^{(l)} =  cor(r_{itk}, r_{i,t+l,k})$. Below we plot histograms of $\alpha_{ik} - \tilde \alpha_{ik}$ for each state and category.  If the histogram is covering zero the fit can be considered ``good''. 
+
+```{r acf_plots, fig.height=fh}
+acf_ppc6 <- make_acf_ppc_plot(merged_df %>% filter(state %in% ppc_states), categories=categories, 
+                  lag=6, outcome=ppc_outcome) 
+print(acf_ppc6$acf_plt)                
+
+acf_ppc3 <- make_acf_ppc_plot(merged_df %>% filter(state %in% ppc_states), categories=categories, 
+                  lag=3, outcome=ppc_outcome) 
+print(acf_ppc3$acf_plt)                
+
+acf_ppc1 <- make_acf_ppc_plot(merged_df %>% filter(state %in% ppc_states), categories=categories, lag=1, outcome=ppc_outcome) 
+print(acf_ppc1$acf_plt)
+
+acf_pval_bool6 <- !(any(acf_ppc6$pval < 0.1) | any(acf_ppc6$pval > 0.9))
+acf_pval_bool3 <- !(any(acf_ppc3$pval < 0.1) | any(acf_ppc3$pval > 0.9))
+acf_pval_bool1 <- !(any(acf_ppc1$pval < 0.1) | any(acf_ppc1$pval > 0.9))
+
+
+```
+
+## Residual Correlation between Units
+
+Define the predictive residual correlation between 2 states $i$ and $j$ $\tilde{c}_{ij} =$ cor($\tilde{r}_{i\cdot k}, \tilde{r}_{j \cdot k}$) and the observed correlation as $c_{ij} =$ cor($r_{i \cdot k}, r_{j \cdot k}$). Let $\tilde{\mathcal{C}} = (\tilde{c}_{ij})$ and  $\mathcal{C} = (c_{ij})$ be the full residual state correlation matrices.  Further $\sigma_{max}(M)$ be the largest singular value of $M$ (also known as the spectral norm of $M$).  Below we plot the difference in spectral norms of $\mathcal{C}$ and $\tilde{\mathcal{C}}$, $\sigma_{max}(\mathcal{C}) - \sigma_{max}(\tilde{\mathcal{C}})$ for each state and category.  If there is remaining residual correlation between the states, the difference in spectral norms would be systematically larger than one and would indicate that the rank of the factor model is too small.
+
+```{r unit_corr_plots}
+uc_ppcs_obj <- make_unit_corr_ppc_plot(merged_df, categories=categories, outcome=ppc_outcome)
+
+print(uc_ppcs_obj$eval_plt)
+
+uc_pval_bool <- !(any(uc_ppcs_obj$pval < 0.1) | any(uc_ppcs_obj$pval > 0.9))
+```
+
+
+
+```{r, save_ppc_results}
+all_pass <- all(rmse_pval_bool, abs_res_pval_bool, acf_pval_bool6, acf_pval_bool3, acf_pval_bool1, uc_pval_bool)
+results_str <- sprintf("%s-%i, All pass = %s, RMSE = %s, Absolute Residual = %s, ACF1 = %s, ACF3 = %s, ACF6 = %s, Unit Correlation = %s", type, model_rank, all_pass, rmse_pval_bool, abs_res_pval_bool, acf_pval_bool1, acf_pval_bool3, acf_pval_bool6, uc_pval_bool)
+write_lines(results_str, model_fits_file, append=TRUE)
+```

@@ -1,0 +1,613 @@
+state	month	births
+Alabama	1	2792
+Alabama	2	2578
+Alabama	3	2628
+Alabama	4	2709
+Alabama	5	2762
+Alabama	6	2515
+Alabama	7	2941
+Alabama	8	2968
+Alabama	9	2802
+Alabama	10	2981
+Alabama	11	2581
+Alabama	12	2877
+Alaska	1	384
+Alaska	2	361
+Alaska	3	387
+Alaska	4	352
+Alaska	5	393
+Alaska	6	367
+Alaska	7	410
+Alaska	8	371
+Alaska	9	366
+Alaska	10	357
+Alaska	11	338
+Alaska	12	363
+Arizona	1	2434
+Arizona	2	2362
+Arizona	3	2574
+Arizona	4	2299
+Arizona	5	2402
+Arizona	6	2210
+Arizona	7	2523
+Arizona	8	2524
+Arizona	9	2508
+Arizona	10	2572
+Arizona	11	2397
+Arizona	12	2417
+Arkansas	1	1916
+Arkansas	2	1799
+Arkansas	3	1782
+Arkansas	4	1858
+Arkansas	5	1806
+Arkansas	6	1728
+Arkansas	7	1970
+Arkansas	8	2065
+Arkansas	9	1967
+Arkansas	10	1867
+Arkansas	11	1684
+Arkansas	12	1954
+California	1	8262
+California	2	7980
+California	3	8623
+California	4	8415
+California	5	8590
+California	6	8206
+California	7	8686
+California	8	9065
+California	9	8625
+California	10	8869
+California	11	8037
+California	12	8147
+Colorado	1	2706
+Colorado	2	2766
+Colorado	3	2910
+Colorado	4	2793
+Colorado	5	3028
+Colorado	6	2742
+Colorado	7	3056
+Colorado	8	3038
+Colorado	9	2755
+Colorado	10	2941
+Colorado	11	2743
+Colorado	12	2722
+Connecticut	1	1402
+Connecticut	2	1361
+Connecticut	3	1493
+Connecticut	4	1511
+Connecticut	5	1580
+Connecticut	6	1387
+Connecticut	7	1660
+Connecticut	8	1588
+Connecticut	9	1466
+Connecticut	10	1565
+Connecticut	11	1357
+Connecticut	12	1377
+Delaware	1	400
+Delaware	2	358
+Delaware	3	378
+Delaware	4	363
+Delaware	5	387
+Delaware	6	386
+Delaware	7	394
+Delaware	8	433
+Delaware	9	377
+Delaware	10	389
+Delaware	11	383
+Delaware	12	319
+District of Columbia	1	185
+District of Columbia	2	192
+District of Columbia	3	220
+District of Columbia	4	183
+District of Columbia	5	226
+District of Columbia	6	224
+District of Columbia	7	200
+District of Columbia	8	201
+District of Columbia	9	178
+District of Columbia	10	194
+District of Columbia	11	210
+District of Columbia	12	175
+Florida	1	7632
+Florida	2	7106
+Florida	3	7355
+Florida	4	7088
+Florida	5	7244
+Florida	6	6940
+Florida	7	8010
+Florida	8	8140
+Florida	9	7904
+Florida	10	7995
+Florida	11	7493
+Florida	12	7796
+Georgia	1	4299
+Georgia	2	4263
+Georgia	3	4475
+Georgia	4	4304
+Georgia	5	4439
+Georgia	6	4168
+Georgia	7	4556
+Georgia	8	4800
+Georgia	9	4467
+Georgia	10	4574
+Georgia	11	4192
+Georgia	12	4533
+Hawaii	1	223
+Hawaii	2	225
+Hawaii	3	252
+Hawaii	4	248
+Hawaii	5	233
+Hawaii	6	231
+Hawaii	7	215
+Hawaii	8	237
+Hawaii	9	237
+Hawaii	10	268
+Hawaii	11	222
+Hawaii	12	174
+Idaho	1	1326
+Idaho	2	1295
+Idaho	3	1422
+Idaho	4	1459
+Idaho	5	1559
+Idaho	6	1466
+Idaho	7	1515
+Idaho	8	1517
+Idaho	9	1494
+Idaho	10	1391
+Idaho	11	1328
+Idaho	12	1367
+Illinois	1	5170
+Illinois	2	4962
+Illinois	3	5317
+Illinois	4	5346
+Illinois	5	5593
+Illinois	6	5373
+Illinois	7	5839
+Illinois	8	5746
+Illinois	9	5208
+Illinois	10	5675
+Illinois	11	4938
+Illinois	12	5144
+Indiana	1	4295
+Indiana	2	4296
+Indiana	3	4556
+Indiana	4	4431
+Indiana	5	4543
+Indiana	6	4451
+Indiana	7	4765
+Indiana	8	4794
+Indiana	9	4539
+Indiana	10	4692
+Indiana	11	4034
+Indiana	12	4383
+Iowa	1	2232
+Iowa	2	2051
+Iowa	3	2311
+Iowa	4	2270
+Iowa	5	2328
+Iowa	6	2235
+Iowa	7	2348
+Iowa	8	2287
+Iowa	9	2171
+Iowa	10	2354
+Iowa	11	2002
+Iowa	12	2088
+Kansas	1	1905
+Kansas	2	1771
+Kansas	3	1893
+Kansas	4	1850
+Kansas	5	1868
+Kansas	6	1751
+Kansas	7	1954
+Kansas	8	2059
+Kansas	9	1878
+Kansas	10	1925
+Kansas	11	1750
+Kansas	12	1880
+Kentucky	1	3283
+Kentucky	2	3138
+Kentucky	3	3247
+Kentucky	4	3220
+Kentucky	5	3338
+Kentucky	6	3184
+Kentucky	7	3656
+Kentucky	8	3528
+Kentucky	9	3268
+Kentucky	10	3417
+Kentucky	11	3010
+Kentucky	12	3118
+Louisiana	1	2155
+Louisiana	2	2080
+Louisiana	3	2188
+Louisiana	4	2050
+Louisiana	5	2141
+Louisiana	6	2010
+Louisiana	7	2371
+Louisiana	8	2365
+Louisiana	9	2322
+Louisiana	10	2307
+Louisiana	11	2130
+Louisiana	12	1907
+Maine	1	777
+Maine	2	766
+Maine	3	811
+Maine	4	799
+Maine	5	812
+Maine	6	794
+Maine	7	862
+Maine	8	824
+Maine	9	813
+Maine	10	849
+Maine	11	752
+Maine	12	785
+Maryland	1	2014
+Maryland	2	1957
+Maryland	3	2147
+Maryland	4	2138
+Maryland	5	2240
+Maryland	6	2113
+Maryland	7	2249
+Maryland	8	2244
+Maryland	9	2055
+Maryland	10	2156
+Maryland	11	1954
+Maryland	12	1979
+Massachusetts	1	2777
+Massachusetts	2	2678
+Massachusetts	3	2975
+Massachusetts	4	2928
+Massachusetts	5	3158
+Massachusetts	6	2972
+Massachusetts	7	3111
+Massachusetts	8	3128
+Massachusetts	9	2881
+Massachusetts	10	2894
+Massachusetts	11	2687
+Massachusetts	12	2594
+Michigan	1	5358
+Michigan	2	5241
+Michigan	3	5673
+Michigan	4	5674
+Michigan	5	5939
+Michigan	6	5858
+Michigan	7	6022
+Michigan	8	6100
+Michigan	9	5622
+Michigan	10	5797
+Michigan	11	5113
+Michigan	12	5260
+Minnesota	1	3084
+Minnesota	2	3226
+Minnesota	3	3289
+Minnesota	4	3377
+Minnesota	5	3538
+Minnesota	6	3337
+Minnesota	7	3444
+Minnesota	8	3611
+Minnesota	9	3217
+Minnesota	10	3408
+Minnesota	11	3114
+Minnesota	12	3225
+Mississippi	1	1442
+Mississippi	2	1367
+Mississippi	3	1411
+Mississippi	4	1340
+Mississippi	5	1394
+Mississippi	6	1386
+Mississippi	7	1521
+Mississippi	8	1520
+Mississippi	9	1458
+Mississippi	10	1516
+Mississippi	11	1345
+Mississippi	12	1462
+Missouri	1	4070
+Missouri	2	3903
+Missouri	3	3994
+Missouri	4	3927
+Missouri	5	4078
+Missouri	6	3980
+Missouri	7	4246
+Missouri	8	4373
+Missouri	9	4058
+Missouri	10	4176
+Missouri	11	3778
+Missouri	12	3851
+Montana	1	696
+Montana	2	719
+Montana	3	758
+Montana	4	755
+Montana	5	865
+Montana	6	727
+Montana	7	781
+Montana	8	794
+Montana	9	798
+Montana	10	715
+Montana	11	665
+Montana	12	747
+Nebraska	1	1252
+Nebraska	2	1341
+Nebraska	3	1330
+Nebraska	4	1332
+Nebraska	5	1432
+Nebraska	6	1298
+Nebraska	7	1343
+Nebraska	8	1349
+Nebraska	9	1282
+Nebraska	10	1354
+Nebraska	11	1200
+Nebraska	12	1266
+Nevada	1	854
+Nevada	2	841
+Nevada	3	883
+Nevada	4	821
+Nevada	5	868
+Nevada	6	851
+Nevada	7	897
+Nevada	8	939
+Nevada	9	849
+Nevada	10	907
+Nevada	11	847
+Nevada	12	892
+New Hampshire	1	782
+New Hampshire	2	814
+New Hampshire	3	808
+New Hampshire	4	819
+New Hampshire	5	827
+New Hampshire	6	834
+New Hampshire	7	894
+New Hampshire	8	875
+New Hampshire	9	836
+New Hampshire	10	800
+New Hampshire	11	833
+New Hampshire	12	803
+New Jersey	1	3772
+New Jersey	2	3470
+New Jersey	3	3786
+New Jersey	4	3768
+New Jersey	5	3945
+New Jersey	6	3669
+New Jersey	7	4115
+New Jersey	8	4096
+New Jersey	9	3721
+New Jersey	10	3866
+New Jersey	11	3556
+New Jersey	12	3604
+New Mexico	1	444
+New Mexico	2	448
+New Mexico	3	461
+New Mexico	4	428
+New Mexico	5	409
+New Mexico	6	432
+New Mexico	7	464
+New Mexico	8	459
+New Mexico	9	448
+New Mexico	10	439
+New Mexico	11	378
+New Mexico	12	310
+New York	1	8318
+New York	2	7886
+New York	3	8403
+New York	4	8417
+New York	5	8960
+New York	6	8451
+New York	7	8946
+New York	8	9055
+New York	9	8248
+New York	10	8402
+New York	11	7878
+New York	12	7911
+North Carolina	1	5181
+North Carolina	2	4808
+North Carolina	3	5029
+North Carolina	4	5186
+North Carolina	5	5244
+North Carolina	6	5017
+North Carolina	7	5304
+North Carolina	8	5586
+North Carolina	9	5295
+North Carolina	10	5381
+North Carolina	11	4851
+North Carolina	12	4993
+North Dakota	1	554
+North Dakota	2	527
+North Dakota	3	571
+North Dakota	4	585
+North Dakota	5	595
+North Dakota	6	569
+North Dakota	7	614
+North Dakota	8	627
+North Dakota	9	521
+North Dakota	10	561
+North Dakota	11	523
+North Dakota	12	524
+Ohio	1	7011
+Ohio	2	6917
+Ohio	3	7260
+Ohio	4	7316
+Ohio	5	7493
+Ohio	6	7405
+Ohio	7	7719
+Ohio	8	7788
+Ohio	9	7363
+Ohio	10	7574
+Ohio	11	6656
+Ohio	12	7061
+Oklahoma	1	2066
+Oklahoma	2	1956
+Oklahoma	3	2082
+Oklahoma	4	2071
+Oklahoma	5	2131
+Oklahoma	6	2002
+Oklahoma	7	2181
+Oklahoma	8	2195
+Oklahoma	9	2084
+Oklahoma	10	2170
+Oklahoma	11	1953
+Oklahoma	12	2124
+Oregon	1	1806
+Oregon	2	1710
+Oregon	3	1932
+Oregon	4	1904
+Oregon	5	1947
+Oregon	6	1903
+Oregon	7	2015
+Oregon	8	1988
+Oregon	9	1896
+Oregon	10	1966
+Oregon	11	1635
+Oregon	12	1303
+Pennsylvania	1	6790
+Pennsylvania	2	6250
+Pennsylvania	3	6952
+Pennsylvania	4	6737
+Pennsylvania	5	6946
+Pennsylvania	6	6871
+Pennsylvania	7	7206
+Pennsylvania	8	7286
+Pennsylvania	9	6903
+Pennsylvania	10	6755
+Pennsylvania	11	6259
+Pennsylvania	12	6431
+Rhode Island	1	408
+Rhode Island	2	411
+Rhode Island	3	497
+Rhode Island	4	444
+Rhode Island	5	496
+Rhode Island	6	461
+Rhode Island	7	474
+Rhode Island	8	496
+Rhode Island	9	466
+Rhode Island	10	461
+Rhode Island	11	396
+Rhode Island	12	397
+South Carolina	1	2622
+South Carolina	2	2511
+South Carolina	3	2597
+South Carolina	4	2619
+South Carolina	5	2674
+South Carolina	6	2565
+South Carolina	7	2927
+South Carolina	8	2955
+South Carolina	9	2620
+South Carolina	10	2814
+South Carolina	11	2560
+South Carolina	12	2782
+South Dakota	1	661
+South Dakota	2	614
+South Dakota	3	644
+South Dakota	4	711
+South Dakota	5	757
+South Dakota	6	639
+South Dakota	7	731
+South Dakota	8	694
+South Dakota	9	692
+South Dakota	10	669
+South Dakota	11	612
+South Dakota	12	672
+Tennessee	1	4272
+Tennessee	2	4165
+Tennessee	3	4391
+Tennessee	4	4187
+Tennessee	5	4540
+Tennessee	6	4301
+Tennessee	7	4718
+Tennessee	8	4750
+Tennessee	9	4494
+Tennessee	10	4575
+Tennessee	11	4211
+Tennessee	12	4456
+Texas	1	9627
+Texas	2	9224
+Texas	3	9741
+Texas	4	9476
+Texas	5	9815
+Texas	6	9281
+Texas	7	10362
+Texas	8	10584
+Texas	9	10007
+Texas	10	10371
+Texas	11	9403
+Texas	12	10119
+Utah	1	2518
+Utah	2	2467
+Utah	3	2766
+Utah	4	2659
+Utah	5	2758
+Utah	6	2723
+Utah	7	2861
+Utah	8	2831
+Utah	9	2710
+Utah	10	2639
+Utah	11	2405
+Utah	12	2468
+Vermont	1	331
+Vermont	2	344
+Vermont	3	393
+Vermont	4	378
+Vermont	5	395
+Vermont	6	396
+Vermont	7	371
+Vermont	8	389
+Vermont	9	353
+Vermont	10	383
+Vermont	11	347
+Vermont	12	366
+Virginia	1	4003
+Virginia	2	3893
+Virginia	3	4128
+Virginia	4	4045
+Virginia	5	4102
+Virginia	6	3964
+Virginia	7	4296
+Virginia	8	4261
+Virginia	9	4013
+Virginia	10	4200
+Virginia	11	3952
+Virginia	12	3067
+Washington	1	3267
+Washington	2	3314
+Washington	3	3565
+Washington	4	3445
+Washington	5	3736
+Washington	6	3578
+Washington	7	3743
+Washington	8	3781
+Washington	9	3465
+Washington	10	3593
+Washington	11	3252
+Washington	12	3302
+West Virginia	1	1247
+West Virginia	2	1225
+West Virginia	3	1278
+West Virginia	4	1213
+West Virginia	5	1254
+West Virginia	6	1226
+West Virginia	7	1326
+West Virginia	8	1380
+West Virginia	9	1286
+West Virginia	10	1293
+West Virginia	11	1185
+West Virginia	12	1152
+Wisconsin	1	3211
+Wisconsin	2	3256
+Wisconsin	3	3391
+Wisconsin	4	3432
+Wisconsin	5	3637
+Wisconsin	6	3522
+Wisconsin	7	3554
+Wisconsin	8	3611
+Wisconsin	9	3311
+Wisconsin	10	3318
+Wisconsin	11	3114
+Wisconsin	12	3286
+Wyoming	1	358
+Wyoming	2	355
+Wyoming	3	382
+Wyoming	4	400
+Wyoming	5	387
+Wyoming	6	421
+Wyoming	7	401
+Wyoming	8	398
+Wyoming	9	350
+Wyoming	10	405
+Wyoming	11	330
+Wyoming	12	387

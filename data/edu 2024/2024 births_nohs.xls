@@ -1,0 +1,690 @@
+"Notes"	"State of Residence"	"State of Residence Code"	"Month"	"Month Code"	Births
+	"Alabama"	"01"	"January"	"1"	656
+	"Alabama"	"01"	"February"	"2"	572
+	"Alabama"	"01"	"March"	"3"	631
+	"Alabama"	"01"	"April"	"4"	581
+	"Alabama"	"01"	"May"	"5"	619
+	"Alabama"	"01"	"June"	"6"	588
+	"Alabama"	"01"	"July"	"7"	683
+	"Alabama"	"01"	"August"	"8"	700
+	"Alabama"	"01"	"September"	"9"	684
+	"Alabama"	"01"	"October"	"10"	709
+	"Alabama"	"01"	"November"	"11"	605
+	"Alabama"	"01"	"December"	"12"	682
+"Total"	"Alabama"	"01"			7710
+	"Alaska"	"02"	"January"	"1"	49
+	"Alaska"	"02"	"February"	"2"	54
+	"Alaska"	"02"	"March"	"3"	61
+	"Alaska"	"02"	"April"	"4"	52
+	"Alaska"	"02"	"May"	"5"	60
+	"Alaska"	"02"	"June"	"6"	57
+	"Alaska"	"02"	"July"	"7"	57
+	"Alaska"	"02"	"August"	"8"	78
+	"Alaska"	"02"	"September"	"9"	70
+	"Alaska"	"02"	"October"	"10"	37
+	"Alaska"	"02"	"November"	"11"	63
+	"Alaska"	"02"	"December"	"12"	39
+"Total"	"Alaska"	"02"			677
+	"Arizona"	"04"	"January"	"1"	939
+	"Arizona"	"04"	"February"	"2"	779
+	"Arizona"	"04"	"March"	"3"	883
+	"Arizona"	"04"	"April"	"4"	778
+	"Arizona"	"04"	"May"	"5"	819
+	"Arizona"	"04"	"June"	"6"	834
+	"Arizona"	"04"	"July"	"7"	915
+	"Arizona"	"04"	"August"	"8"	989
+	"Arizona"	"04"	"September"	"9"	931
+	"Arizona"	"04"	"October"	"10"	868
+	"Arizona"	"04"	"November"	"11"	901
+	"Arizona"	"04"	"December"	"12"	901
+"Total"	"Arizona"	"04"			10537
+	"Arkansas"	"05"	"January"	"1"	356
+	"Arkansas"	"05"	"February"	"2"	325
+	"Arkansas"	"05"	"March"	"3"	330
+	"Arkansas"	"05"	"April"	"4"	311
+	"Arkansas"	"05"	"May"	"5"	308
+	"Arkansas"	"05"	"June"	"6"	334
+	"Arkansas"	"05"	"July"	"7"	364
+	"Arkansas"	"05"	"August"	"8"	374
+	"Arkansas"	"05"	"September"	"9"	382
+	"Arkansas"	"05"	"October"	"10"	318
+	"Arkansas"	"05"	"November"	"11"	355
+	"Arkansas"	"05"	"December"	"12"	360
+"Total"	"Arkansas"	"05"			4117
+	"California"	"06"	"January"	"1"	3007
+	"California"	"06"	"February"	"2"	2727
+	"California"	"06"	"March"	"3"	2930
+	"California"	"06"	"April"	"4"	2654
+	"California"	"06"	"May"	"5"	2854
+	"California"	"06"	"June"	"6"	2802
+	"California"	"06"	"July"	"7"	3019
+	"California"	"06"	"August"	"8"	3128
+	"California"	"06"	"September"	"9"	2979
+	"California"	"06"	"October"	"10"	3035
+	"California"	"06"	"November"	"11"	2772
+	"California"	"06"	"December"	"12"	2917
+"Total"	"California"	"06"			34824
+	"Colorado"	"08"	"January"	"1"	548
+	"Colorado"	"08"	"February"	"2"	528
+	"Colorado"	"08"	"March"	"3"	514
+	"Colorado"	"08"	"April"	"4"	516
+	"Colorado"	"08"	"May"	"5"	483
+	"Colorado"	"08"	"June"	"6"	546
+	"Colorado"	"08"	"July"	"7"	516
+	"Colorado"	"08"	"August"	"8"	571
+	"Colorado"	"08"	"September"	"9"	528
+	"Colorado"	"08"	"October"	"10"	563
+	"Colorado"	"08"	"November"	"11"	535
+	"Colorado"	"08"	"December"	"12"	520
+"Total"	"Colorado"	"08"			6368
+	"Connecticut"	"09"	"January"	"1"	258
+	"Connecticut"	"09"	"February"	"2"	260
+	"Connecticut"	"09"	"March"	"3"	242
+	"Connecticut"	"09"	"April"	"4"	230
+	"Connecticut"	"09"	"May"	"5"	264
+	"Connecticut"	"09"	"June"	"6"	199
+	"Connecticut"	"09"	"July"	"7"	273
+	"Connecticut"	"09"	"August"	"8"	257
+	"Connecticut"	"09"	"September"	"9"	249
+	"Connecticut"	"09"	"October"	"10"	251
+	"Connecticut"	"09"	"November"	"11"	218
+	"Connecticut"	"09"	"December"	"12"	249
+"Total"	"Connecticut"	"09"			2950
+	"Delaware"	"10"	"January"	"1"	116
+	"Delaware"	"10"	"February"	"2"	123
+	"Delaware"	"10"	"March"	"3"	111
+	"Delaware"	"10"	"April"	"4"	126
+	"Delaware"	"10"	"May"	"5"	121
+	"Delaware"	"10"	"June"	"6"	113
+	"Delaware"	"10"	"July"	"7"	123
+	"Delaware"	"10"	"August"	"8"	118
+	"Delaware"	"10"	"September"	"9"	102
+	"Delaware"	"10"	"October"	"10"	109
+	"Delaware"	"10"	"November"	"11"	96
+	"Delaware"	"10"	"December"	"12"	82
+"Total"	"Delaware"	"10"			1340
+	"District of Columbia"	"11"	"January"	"1"	84
+	"District of Columbia"	"11"	"February"	"2"	71
+	"District of Columbia"	"11"	"March"	"3"	79
+	"District of Columbia"	"11"	"April"	"4"	81
+	"District of Columbia"	"11"	"May"	"5"	76
+	"District of Columbia"	"11"	"June"	"6"	70
+	"District of Columbia"	"11"	"July"	"7"	76
+	"District of Columbia"	"11"	"August"	"8"	72
+	"District of Columbia"	"11"	"September"	"9"	97
+	"District of Columbia"	"11"	"October"	"10"	84
+	"District of Columbia"	"11"	"November"	"11"	80
+	"District of Columbia"	"11"	"December"	"12"	70
+"Total"	"District of Columbia"	"11"			940
+	"Florida"	"12"	"January"	"1"	1790
+	"Florida"	"12"	"February"	"2"	1751
+	"Florida"	"12"	"March"	"3"	1801
+	"Florida"	"12"	"April"	"4"	1681
+	"Florida"	"12"	"May"	"5"	1654
+	"Florida"	"12"	"June"	"6"	1710
+	"Florida"	"12"	"July"	"7"	1633
+	"Florida"	"12"	"August"	"8"	2005
+	"Florida"	"12"	"September"	"9"	1998
+	"Florida"	"12"	"October"	"10"	2009
+	"Florida"	"12"	"November"	"11"	1856
+	"Florida"	"12"	"December"	"12"	1924
+"Total"	"Florida"	"12"			21812
+	"Georgia"	"13"	"January"	"1"	1182
+	"Georgia"	"13"	"February"	"2"	1050
+	"Georgia"	"13"	"March"	"3"	1142
+	"Georgia"	"13"	"April"	"4"	1080
+	"Georgia"	"13"	"May"	"5"	1092
+	"Georgia"	"13"	"June"	"6"	1046
+	"Georgia"	"13"	"July"	"7"	1193
+	"Georgia"	"13"	"August"	"8"	1247
+	"Georgia"	"13"	"September"	"9"	1194
+	"Georgia"	"13"	"October"	"10"	1221
+	"Georgia"	"13"	"November"	"11"	1279
+	"Georgia"	"13"	"December"	"12"	1298
+"Total"	"Georgia"	"13"			14024
+	"Hawaii"	"15"	"January"	"1"	196
+	"Hawaii"	"15"	"February"	"2"	176
+	"Hawaii"	"15"	"March"	"3"	168
+	"Hawaii"	"15"	"April"	"4"	164
+	"Hawaii"	"15"	"May"	"5"	153
+	"Hawaii"	"15"	"June"	"6"	141
+	"Hawaii"	"15"	"July"	"7"	150
+	"Hawaii"	"15"	"August"	"8"	139
+	"Hawaii"	"15"	"September"	"9"	149
+	"Hawaii"	"15"	"October"	"10"	180
+	"Hawaii"	"15"	"November"	"11"	162
+	"Hawaii"	"15"	"December"	"12"	171
+"Total"	"Hawaii"	"15"			1949
+	"Idaho"	"16"	"January"	"1"	161
+	"Idaho"	"16"	"February"	"2"	160
+	"Idaho"	"16"	"March"	"3"	155
+	"Idaho"	"16"	"April"	"4"	163
+	"Idaho"	"16"	"May"	"5"	160
+	"Idaho"	"16"	"June"	"6"	168
+	"Idaho"	"16"	"July"	"7"	186
+	"Idaho"	"16"	"August"	"8"	171
+	"Idaho"	"16"	"September"	"9"	159
+	"Idaho"	"16"	"October"	"10"	148
+	"Idaho"	"16"	"November"	"11"	170
+	"Idaho"	"16"	"December"	"12"	161
+"Total"	"Idaho"	"16"			1962
+	"Illinois"	"17"	"January"	"1"	930
+	"Illinois"	"17"	"February"	"2"	885
+	"Illinois"	"17"	"March"	"3"	873
+	"Illinois"	"17"	"April"	"4"	874
+	"Illinois"	"17"	"May"	"5"	879
+	"Illinois"	"17"	"June"	"6"	861
+	"Illinois"	"17"	"July"	"7"	970
+	"Illinois"	"17"	"August"	"8"	1042
+	"Illinois"	"17"	"September"	"9"	872
+	"Illinois"	"17"	"October"	"10"	946
+	"Illinois"	"17"	"November"	"11"	901
+	"Illinois"	"17"	"December"	"12"	889
+"Total"	"Illinois"	"17"			10922
+	"Indiana"	"18"	"January"	"1"	1078
+	"Indiana"	"18"	"February"	"2"	971
+	"Indiana"	"18"	"March"	"3"	1024
+	"Indiana"	"18"	"April"	"4"	954
+	"Indiana"	"18"	"May"	"5"	935
+	"Indiana"	"18"	"June"	"6"	956
+	"Indiana"	"18"	"July"	"7"	1021
+	"Indiana"	"18"	"August"	"8"	1078
+	"Indiana"	"18"	"September"	"9"	998
+	"Indiana"	"18"	"October"	"10"	990
+	"Indiana"	"18"	"November"	"11"	891
+	"Indiana"	"18"	"December"	"12"	969
+"Total"	"Indiana"	"18"			11865
+	"Iowa"	"19"	"January"	"1"	391
+	"Iowa"	"19"	"February"	"2"	302
+	"Iowa"	"19"	"March"	"3"	365
+	"Iowa"	"19"	"April"	"4"	360
+	"Iowa"	"19"	"May"	"5"	328
+	"Iowa"	"19"	"June"	"6"	335
+	"Iowa"	"19"	"July"	"7"	389
+	"Iowa"	"19"	"August"	"8"	404
+	"Iowa"	"19"	"September"	"9"	358
+	"Iowa"	"19"	"October"	"10"	388
+	"Iowa"	"19"	"November"	"11"	345
+	"Iowa"	"19"	"December"	"12"	341
+"Total"	"Iowa"	"19"			4306
+	"Kansas"	"20"	"January"	"1"	311
+	"Kansas"	"20"	"February"	"2"	273
+	"Kansas"	"20"	"March"	"3"	310
+	"Kansas"	"20"	"April"	"4"	293
+	"Kansas"	"20"	"May"	"5"	312
+	"Kansas"	"20"	"June"	"6"	275
+	"Kansas"	"20"	"July"	"7"	345
+	"Kansas"	"20"	"August"	"8"	357
+	"Kansas"	"20"	"September"	"9"	332
+	"Kansas"	"20"	"October"	"10"	296
+	"Kansas"	"20"	"November"	"11"	287
+	"Kansas"	"20"	"December"	"12"	283
+"Total"	"Kansas"	"20"			3674
+	"Kentucky"	"21"	"January"	"1"	550
+	"Kentucky"	"21"	"February"	"2"	528
+	"Kentucky"	"21"	"March"	"3"	568
+	"Kentucky"	"21"	"April"	"4"	550
+	"Kentucky"	"21"	"May"	"5"	524
+	"Kentucky"	"21"	"June"	"6"	542
+	"Kentucky"	"21"	"July"	"7"	571
+	"Kentucky"	"21"	"August"	"8"	604
+	"Kentucky"	"21"	"September"	"9"	548
+	"Kentucky"	"21"	"October"	"10"	549
+	"Kentucky"	"21"	"November"	"11"	517
+	"Kentucky"	"21"	"December"	"12"	550
+"Total"	"Kentucky"	"21"			6601
+	"Louisiana"	"22"	"January"	"1"	582
+	"Louisiana"	"22"	"February"	"2"	550
+	"Louisiana"	"22"	"March"	"3"	523
+	"Louisiana"	"22"	"April"	"4"	499
+	"Louisiana"	"22"	"May"	"5"	566
+	"Louisiana"	"22"	"June"	"6"	527
+	"Louisiana"	"22"	"July"	"7"	643
+	"Louisiana"	"22"	"August"	"8"	602
+	"Louisiana"	"22"	"September"	"9"	583
+	"Louisiana"	"22"	"October"	"10"	639
+	"Louisiana"	"22"	"November"	"11"	596
+	"Louisiana"	"22"	"December"	"12"	483
+"Total"	"Louisiana"	"22"			6793
+	"Maine"	"23"	"January"	"1"	80
+	"Maine"	"23"	"February"	"2"	69
+	"Maine"	"23"	"March"	"3"	69
+	"Maine"	"23"	"April"	"4"	63
+	"Maine"	"23"	"May"	"5"	76
+	"Maine"	"23"	"June"	"6"	51
+	"Maine"	"23"	"July"	"7"	56
+	"Maine"	"23"	"August"	"8"	63
+	"Maine"	"23"	"September"	"9"	58
+	"Maine"	"23"	"October"	"10"	89
+	"Maine"	"23"	"November"	"11"	67
+	"Maine"	"23"	"December"	"12"	48
+"Total"	"Maine"	"23"			789
+	"Maryland"	"24"	"January"	"1"	730
+	"Maryland"	"24"	"February"	"2"	700
+	"Maryland"	"24"	"March"	"3"	649
+	"Maryland"	"24"	"April"	"4"	656
+	"Maryland"	"24"	"May"	"5"	641
+	"Maryland"	"24"	"June"	"6"	722
+	"Maryland"	"24"	"July"	"7"	745
+	"Maryland"	"24"	"August"	"8"	835
+	"Maryland"	"24"	"September"	"9"	738
+	"Maryland"	"24"	"October"	"10"	747
+	"Maryland"	"24"	"November"	"11"	700
+	"Maryland"	"24"	"December"	"12"	823
+"Total"	"Maryland"	"24"			8686
+	"Massachusetts"	"25"	"January"	"1"	509
+	"Massachusetts"	"25"	"February"	"2"	534
+	"Massachusetts"	"25"	"March"	"3"	503
+	"Massachusetts"	"25"	"April"	"4"	478
+	"Massachusetts"	"25"	"May"	"5"	476
+	"Massachusetts"	"25"	"June"	"6"	481
+	"Massachusetts"	"25"	"July"	"7"	490
+	"Massachusetts"	"25"	"August"	"8"	491
+	"Massachusetts"	"25"	"September"	"9"	479
+	"Massachusetts"	"25"	"October"	"10"	550
+	"Massachusetts"	"25"	"November"	"11"	511
+	"Massachusetts"	"25"	"December"	"12"	465
+"Total"	"Massachusetts"	"25"			5967
+	"Michigan"	"26"	"January"	"1"	836
+	"Michigan"	"26"	"February"	"2"	767
+	"Michigan"	"26"	"March"	"3"	895
+	"Michigan"	"26"	"April"	"4"	740
+	"Michigan"	"26"	"May"	"5"	797
+	"Michigan"	"26"	"June"	"6"	818
+	"Michigan"	"26"	"July"	"7"	783
+	"Michigan"	"26"	"August"	"8"	852
+	"Michigan"	"26"	"September"	"9"	781
+	"Michigan"	"26"	"October"	"10"	824
+	"Michigan"	"26"	"November"	"11"	763
+	"Michigan"	"26"	"December"	"12"	780
+"Total"	"Michigan"	"26"			9636
+	"Minnesota"	"27"	"January"	"1"	524
+	"Minnesota"	"27"	"February"	"2"	506
+	"Minnesota"	"27"	"March"	"3"	520
+	"Minnesota"	"27"	"April"	"4"	501
+	"Minnesota"	"27"	"May"	"5"	503
+	"Minnesota"	"27"	"June"	"6"	447
+	"Minnesota"	"27"	"July"	"7"	505
+	"Minnesota"	"27"	"August"	"8"	542
+	"Minnesota"	"27"	"September"	"9"	519
+	"Minnesota"	"27"	"October"	"10"	540
+	"Minnesota"	"27"	"November"	"11"	492
+	"Minnesota"	"27"	"December"	"12"	583
+"Total"	"Minnesota"	"27"			6182
+	"Mississippi"	"28"	"January"	"1"	334
+	"Mississippi"	"28"	"February"	"2"	281
+	"Mississippi"	"28"	"March"	"3"	322
+	"Mississippi"	"28"	"April"	"4"	226
+	"Mississippi"	"28"	"May"	"5"	310
+	"Mississippi"	"28"	"June"	"6"	298
+	"Mississippi"	"28"	"July"	"7"	339
+	"Mississippi"	"28"	"August"	"8"	327
+	"Mississippi"	"28"	"September"	"9"	339
+	"Mississippi"	"28"	"October"	"10"	339
+	"Mississippi"	"28"	"November"	"11"	317
+	"Mississippi"	"28"	"December"	"12"	320
+"Total"	"Mississippi"	"28"			3752
+	"Missouri"	"29"	"January"	"1"	689
+	"Missouri"	"29"	"February"	"2"	663
+	"Missouri"	"29"	"March"	"3"	633
+	"Missouri"	"29"	"April"	"4"	581
+	"Missouri"	"29"	"May"	"5"	634
+	"Missouri"	"29"	"June"	"6"	628
+	"Missouri"	"29"	"July"	"7"	669
+	"Missouri"	"29"	"August"	"8"	673
+	"Missouri"	"29"	"September"	"9"	670
+	"Missouri"	"29"	"October"	"10"	673
+	"Missouri"	"29"	"November"	"11"	607
+	"Missouri"	"29"	"December"	"12"	552
+"Total"	"Missouri"	"29"			7672
+	"Montana"	"30"	"January"	"1"	79
+	"Montana"	"30"	"February"	"2"	80
+	"Montana"	"30"	"March"	"3"	88
+	"Montana"	"30"	"April"	"4"	94
+	"Montana"	"30"	"May"	"5"	111
+	"Montana"	"30"	"June"	"6"	70
+	"Montana"	"30"	"July"	"7"	95
+	"Montana"	"30"	"August"	"8"	96
+	"Montana"	"30"	"September"	"9"	121
+	"Montana"	"30"	"October"	"10"	92
+	"Montana"	"30"	"November"	"11"	76
+	"Montana"	"30"	"December"	"12"	96
+"Total"	"Montana"	"30"			1098
+	"Nebraska"	"31"	"January"	"1"	266
+	"Nebraska"	"31"	"February"	"2"	236
+	"Nebraska"	"31"	"March"	"3"	224
+	"Nebraska"	"31"	"April"	"4"	233
+	"Nebraska"	"31"	"May"	"5"	286
+	"Nebraska"	"31"	"June"	"6"	255
+	"Nebraska"	"31"	"July"	"7"	240
+	"Nebraska"	"31"	"August"	"8"	250
+	"Nebraska"	"31"	"September"	"9"	285
+	"Nebraska"	"31"	"October"	"10"	267
+	"Nebraska"	"31"	"November"	"11"	236
+	"Nebraska"	"31"	"December"	"12"	238
+"Total"	"Nebraska"	"31"			3016
+	"Nevada"	"32"	"January"	"1"	287
+	"Nevada"	"32"	"February"	"2"	278
+	"Nevada"	"32"	"March"	"3"	328
+	"Nevada"	"32"	"April"	"4"	282
+	"Nevada"	"32"	"May"	"5"	302
+	"Nevada"	"32"	"June"	"6"	328
+	"Nevada"	"32"	"July"	"7"	323
+	"Nevada"	"32"	"August"	"8"	363
+	"Nevada"	"32"	"September"	"9"	349
+	"Nevada"	"32"	"October"	"10"	339
+	"Nevada"	"32"	"November"	"11"	317
+	"Nevada"	"32"	"December"	"12"	344
+"Total"	"Nevada"	"32"			3840
+	"New Hampshire"	"33"	"January"	"1"	51
+	"New Hampshire"	"33"	"February"	"2"	43
+	"New Hampshire"	"33"	"March"	"3"	32
+	"New Hampshire"	"33"	"April"	"4"	40
+	"New Hampshire"	"33"	"May"	"5"	40
+	"New Hampshire"	"33"	"June"	"6"	42
+	"New Hampshire"	"33"	"July"	"7"	44
+	"New Hampshire"	"33"	"August"	"8"	43
+	"New Hampshire"	"33"	"September"	"9"	48
+	"New Hampshire"	"33"	"October"	"10"	53
+	"New Hampshire"	"33"	"November"	"11"	51
+	"New Hampshire"	"33"	"December"	"12"	35
+"Total"	"New Hampshire"	"33"			522
+	"New Jersey"	"34"	"January"	"1"	805
+	"New Jersey"	"34"	"February"	"2"	713
+	"New Jersey"	"34"	"March"	"3"	755
+	"New Jersey"	"34"	"April"	"4"	702
+	"New Jersey"	"34"	"May"	"5"	671
+	"New Jersey"	"34"	"June"	"6"	742
+	"New Jersey"	"34"	"July"	"7"	786
+	"New Jersey"	"34"	"August"	"8"	841
+	"New Jersey"	"34"	"September"	"9"	776
+	"New Jersey"	"34"	"October"	"10"	793
+	"New Jersey"	"34"	"November"	"11"	725
+	"New Jersey"	"34"	"December"	"12"	752
+"Total"	"New Jersey"	"34"			9061
+	"New Mexico"	"35"	"January"	"1"	282
+	"New Mexico"	"35"	"February"	"2"	232
+	"New Mexico"	"35"	"March"	"3"	267
+	"New Mexico"	"35"	"April"	"4"	268
+	"New Mexico"	"35"	"May"	"5"	270
+	"New Mexico"	"35"	"June"	"6"	273
+	"New Mexico"	"35"	"July"	"7"	244
+	"New Mexico"	"35"	"August"	"8"	301
+	"New Mexico"	"35"	"September"	"9"	285
+	"New Mexico"	"35"	"October"	"10"	244
+	"New Mexico"	"35"	"November"	"11"	212
+	"New Mexico"	"35"	"December"	"12"	152
+"Total"	"New Mexico"	"35"			3030
+	"New York"	"36"	"January"	"1"	2231
+	"New York"	"36"	"February"	"2"	2029
+	"New York"	"36"	"March"	"3"	2116
+	"New York"	"36"	"April"	"4"	2008
+	"New York"	"36"	"May"	"5"	2166
+	"New York"	"36"	"June"	"6"	2005
+	"New York"	"36"	"July"	"7"	2195
+	"New York"	"36"	"August"	"8"	2228
+	"New York"	"36"	"September"	"9"	2219
+	"New York"	"36"	"October"	"10"	2191
+	"New York"	"36"	"November"	"11"	2018
+	"New York"	"36"	"December"	"12"	2081
+"Total"	"New York"	"36"			25487
+	"North Carolina"	"37"	"January"	"1"	1214
+	"North Carolina"	"37"	"February"	"2"	1051
+	"North Carolina"	"37"	"March"	"3"	1175
+	"North Carolina"	"37"	"April"	"4"	1099
+	"North Carolina"	"37"	"May"	"5"	1190
+	"North Carolina"	"37"	"June"	"6"	1160
+	"North Carolina"	"37"	"July"	"7"	1226
+	"North Carolina"	"37"	"August"	"8"	1197
+	"North Carolina"	"37"	"September"	"9"	1286
+	"North Carolina"	"37"	"October"	"10"	1194
+	"North Carolina"	"37"	"November"	"11"	1180
+	"North Carolina"	"37"	"December"	"12"	1266
+"Total"	"North Carolina"	"37"			14238
+	"North Dakota"	"38"	"January"	"1"	73
+	"North Dakota"	"38"	"February"	"2"	60
+	"North Dakota"	"38"	"March"	"3"	63
+	"North Dakota"	"38"	"April"	"4"	59
+	"North Dakota"	"38"	"May"	"5"	66
+	"North Dakota"	"38"	"June"	"6"	75
+	"North Dakota"	"38"	"July"	"7"	59
+	"North Dakota"	"38"	"August"	"8"	65
+	"North Dakota"	"38"	"September"	"9"	62
+	"North Dakota"	"38"	"October"	"10"	65
+	"North Dakota"	"38"	"November"	"11"	45
+	"North Dakota"	"38"	"December"	"12"	65
+"Total"	"North Dakota"	"38"			757
+	"Ohio"	"39"	"January"	"1"	1356
+	"Ohio"	"39"	"February"	"2"	1219
+	"Ohio"	"39"	"March"	"3"	1235
+	"Ohio"	"39"	"April"	"4"	1261
+	"Ohio"	"39"	"May"	"5"	1286
+	"Ohio"	"39"	"June"	"6"	1254
+	"Ohio"	"39"	"July"	"7"	1350
+	"Ohio"	"39"	"August"	"8"	1380
+	"Ohio"	"39"	"September"	"9"	1325
+	"Ohio"	"39"	"October"	"10"	1301
+	"Ohio"	"39"	"November"	"11"	1247
+	"Ohio"	"39"	"December"	"12"	1281
+"Total"	"Ohio"	"39"			15495
+	"Oklahoma"	"40"	"January"	"1"	574
+	"Oklahoma"	"40"	"February"	"2"	505
+	"Oklahoma"	"40"	"March"	"3"	501
+	"Oklahoma"	"40"	"April"	"4"	488
+	"Oklahoma"	"40"	"May"	"5"	492
+	"Oklahoma"	"40"	"June"	"6"	509
+	"Oklahoma"	"40"	"July"	"7"	624
+	"Oklahoma"	"40"	"August"	"8"	557
+	"Oklahoma"	"40"	"September"	"9"	505
+	"Oklahoma"	"40"	"October"	"10"	544
+	"Oklahoma"	"40"	"November"	"11"	498
+	"Oklahoma"	"40"	"December"	"12"	566
+"Total"	"Oklahoma"	"40"			6363
+	"Oregon"	"41"	"January"	"1"	366
+	"Oregon"	"41"	"February"	"2"	322
+	"Oregon"	"41"	"March"	"3"	314
+	"Oregon"	"41"	"April"	"4"	325
+	"Oregon"	"41"	"May"	"5"	351
+	"Oregon"	"41"	"June"	"6"	370
+	"Oregon"	"41"	"July"	"7"	381
+	"Oregon"	"41"	"August"	"8"	398
+	"Oregon"	"41"	"September"	"9"	377
+	"Oregon"	"41"	"October"	"10"	356
+	"Oregon"	"41"	"November"	"11"	358
+	"Oregon"	"41"	"December"	"12"	148
+"Total"	"Oregon"	"41"			4066
+	"Pennsylvania"	"42"	"January"	"1"	1248
+	"Pennsylvania"	"42"	"February"	"2"	1183
+	"Pennsylvania"	"42"	"March"	"3"	1244
+	"Pennsylvania"	"42"	"April"	"4"	1158
+	"Pennsylvania"	"42"	"May"	"5"	1125
+	"Pennsylvania"	"42"	"June"	"6"	1185
+	"Pennsylvania"	"42"	"July"	"7"	1239
+	"Pennsylvania"	"42"	"August"	"8"	1284
+	"Pennsylvania"	"42"	"September"	"9"	1281
+	"Pennsylvania"	"42"	"October"	"10"	1168
+	"Pennsylvania"	"42"	"November"	"11"	1102
+	"Pennsylvania"	"42"	"December"	"12"	1255
+"Total"	"Pennsylvania"	"42"			14472
+	"Rhode Island"	"44"	"January"	"1"	107
+	"Rhode Island"	"44"	"February"	"2"	83
+	"Rhode Island"	"44"	"March"	"3"	90
+	"Rhode Island"	"44"	"April"	"4"	90
+	"Rhode Island"	"44"	"May"	"5"	96
+	"Rhode Island"	"44"	"June"	"6"	75
+	"Rhode Island"	"44"	"July"	"7"	79
+	"Rhode Island"	"44"	"August"	"8"	82
+	"Rhode Island"	"44"	"September"	"9"	94
+	"Rhode Island"	"44"	"October"	"10"	87
+	"Rhode Island"	"44"	"November"	"11"	99
+	"Rhode Island"	"44"	"December"	"12"	76
+"Total"	"Rhode Island"	"44"			1058
+	"South Carolina"	"45"	"January"	"1"	609
+	"South Carolina"	"45"	"February"	"2"	516
+	"South Carolina"	"45"	"March"	"3"	554
+	"South Carolina"	"45"	"April"	"4"	516
+	"South Carolina"	"45"	"May"	"5"	556
+	"South Carolina"	"45"	"June"	"6"	538
+	"South Carolina"	"45"	"July"	"7"	610
+	"South Carolina"	"45"	"August"	"8"	620
+	"South Carolina"	"45"	"September"	"9"	589
+	"South Carolina"	"45"	"October"	"10"	572
+	"South Carolina"	"45"	"November"	"11"	577
+	"South Carolina"	"45"	"December"	"12"	612
+"Total"	"South Carolina"	"45"			6869
+	"South Dakota"	"46"	"January"	"1"	150
+	"South Dakota"	"46"	"February"	"2"	138
+	"South Dakota"	"46"	"March"	"3"	164
+	"South Dakota"	"46"	"April"	"4"	141
+	"South Dakota"	"46"	"May"	"5"	128
+	"South Dakota"	"46"	"June"	"6"	126
+	"South Dakota"	"46"	"July"	"7"	137
+	"South Dakota"	"46"	"August"	"8"	123
+	"South Dakota"	"46"	"September"	"9"	139
+	"South Dakota"	"46"	"October"	"10"	125
+	"South Dakota"	"46"	"November"	"11"	136
+	"South Dakota"	"46"	"December"	"12"	145
+"Total"	"South Dakota"	"46"			1652
+	"Tennessee"	"47"	"January"	"1"	919
+	"Tennessee"	"47"	"February"	"2"	802
+	"Tennessee"	"47"	"March"	"3"	845
+	"Tennessee"	"47"	"April"	"4"	824
+	"Tennessee"	"47"	"May"	"5"	919
+	"Tennessee"	"47"	"June"	"6"	906
+	"Tennessee"	"47"	"July"	"7"	1023
+	"Tennessee"	"47"	"August"	"8"	1027
+	"Tennessee"	"47"	"September"	"9"	976
+	"Tennessee"	"47"	"October"	"10"	957
+	"Tennessee"	"47"	"November"	"11"	882
+	"Tennessee"	"47"	"December"	"12"	996
+"Total"	"Tennessee"	"47"			11076
+	"Texas"	"48"	"January"	"1"	4689
+	"Texas"	"48"	"February"	"2"	4227
+	"Texas"	"48"	"March"	"3"	4131
+	"Texas"	"48"	"April"	"4"	3896
+	"Texas"	"48"	"May"	"5"	4303
+	"Texas"	"48"	"June"	"6"	4261
+	"Texas"	"48"	"July"	"7"	4776
+	"Texas"	"48"	"August"	"8"	4846
+	"Texas"	"48"	"September"	"9"	4845
+	"Texas"	"48"	"October"	"10"	4837
+	"Texas"	"48"	"November"	"11"	4528
+	"Texas"	"48"	"December"	"12"	4833
+"Total"	"Texas"	"48"			54172
+	"Utah"	"49"	"January"	"1"	283
+	"Utah"	"49"	"February"	"2"	279
+	"Utah"	"49"	"March"	"3"	229
+	"Utah"	"49"	"April"	"4"	250
+	"Utah"	"49"	"May"	"5"	252
+	"Utah"	"49"	"June"	"6"	271
+	"Utah"	"49"	"July"	"7"	306
+	"Utah"	"49"	"August"	"8"	282
+	"Utah"	"49"	"September"	"9"	256
+	"Utah"	"49"	"October"	"10"	236
+	"Utah"	"49"	"November"	"11"	230
+	"Utah"	"49"	"December"	"12"	242
+"Total"	"Utah"	"49"			3116
+	"Vermont"	"50"	"January"	"1"	36
+	"Vermont"	"50"	"February"	"2"	17
+	"Vermont"	"50"	"March"	"3"	41
+	"Vermont"	"50"	"April"	"4"	28
+	"Vermont"	"50"	"May"	"5"	24
+	"Vermont"	"50"	"June"	"6"	29
+	"Vermont"	"50"	"July"	"7"	27
+	"Vermont"	"50"	"August"	"8"	34
+	"Vermont"	"50"	"September"	"9"	28
+	"Vermont"	"50"	"October"	"10"	20
+	"Vermont"	"50"	"November"	"11"	30
+	"Vermont"	"50"	"December"	"12"	33
+"Total"	"Vermont"	"50"			347
+	"Virginia"	"51"	"January"	"1"	693
+	"Virginia"	"51"	"February"	"2"	688
+	"Virginia"	"51"	"March"	"3"	714
+	"Virginia"	"51"	"April"	"4"	654
+	"Virginia"	"51"	"May"	"5"	712
+	"Virginia"	"51"	"June"	"6"	714
+	"Virginia"	"51"	"July"	"7"	739
+	"Virginia"	"51"	"August"	"8"	707
+	"Virginia"	"51"	"September"	"9"	710
+	"Virginia"	"51"	"October"	"10"	713
+	"Virginia"	"51"	"November"	"11"	688
+	"Virginia"	"51"	"December"	"12"	533
+"Total"	"Virginia"	"51"			8265
+	"Washington"	"53"	"January"	"1"	598
+	"Washington"	"53"	"February"	"2"	581
+	"Washington"	"53"	"March"	"3"	616
+	"Washington"	"53"	"April"	"4"	567
+	"Washington"	"53"	"May"	"5"	644
+	"Washington"	"53"	"June"	"6"	614
+	"Washington"	"53"	"July"	"7"	610
+	"Washington"	"53"	"August"	"8"	630
+	"Washington"	"53"	"September"	"9"	607
+	"Washington"	"53"	"October"	"10"	652
+	"Washington"	"53"	"November"	"11"	627
+	"Washington"	"53"	"December"	"12"	591
+"Total"	"Washington"	"53"			7337
+	"West Virginia"	"54"	"January"	"1"	137
+	"West Virginia"	"54"	"February"	"2"	165
+	"West Virginia"	"54"	"March"	"3"	137
+	"West Virginia"	"54"	"April"	"4"	121
+	"West Virginia"	"54"	"May"	"5"	128
+	"West Virginia"	"54"	"June"	"6"	135
+	"West Virginia"	"54"	"July"	"7"	145
+	"West Virginia"	"54"	"August"	"8"	145
+	"West Virginia"	"54"	"September"	"9"	144
+	"West Virginia"	"54"	"October"	"10"	147
+	"West Virginia"	"54"	"November"	"11"	141
+	"West Virginia"	"54"	"December"	"12"	141
+"Total"	"West Virginia"	"54"			1686
+	"Wisconsin"	"55"	"January"	"1"	475
+	"Wisconsin"	"55"	"February"	"2"	490
+	"Wisconsin"	"55"	"March"	"3"	480
+	"Wisconsin"	"55"	"April"	"4"	487
+	"Wisconsin"	"55"	"May"	"5"	484
+	"Wisconsin"	"55"	"June"	"6"	444
+	"Wisconsin"	"55"	"July"	"7"	505
+	"Wisconsin"	"55"	"August"	"8"	575
+	"Wisconsin"	"55"	"September"	"9"	527
+	"Wisconsin"	"55"	"October"	"10"	504
+	"Wisconsin"	"55"	"November"	"11"	438
+	"Wisconsin"	"55"	"December"	"12"	530
+"Total"	"Wisconsin"	"55"			5939
+	"Wyoming"	"56"	"January"	"1"	53
+	"Wyoming"	"56"	"February"	"2"	45
+	"Wyoming"	"56"	"March"	"3"	54
+	"Wyoming"	"56"	"April"	"4"	47
+	"Wyoming"	"56"	"May"	"5"	54
+	"Wyoming"	"56"	"June"	"6"	34
+	"Wyoming"	"56"	"July"	"7"	42
+	"Wyoming"	"56"	"August"	"8"	47
+	"Wyoming"	"56"	"September"	"9"	36
+	"Wyoming"	"56"	"October"	"10"	52
+	"Wyoming"	"56"	"November"	"11"	38
+	"Wyoming"	"56"	"December"	"12"	43
+"Total"	"Wyoming"	"56"			545
+"Total"					399562
+"---"
+"Dataset: Provisional Natality, 2023 through Last Month"
+"Query Parameters:"
+"Age of Mother 9: 15-19 years; 20-24 years; 25-29 years; 30-34 years; 35-39 years; 40-44 years"
+"Mother's Education: 8th grade or less; 9th through 12th grade with no diploma"
+"Year: 2024 (Provisional)"
+"Group By: State of Residence; Month"
+"Show Totals: True"
+"Show Zero Values: False"
+"Show Suppressed: False"
+"Calculate Rates Per: 1,000"
+"---"
+"Help: See http://wonder.cdc.gov/wonder/help/natality-provisional.html for more information."
+"---"
+"Query Date: Aug 14, 2025 4:36:25 AM"
+"---"
+"Suggested Citation: Centers for Disease Control and Prevention, National Center for Health Statistics. National Vital Statistics"
+"System, Provisional Natality on CDC WONDER Online Database. Data are from the Natality Records 2023 through Last Month, as"
+"compiled from data provided by the 57 vital statistics jurisdictions through the Vital Statistics Cooperative Program. Accessed"
+"at http://wonder.cdc.gov/natality-expanded-provisional.html on Aug 14, 2025 4:36:25 AM"
+"---"
+Caveats:
+"1. Each birth record represents one liveborn infant."
+"2. 2024 and 2025 data are provisional and subject to change. 2023 data are final."
+"3. Births occurring through June 30, 2025 as of July 30, 2025."

@@ -1,0 +1,1234 @@
+﻿state,month,marital_status,births
+Alabama,1,Married,2665
+Alabama,1,Unmarried,2293
+Alabama,2,Married,2458
+Alabama,2,Unmarried,2014
+Alabama,3,Married,2535
+Alabama,3,Unmarried,2083
+Alabama,4,Married,2587
+Alabama,4,Unmarried,1970
+Alabama,5,Married,2628
+Alabama,5,Unmarried,2091
+Alabama,6,Married,2481
+Alabama,6,Unmarried,2030
+Alabama,7,Married,2778
+Alabama,7,Unmarried,2343
+Alabama,8,Married,2894
+Alabama,8,Unmarried,2324
+Alabama,9,Married,2647
+Alabama,9,Unmarried,2179
+Alabama,10,Married,2912
+Alabama,10,Unmarried,2207
+Alabama,11,Married,2501
+Alabama,11,Unmarried,2065
+Alabama,12,Married,2773
+Alabama,12,Unmarried,2243
+Alaska,1,Married,486
+Alaska,1,Unmarried,273
+Alaska,2,Married,487
+Alaska,2,Unmarried,248
+Alaska,3,Married,470
+Alaska,3,Unmarried,298
+Alaska,4,Married,452
+Alaska,4,Unmarried,251
+Alaska,5,Married,498
+Alaska,5,Unmarried,279
+Alaska,6,Married,469
+Alaska,6,Unmarried,241
+Alaska,7,Married,514
+Alaska,7,Unmarried,299
+Alaska,8,Married,469
+Alaska,8,Unmarried,301
+Alaska,9,Married,460
+Alaska,9,Unmarried,298
+Alaska,10,Married,435
+Alaska,10,Unmarried,258
+Alaska,11,Married,445
+Alaska,11,Unmarried,244
+Alaska,12,Married,450
+Alaska,12,Unmarried,259
+Arizona,1,Married,3455
+Arizona,1,Unmarried,3033
+Arizona,1,Not Reported,15
+Arizona,2,Married,3335
+Arizona,2,Unmarried,2759
+Arizona,2,Not Reported,10
+Arizona,3,Married,3637
+Arizona,3,Unmarried,2998
+Arizona,4,Married,3350
+Arizona,4,Unmarried,2707
+Arizona,5,Married,3459
+Arizona,5,Unmarried,2704
+Arizona,6,Married,3306
+Arizona,6,Unmarried,2699
+Arizona,7,Married,3629
+Arizona,7,Unmarried,3120
+Arizona,7,Not Reported,12
+Arizona,8,Married,3699
+Arizona,8,Unmarried,3239
+Arizona,9,Married,3741
+Arizona,9,Unmarried,3100
+Arizona,9,Not Reported,11
+Arizona,10,Married,3891
+Arizona,10,Unmarried,3055
+Arizona,11,Married,3602
+Arizona,11,Unmarried,3162
+Arizona,11,Not Reported,12
+Arizona,12,Married,3600
+Arizona,12,Unmarried,3021
+Arizona,12,Not Reported,12
+Arkansas,1,Married,1624
+Arkansas,1,Unmarried,1376
+Arkansas,2,Married,1529
+Arkansas,2,Unmarried,1255
+Arkansas,3,Married,1566
+Arkansas,3,Unmarried,1209
+Arkansas,4,Married,1614
+Arkansas,4,Unmarried,1223
+Arkansas,5,Married,1626
+Arkansas,5,Unmarried,1240
+Arkansas,6,Married,1563
+Arkansas,6,Unmarried,1186
+Arkansas,7,Married,1722
+Arkansas,7,Unmarried,1383
+Arkansas,8,Married,1734
+Arkansas,8,Unmarried,1504
+Arkansas,9,Married,1737
+Arkansas,9,Unmarried,1401
+Arkansas,10,Married,1666
+Arkansas,10,Unmarried,1278
+Arkansas,11,Married,1503
+Arkansas,11,Unmarried,1228
+Arkansas,12,Married,1697
+Arkansas,12,Unmarried,1329
+California,1,Not Reported,32661
+California,2,Not Reported,30955
+California,3,Not Reported,33065
+California,4,Not Reported,31643
+California,5,Not Reported,32800
+California,6,Not Reported,32212
+California,7,Not Reported,34434
+California,8,Not Reported,35903
+California,9,Not Reported,34546
+California,10,Not Reported,35099
+California,11,Not Reported,32324
+California,12,Not Reported,33426
+Colorado,1,Married,3848
+Colorado,1,Unmarried,1275
+Colorado,2,Married,3799
+Colorado,2,Unmarried,1196
+Colorado,3,Married,4007
+Colorado,3,Unmarried,1289
+Colorado,4,Married,3966
+Colorado,4,Unmarried,1189
+Colorado,5,Married,4171
+Colorado,5,Unmarried,1306
+Colorado,6,Married,3902
+Colorado,6,Unmarried,1273
+Colorado,7,Married,4361
+Colorado,7,Unmarried,1273
+Colorado,8,Married,4371
+Colorado,8,Unmarried,1401
+Colorado,9,Married,4014
+Colorado,9,Unmarried,1314
+Colorado,10,Married,4248
+Colorado,10,Unmarried,1325
+Colorado,11,Married,3987
+Colorado,11,Unmarried,1259
+Colorado,12,Married,3972
+Colorado,12,Unmarried,1274
+Connecticut,1,Married,1694
+Connecticut,1,Unmarried,1020
+Connecticut,2,Married,1665
+Connecticut,2,Unmarried,1060
+Connecticut,3,Married,1783
+Connecticut,3,Unmarried,1069
+Connecticut,4,Married,1790
+Connecticut,4,Unmarried,1021
+Connecticut,5,Married,1961
+Connecticut,5,Unmarried,1075
+Connecticut,6,Married,1767
+Connecticut,6,Unmarried,918
+Connecticut,7,Married,2036
+Connecticut,7,Unmarried,1130
+Connecticut,8,Married,2012
+Connecticut,8,Unmarried,1114
+Connecticut,9,Married,1798
+Connecticut,9,Unmarried,1048
+Connecticut,10,Married,1925
+Connecticut,10,Unmarried,1073
+Connecticut,11,Married,1683
+Connecticut,11,Unmarried,975
+Connecticut,12,Married,1700
+Connecticut,12,Unmarried,1077
+Delaware,1,Married,450
+Delaware,1,Unmarried,408
+Delaware,2,Married,395
+Delaware,2,Unmarried,405
+Delaware,3,Married,427
+Delaware,3,Unmarried,411
+Delaware,4,Married,475
+Delaware,4,Unmarried,413
+Delaware,5,Married,438
+Delaware,5,Unmarried,435
+Delaware,6,Married,462
+Delaware,6,Unmarried,438
+Delaware,7,Married,499
+Delaware,7,Unmarried,400
+Delaware,8,Married,544
+Delaware,8,Unmarried,441
+Delaware,9,Married,490
+Delaware,9,Unmarried,376
+Delaware,10,Married,478
+Delaware,10,Unmarried,421
+Delaware,11,Married,427
+Delaware,11,Unmarried,391
+Delaware,12,Married,430
+Delaware,12,Unmarried,310
+District of Columbia,1,Married,327
+District of Columbia,1,Unmarried,288
+District of Columbia,2,Married,332
+District of Columbia,2,Unmarried,266
+District of Columbia,3,Married,362
+District of Columbia,3,Unmarried,282
+District of Columbia,4,Married,342
+District of Columbia,4,Unmarried,261
+District of Columbia,5,Married,372
+District of Columbia,5,Unmarried,281
+District of Columbia,6,Married,331
+District of Columbia,6,Unmarried,293
+District of Columbia,7,Married,343
+District of Columbia,7,Unmarried,288
+District of Columbia,8,Married,374
+District of Columbia,8,Unmarried,320
+District of Columbia,9,Married,302
+District of Columbia,9,Unmarried,322
+District of Columbia,10,Married,354
+District of Columbia,10,Unmarried,263
+District of Columbia,11,Married,381
+District of Columbia,11,Unmarried,281
+District of Columbia,12,Married,302
+District of Columbia,12,Unmarried,252
+Florida,1,Married,10018
+Florida,1,Unmarried,8343
+Florida,2,Married,9499
+Florida,2,Unmarried,7952
+Florida,3,Married,9965
+Florida,3,Unmarried,7907
+Florida,4,Married,9730
+Florida,4,Unmarried,7574
+Florida,5,Married,9854
+Florida,5,Unmarried,7891
+Florida,6,Married,9502
+Florida,6,Unmarried,7807
+Florida,7,Married,10427
+Florida,7,Unmarried,8711
+Florida,8,Married,10903
+Florida,8,Unmarried,9157
+Florida,9,Married,10632
+Florida,9,Unmarried,8948
+Florida,10,Married,10988
+Florida,10,Unmarried,9014
+Florida,11,Married,10258
+Florida,11,Unmarried,8476
+Florida,12,Married,10680
+Florida,12,Unmarried,9092
+Georgia,1,Married,5520
+Georgia,1,Unmarried,4916
+Georgia,2,Married,5440
+Georgia,2,Unmarried,4530
+Georgia,3,Married,5722
+Georgia,3,Unmarried,4675
+Georgia,4,Married,5377
+Georgia,4,Unmarried,4459
+Georgia,5,Married,5660
+Georgia,5,Unmarried,4634
+Georgia,6,Married,5254
+Georgia,6,Unmarried,4665
+Georgia,7,Married,5988
+Georgia,7,Unmarried,5140
+Georgia,8,Married,6068
+Georgia,8,Unmarried,5303
+Georgia,9,Married,5715
+Georgia,9,Unmarried,4921
+Georgia,10,Married,5862
+Georgia,10,Unmarried,4836
+Georgia,11,Married,5576
+Georgia,11,Unmarried,4693
+Georgia,12,Married,5750
+Georgia,12,Unmarried,5156
+Hawaii,1,Married,706
+Hawaii,1,Unmarried,518
+Hawaii,2,Married,710
+Hawaii,2,Unmarried,499
+Hawaii,3,Married,711
+Hawaii,3,Unmarried,488
+Hawaii,4,Married,738
+Hawaii,4,Unmarried,475
+Hawaii,5,Married,753
+Hawaii,5,Unmarried,480
+Hawaii,6,Married,703
+Hawaii,6,Unmarried,456
+Hawaii,7,Married,699
+Hawaii,7,Unmarried,492
+Hawaii,8,Married,756
+Hawaii,8,Unmarried,513
+Hawaii,9,Married,736
+Hawaii,9,Unmarried,538
+Hawaii,10,Married,778
+Hawaii,10,Unmarried,534
+Hawaii,11,Married,698
+Hawaii,11,Unmarried,533
+Hawaii,12,Married,632
+Hawaii,12,Unmarried,507
+Idaho,1,Married,1317
+Idaho,1,Unmarried,473
+Idaho,2,Married,1257
+Idaho,2,Unmarried,470
+Idaho,3,Married,1395
+Idaho,3,Unmarried,484
+Idaho,4,Married,1451
+Idaho,4,Unmarried,490
+Idaho,5,Married,1546
+Idaho,5,Unmarried,561
+Idaho,6,Married,1437
+Idaho,6,Unmarried,539
+Idaho,7,Married,1534
+Idaho,7,Unmarried,562
+Idaho,8,Married,1487
+Idaho,8,Unmarried,575
+Idaho,9,Married,1483
+Idaho,9,Unmarried,534
+Idaho,10,Married,1441
+Idaho,10,Unmarried,470
+Idaho,11,Married,1296
+Idaho,11,Unmarried,495
+Idaho,12,Married,1379
+Idaho,12,Unmarried,485
+Illinois,1,Married,5941
+Illinois,1,Unmarried,4248
+Illinois,2,Married,5748
+Illinois,2,Unmarried,3939
+Illinois,3,Married,6249
+Illinois,3,Unmarried,3969
+Illinois,4,Married,6291
+Illinois,4,Unmarried,3907
+Illinois,5,Married,6655
+Illinois,5,Unmarried,4057
+Illinois,6,Married,6395
+Illinois,6,Unmarried,4065
+Illinois,7,Married,6863
+Illinois,7,Unmarried,4362
+Illinois,8,Married,6634
+Illinois,8,Unmarried,4483
+Illinois,9,Married,6187
+Illinois,9,Unmarried,4196
+Illinois,10,Married,6694
+Illinois,10,Unmarried,4173
+Illinois,11,Married,5916
+Illinois,11,Unmarried,4023
+Illinois,12,Married,6017
+Illinois,12,Unmarried,4172
+Indiana,1,Married,3531
+Indiana,1,Unmarried,2867
+Indiana,2,Married,3674
+Indiana,2,Unmarried,2652
+Indiana,3,Married,3897
+Indiana,3,Unmarried,2836
+Indiana,4,Married,3903
+Indiana,4,Unmarried,2643
+Indiana,5,Married,3865
+Indiana,5,Unmarried,2841
+Indiana,6,Married,3876
+Indiana,6,Unmarried,2687
+Indiana,7,Married,4050
+Indiana,7,Unmarried,2977
+Indiana,8,Married,4140
+Indiana,8,Unmarried,3055
+Indiana,9,Married,3885
+Indiana,9,Unmarried,2914
+Indiana,10,Married,4058
+Indiana,10,Unmarried,2823
+Indiana,11,Married,3452
+Indiana,11,Unmarried,2673
+Indiana,12,Married,3760
+Indiana,12,Unmarried,2867
+Iowa,1,Married,1907
+Iowa,1,Unmarried,1149
+Iowa,2,Married,1740
+Iowa,2,Unmarried,989
+Iowa,3,Married,1998
+Iowa,3,Unmarried,1117
+Iowa,4,Married,1974
+Iowa,4,Unmarried,1020
+Iowa,5,Married,1992
+Iowa,5,Unmarried,1093
+Iowa,6,Married,1965
+Iowa,6,Unmarried,1065
+Iowa,7,Married,1982
+Iowa,7,Unmarried,1161
+Iowa,8,Married,2026
+Iowa,8,Unmarried,1154
+Iowa,9,Married,1902
+Iowa,9,Unmarried,1115
+Iowa,10,Married,2032
+Iowa,10,Unmarried,1167
+Iowa,11,Married,1810
+Iowa,11,Unmarried,1018
+Iowa,12,Married,1811
+Iowa,12,Unmarried,1110
+Kansas,1,Married,1755
+Kansas,1,Unmarried,1054
+Kansas,2,Married,1678
+Kansas,2,Unmarried,937
+Kansas,3,Married,1803
+Kansas,3,Unmarried,1008
+Kansas,4,Married,1831
+Kansas,4,Unmarried,934
+Kansas,5,Married,1803
+Kansas,5,Unmarried,985
+Kansas,6,Married,1746
+Kansas,6,Unmarried,955
+Kansas,7,Married,1890
+Kansas,7,Unmarried,1099
+Kansas,8,Married,1977
+Kansas,8,Unmarried,1134
+Kansas,9,Married,1878
+Kansas,9,Unmarried,1005
+Kansas,10,Married,1849
+Kansas,10,Unmarried,1059
+Kansas,11,Married,1684
+Kansas,11,Unmarried,985
+Kansas,12,Married,1809
+Kansas,12,Unmarried,1031
+Kentucky,1,Married,2466
+Kentucky,1,Unmarried,1931
+Kentucky,2,Married,2379
+Kentucky,2,Unmarried,1758
+Kentucky,3,Married,2463
+Kentucky,3,Unmarried,1788
+Kentucky,4,Married,2476
+Kentucky,4,Unmarried,1770
+Kentucky,5,Married,2637
+Kentucky,5,Unmarried,1760
+Kentucky,6,Married,2435
+Kentucky,6,Unmarried,1855
+Kentucky,7,Married,2884
+Kentucky,7,Unmarried,1940
+Kentucky,8,Married,2734
+Kentucky,8,Unmarried,2014
+Kentucky,9,Married,2470
+Kentucky,9,Unmarried,1938
+Kentucky,10,Married,2688
+Kentucky,10,Unmarried,1886
+Kentucky,11,Married,2328
+Kentucky,11,Unmarried,1762
+Kentucky,12,Married,2460
+Kentucky,12,Unmarried,1802
+Louisiana,1,Married,1897
+Louisiana,1,Unmarried,2519
+Louisiana,2,Married,1963
+Louisiana,2,Unmarried,2275
+Louisiana,3,Married,2001
+Louisiana,3,Unmarried,2270
+Louisiana,4,Married,1936
+Louisiana,4,Unmarried,2132
+Louisiana,5,Married,1958
+Louisiana,5,Unmarried,2237
+Louisiana,6,Married,1825
+Louisiana,6,Unmarried,2290
+Louisiana,7,Married,2184
+Louisiana,7,Unmarried,2626
+Louisiana,8,Married,2149
+Louisiana,8,Unmarried,2608
+Louisiana,9,Married,2049
+Louisiana,9,Unmarried,2571
+Louisiana,10,Married,2031
+Louisiana,10,Unmarried,2631
+Louisiana,11,Married,1972
+Louisiana,11,Unmarried,2362
+Louisiana,12,Married,1872
+Louisiana,12,Unmarried,1861
+Maine,1,Married,613
+Maine,1,Unmarried,330
+Maine,2,Married,572
+Maine,2,Unmarried,345
+Maine,3,Married,608
+Maine,3,Unmarried,371
+Maine,4,Married,623
+Maine,4,Unmarried,327
+Maine,5,Married,619
+Maine,5,Unmarried,370
+Maine,6,Married,581
+Maine,6,Unmarried,359
+Maine,7,Married,679
+Maine,7,Unmarried,348
+Maine,8,Married,634
+Maine,8,Unmarried,356
+Maine,9,Married,608
+Maine,9,Unmarried,354
+Maine,10,Married,660
+Maine,10,Unmarried,352
+Maine,11,Married,607
+Maine,11,Unmarried,327
+Maine,12,Married,596
+Maine,12,Unmarried,322
+Maryland,1,Married,3228
+Maryland,1,Unmarried,2202
+Maryland,2,Married,2974
+Maryland,2,Unmarried,2140
+Maryland,3,Married,3311
+Maryland,3,Unmarried,2170
+Maryland,4,Married,3133
+Maryland,4,Unmarried,2077
+Maryland,5,Married,3405
+Maryland,5,Unmarried,2137
+Maryland,6,Married,3136
+Maryland,6,Unmarried,2172
+Maryland,7,Married,3507
+Maryland,7,Unmarried,2307
+Maryland,8,Married,3552
+Maryland,8,Unmarried,2387
+Maryland,9,Married,3230
+Maryland,9,Unmarried,2230
+Maryland,10,Married,3245
+Maryland,10,Unmarried,2230
+Maryland,11,Married,3103
+Maryland,11,Unmarried,2096
+Maryland,12,Married,3077
+Maryland,12,Unmarried,2295
+Massachusetts,1,Married,3525
+Massachusetts,1,Unmarried,1922
+Massachusetts,2,Married,3411
+Massachusetts,2,Unmarried,1873
+Massachusetts,3,Married,3813
+Massachusetts,3,Unmarried,1867
+Massachusetts,4,Married,3726
+Massachusetts,4,Unmarried,1805
+Massachusetts,5,Married,3936
+Massachusetts,5,Unmarried,1911
+Massachusetts,6,Married,3804
+Massachusetts,6,Unmarried,1852
+Massachusetts,7,Married,4032
+Massachusetts,7,Unmarried,1947
+Massachusetts,8,Married,4056
+Massachusetts,8,Unmarried,1984
+Massachusetts,9,Married,3727
+Massachusetts,9,Unmarried,1924
+Massachusetts,10,Married,3888
+Massachusetts,10,Unmarried,1908
+Massachusetts,11,Married,3610
+Massachusetts,11,Unmarried,1869
+Massachusetts,12,Married,3586
+Massachusetts,12,Unmarried,1882
+Michigan,1,Married,4761
+Michigan,1,Unmarried,3197
+Michigan,2,Married,4593
+Michigan,2,Unmarried,3112
+Michigan,3,Married,5109
+Michigan,3,Unmarried,3238
+Michigan,4,Married,5156
+Michigan,4,Unmarried,3065
+Michigan,5,Married,5437
+Michigan,5,Unmarried,3249
+Michigan,6,Married,5340
+Michigan,6,Unmarried,3140
+Michigan,7,Married,5491
+Michigan,7,Unmarried,3237
+Michigan,8,Married,5568
+Michigan,8,Unmarried,3345
+Michigan,9,Married,5185
+Michigan,9,Unmarried,3094
+Michigan,10,Married,5281
+Michigan,10,Unmarried,3141
+Michigan,11,Married,4680
+Michigan,11,Unmarried,2918
+Michigan,12,Married,4718
+Michigan,12,Unmarried,3143
+Minnesota,1,Married,3178
+Minnesota,1,Unmarried,1626
+Minnesota,2,Married,3314
+Minnesota,2,Unmarried,1559
+Minnesota,3,Married,3400
+Minnesota,3,Unmarried,1678
+Minnesota,4,Married,3482
+Minnesota,4,Unmarried,1651
+Minnesota,5,Married,3702
+Minnesota,5,Unmarried,1704
+Minnesota,6,Married,3403
+Minnesota,6,Unmarried,1674
+Minnesota,7,Married,3641
+Minnesota,7,Unmarried,1689
+Minnesota,8,Married,3755
+Minnesota,8,Unmarried,1744
+Minnesota,9,Married,3457
+Minnesota,9,Unmarried,1669
+Minnesota,10,Married,3678
+Minnesota,10,Unmarried,1663
+Minnesota,11,Married,3316
+Minnesota,11,Unmarried,1590
+Minnesota,12,Married,3420
+Minnesota,12,Unmarried,1797
+Mississippi,1,Married,1271
+Mississippi,1,Unmarried,1553
+Mississippi,2,Married,1226
+Mississippi,2,Unmarried,1477
+Mississippi,3,Married,1263
+Mississippi,3,Unmarried,1492
+Mississippi,4,Married,1225
+Mississippi,4,Unmarried,1237
+Mississippi,5,Married,1264
+Mississippi,5,Unmarried,1388
+Mississippi,6,Married,1249
+Mississippi,6,Unmarried,1453
+Mississippi,7,Married,1368
+Mississippi,7,Unmarried,1645
+Mississippi,8,Married,1351
+Mississippi,8,Unmarried,1575
+Mississippi,9,Married,1268
+Mississippi,9,Unmarried,1545
+Mississippi,10,Married,1353
+Mississippi,10,Unmarried,1585
+Mississippi,11,Married,1199
+Mississippi,11,Unmarried,1499
+Mississippi,12,Married,1331
+Mississippi,12,Unmarried,1548
+Missouri,1,Married,3365
+Missouri,1,Unmarried,2338
+Missouri,2,Married,3217
+Missouri,2,Unmarried,2167
+Missouri,3,Married,3439
+Missouri,3,Unmarried,2056
+Missouri,4,Married,3430
+Missouri,4,Unmarried,2017
+Missouri,5,Married,3540
+Missouri,5,Unmarried,2130
+Missouri,6,Married,3353
+Missouri,6,Unmarried,2108
+Missouri,7,Married,3693
+Missouri,7,Unmarried,2215
+Missouri,8,Married,3768
+Missouri,8,Unmarried,2312
+Missouri,9,Married,3536
+Missouri,9,Unmarried,2268
+Missouri,10,Married,3583
+Missouri,10,Unmarried,2310
+Missouri,11,Married,3222
+Missouri,11,Unmarried,2090
+Missouri,12,Married,3156
+Missouri,12,Unmarried,2264
+Montana,1,Married,628
+Montana,1,Unmarried,252
+Montana,2,Married,634
+Montana,2,Unmarried,276
+Montana,3,Married,673
+Montana,3,Unmarried,281
+Montana,4,Married,661
+Montana,4,Unmarried,276
+Montana,5,Married,728
+Montana,5,Unmarried,325
+Montana,6,Married,623
+Montana,6,Unmarried,294
+Montana,7,Married,657
+Montana,7,Unmarried,292
+Montana,8,Married,685
+Montana,8,Unmarried,306
+Montana,9,Married,685
+Montana,9,Unmarried,308
+Montana,10,Married,626
+Montana,10,Unmarried,261
+Montana,11,Married,608
+Montana,11,Unmarried,245
+Montana,12,Married,656
+Montana,12,Unmarried,297
+Nebraska,1,Married,1300
+Nebraska,1,Unmarried,730
+Nebraska,2,Married,1320
+Nebraska,2,Unmarried,689
+Nebraska,3,Married,1340
+Nebraska,3,Unmarried,659
+Nebraska,4,Married,1354
+Nebraska,4,Unmarried,693
+Nebraska,5,Married,1438
+Nebraska,5,Unmarried,778
+Nebraska,6,Married,1318
+Nebraska,6,Unmarried,706
+Nebraska,7,Married,1377
+Nebraska,7,Unmarried,749
+Nebraska,8,Married,1385
+Nebraska,8,Unmarried,743
+Nebraska,9,Married,1297
+Nebraska,9,Unmarried,767
+Nebraska,10,Married,1394
+Nebraska,10,Unmarried,745
+Nebraska,11,Married,1267
+Nebraska,11,Unmarried,634
+Nebraska,12,Married,1297
+Nebraska,12,Unmarried,664
+Nevada,1,Married,1308
+Nevada,1,Unmarried,1259
+Nevada,1,Not Reported,11
+Nevada,2,Married,1316
+Nevada,2,Unmarried,1234
+Nevada,2,Not Reported,16
+Nevada,3,Married,1308
+Nevada,3,Unmarried,1306
+Nevada,3,Not Reported,22
+Nevada,4,Married,1298
+Nevada,4,Unmarried,1195
+Nevada,4,Not Reported,25
+Nevada,5,Married,1307
+Nevada,5,Unmarried,1260
+Nevada,5,Not Reported,18
+Nevada,6,Married,1328
+Nevada,6,Unmarried,1282
+Nevada,6,Not Reported,25
+Nevada,7,Married,1441
+Nevada,7,Unmarried,1285
+Nevada,7,Not Reported,19
+Nevada,8,Married,1436
+Nevada,8,Unmarried,1381
+Nevada,8,Not Reported,18
+Nevada,9,Married,1459
+Nevada,9,Unmarried,1336
+Nevada,9,Not Reported,20
+Nevada,10,Married,1452
+Nevada,10,Unmarried,1372
+Nevada,10,Not Reported,20
+Nevada,11,Married,1380
+Nevada,11,Unmarried,1270
+Nevada,11,Not Reported,19
+Nevada,12,Married,1389
+Nevada,12,Unmarried,1399
+Nevada,12,Not Reported,18
+New Hampshire,1,Married,633
+New Hampshire,1,Unmarried,304
+New Hampshire,2,Married,706
+New Hampshire,2,Unmarried,262
+New Hampshire,3,Married,660
+New Hampshire,3,Unmarried,275
+New Hampshire,4,Married,682
+New Hampshire,4,Unmarried,262
+New Hampshire,5,Married,719
+New Hampshire,5,Unmarried,246
+New Hampshire,6,Married,697
+New Hampshire,6,Unmarried,284
+New Hampshire,7,Married,776
+New Hampshire,7,Unmarried,279
+New Hampshire,8,Married,755
+New Hampshire,8,Unmarried,268
+New Hampshire,9,Married,712
+New Hampshire,9,Unmarried,289
+New Hampshire,10,Married,688
+New Hampshire,10,Unmarried,285
+New Hampshire,11,Married,699
+New Hampshire,11,Unmarried,284
+New Hampshire,12,Married,665
+New Hampshire,12,Unmarried,297
+New Jersey,1,Married,5453
+New Jersey,1,Unmarried,2823
+New Jersey,2,Married,5129
+New Jersey,2,Unmarried,2721
+New Jersey,3,Married,5601
+New Jersey,3,Unmarried,2790
+New Jersey,4,Married,5484
+New Jersey,4,Unmarried,2635
+New Jersey,5,Married,5806
+New Jersey,5,Unmarried,2724
+New Jersey,6,Married,5479
+New Jersey,6,Unmarried,2585
+New Jersey,7,Married,6057
+New Jersey,7,Unmarried,2860
+New Jersey,8,Married,6126
+New Jersey,8,Unmarried,3010
+New Jersey,9,Married,5718
+New Jersey,9,Unmarried,2756
+New Jersey,10,Married,5873
+New Jersey,10,Unmarried,2778
+New Jersey,11,Married,5388
+New Jersey,11,Unmarried,2692
+New Jersey,12,Married,5538
+New Jersey,12,Unmarried,2807
+New Mexico,1,Married,823
+New Mexico,1,Unmarried,941
+New Mexico,2,Married,758
+New Mexico,2,Unmarried,897
+New Mexico,3,Married,826
+New Mexico,3,Unmarried,932
+New Mexico,4,Married,806
+New Mexico,4,Unmarried,908
+New Mexico,5,Married,783
+New Mexico,5,Unmarried,866
+New Mexico,6,Married,801
+New Mexico,6,Unmarried,909
+New Mexico,7,Married,846
+New Mexico,7,Unmarried,982
+New Mexico,8,Married,905
+New Mexico,8,Unmarried,1005
+New Mexico,9,Married,913
+New Mexico,9,Unmarried,975
+New Mexico,10,Married,863
+New Mexico,10,Unmarried,899
+New Mexico,11,Married,750
+New Mexico,11,Unmarried,737
+New Mexico,12,Married,739
+New Mexico,12,Unmarried,384
+New York,1,Married,10431
+New York,1,Unmarried,6355
+New York,2,Married,9933
+New York,2,Unmarried,6156
+New York,3,Married,10664
+New York,3,Unmarried,6271
+New York,4,Married,10566
+New York,4,Unmarried,5928
+New York,5,Married,11226
+New York,5,Unmarried,6456
+New York,6,Married,10548
+New York,6,Unmarried,6048
+New York,7,Married,11320
+New York,7,Unmarried,6587
+New York,8,Married,11440
+New York,8,Unmarried,6633
+New York,9,Married,10663
+New York,9,Unmarried,6303
+New York,10,Married,10882
+New York,10,Unmarried,6266
+New York,11,Married,10320
+New York,11,Unmarried,6136
+New York,12,Married,10071
+New York,12,Unmarried,6198
+North Carolina,1,Married,6006
+North Carolina,1,Unmarried,4153
+North Carolina,2,Married,5634
+North Carolina,2,Unmarried,3877
+North Carolina,3,Married,5882
+North Carolina,3,Unmarried,4093
+North Carolina,4,Married,5889
+North Carolina,4,Unmarried,3875
+North Carolina,5,Married,6035
+North Carolina,5,Unmarried,4204
+North Carolina,6,Married,5797
+North Carolina,6,Unmarried,3974
+North Carolina,7,Married,6331
+North Carolina,7,Unmarried,4429
+North Carolina,8,Married,6565
+North Carolina,8,Unmarried,4450
+North Carolina,9,Married,6111
+North Carolina,9,Unmarried,4366
+North Carolina,10,Married,6225
+North Carolina,10,Unmarried,4181
+North Carolina,11,Married,5830
+North Carolina,11,Unmarried,4057
+North Carolina,12,Married,6061
+North Carolina,12,Unmarried,4277
+North Dakota,1,Married,531
+North Dakota,1,Unmarried,254
+North Dakota,2,Married,491
+North Dakota,2,Unmarried,256
+North Dakota,3,Married,540
+North Dakota,3,Unmarried,270
+North Dakota,4,Married,577
+North Dakota,4,Unmarried,231
+North Dakota,5,Married,577
+North Dakota,5,Unmarried,254
+North Dakota,6,Married,539
+North Dakota,6,Unmarried,269
+North Dakota,7,Married,600
+North Dakota,7,Unmarried,280
+North Dakota,8,Married,567
+North Dakota,8,Unmarried,291
+North Dakota,9,Married,512
+North Dakota,9,Unmarried,243
+North Dakota,10,Married,553
+North Dakota,10,Unmarried,267
+North Dakota,11,Married,513
+North Dakota,11,Unmarried,228
+North Dakota,12,Married,490
+North Dakota,12,Unmarried,278
+Ohio,1,Married,5703
+Ohio,1,Unmarried,4509
+Ohio,2,Married,5762
+Ohio,2,Unmarried,4230
+Ohio,3,Married,6129
+Ohio,3,Unmarried,4327
+Ohio,4,Married,6084
+Ohio,4,Unmarried,4198
+Ohio,5,Married,6351
+Ohio,5,Unmarried,4453
+Ohio,6,Married,6279
+Ohio,6,Unmarried,4326
+Ohio,7,Married,6555
+Ohio,7,Unmarried,4614
+Ohio,8,Married,6591
+Ohio,8,Unmarried,4681
+Ohio,9,Married,6171
+Ohio,9,Unmarried,4424
+Ohio,10,Married,6345
+Ohio,10,Unmarried,4472
+Ohio,11,Married,5700
+Ohio,11,Unmarried,4097
+Ohio,12,Married,5924
+Ohio,12,Unmarried,4415
+Oklahoma,1,Married,2142
+Oklahoma,1,Unmarried,1760
+Oklahoma,2,Married,2016
+Oklahoma,2,Unmarried,1675
+Oklahoma,3,Married,2227
+Oklahoma,3,Unmarried,1661
+Oklahoma,4,Married,2142
+Oklahoma,4,Unmarried,1698
+Oklahoma,5,Married,2255
+Oklahoma,5,Unmarried,1733
+Oklahoma,6,Married,2151
+Oklahoma,6,Unmarried,1624
+Oklahoma,7,Married,2345
+Oklahoma,7,Unmarried,1954
+Oklahoma,8,Married,2396
+Oklahoma,8,Unmarried,1900
+Oklahoma,9,Married,2221
+Oklahoma,9,Unmarried,1857
+Oklahoma,10,Married,2301
+Oklahoma,10,Unmarried,1838
+Oklahoma,11,Married,2086
+Oklahoma,11,Unmarried,1708
+Oklahoma,12,Married,2251
+Oklahoma,12,Unmarried,1897
+Oregon,1,Married,1894
+Oregon,1,Unmarried,1215
+Oregon,2,Married,1783
+Oregon,2,Unmarried,1110
+Oregon,3,Married,2078
+Oregon,3,Unmarried,1178
+Oregon,4,Married,1981
+Oregon,4,Unmarried,1193
+Oregon,5,Married,2107
+Oregon,5,Unmarried,1223
+Oregon,6,Married,2063
+Oregon,6,Unmarried,1179
+Oregon,7,Married,2241
+Oregon,7,Unmarried,1267
+Oregon,8,Married,2135
+Oregon,8,Unmarried,1281
+Oregon,9,Married,2000
+Oregon,9,Unmarried,1273
+Oregon,10,Married,2099
+Oregon,10,Unmarried,1247
+Oregon,11,Married,1872
+Oregon,11,Unmarried,1139
+Oregon,12,Married,1909
+Oregon,12,Unmarried,258
+Pennsylvania,1,Married,6392
+Pennsylvania,1,Unmarried,4231
+Pennsylvania,2,Married,5960
+Pennsylvania,2,Unmarried,3818
+Pennsylvania,3,Married,6539
+Pennsylvania,3,Unmarried,4198
+Pennsylvania,4,Married,6459
+Pennsylvania,4,Unmarried,3842
+Pennsylvania,5,Married,6723
+Pennsylvania,5,Unmarried,3955
+Pennsylvania,6,Married,6505
+Pennsylvania,6,Unmarried,3991
+Pennsylvania,7,Married,6880
+Pennsylvania,7,Unmarried,4268
+Pennsylvania,8,Married,7020
+Pennsylvania,8,Unmarried,4348
+Pennsylvania,9,Married,6628
+Pennsylvania,9,Unmarried,4040
+Pennsylvania,10,Married,6600
+Pennsylvania,10,Unmarried,4020
+Pennsylvania,11,Married,6129
+Pennsylvania,11,Unmarried,3875
+Pennsylvania,12,Married,6228
+Pennsylvania,12,Unmarried,3976
+Rhode Island,1,Married,450
+Rhode Island,1,Unmarried,360
+Rhode Island,2,Married,431
+Rhode Island,2,Unmarried,319
+Rhode Island,3,Married,471
+Rhode Island,3,Unmarried,403
+Rhode Island,4,Married,476
+Rhode Island,4,Unmarried,331
+Rhode Island,5,Married,522
+Rhode Island,5,Unmarried,348
+Rhode Island,6,Married,488
+Rhode Island,6,Unmarried,308
+Rhode Island,7,Married,501
+Rhode Island,7,Unmarried,355
+Rhode Island,8,Married,544
+Rhode Island,8,Unmarried,359
+Rhode Island,9,Married,522
+Rhode Island,9,Unmarried,359
+Rhode Island,10,Married,517
+Rhode Island,10,Unmarried,352
+Rhode Island,11,Married,445
+Rhode Island,11,Unmarried,314
+Rhode Island,12,Married,448
+Rhode Island,12,Unmarried,341
+South Carolina,1,Married,2629
+South Carolina,1,Unmarried,2238
+South Carolina,2,Married,2472
+South Carolina,2,Unmarried,2004
+South Carolina,3,Married,2648
+South Carolina,3,Unmarried,2103
+South Carolina,4,Married,2579
+South Carolina,4,Unmarried,1967
+South Carolina,5,Married,2659
+South Carolina,5,Unmarried,2155
+South Carolina,6,Married,2570
+South Carolina,6,Unmarried,2186
+South Carolina,7,Married,2960
+South Carolina,7,Unmarried,2373
+South Carolina,8,Married,3028
+South Carolina,8,Unmarried,2416
+South Carolina,9,Married,2677
+South Carolina,9,Unmarried,2134
+South Carolina,10,Married,2842
+South Carolina,10,Unmarried,2192
+South Carolina,11,Married,2595
+South Carolina,11,Unmarried,2044
+South Carolina,12,Married,2794
+South Carolina,12,Unmarried,2321
+South Dakota,1,Married,594
+South Dakota,1,Unmarried,362
+South Dakota,2,Married,549
+South Dakota,2,Unmarried,314
+South Dakota,3,Married,596
+South Dakota,3,Unmarried,351
+South Dakota,4,Married,645
+South Dakota,4,Unmarried,323
+South Dakota,5,Married,694
+South Dakota,5,Unmarried,347
+South Dakota,6,Married,615
+South Dakota,6,Unmarried,308
+South Dakota,7,Married,644
+South Dakota,7,Unmarried,359
+South Dakota,8,Married,639
+South Dakota,8,Unmarried,362
+South Dakota,9,Married,619
+South Dakota,9,Unmarried,364
+South Dakota,10,Married,609
+South Dakota,10,Unmarried,313
+South Dakota,11,Married,569
+South Dakota,11,Unmarried,304
+South Dakota,12,Married,617
+South Dakota,12,Unmarried,317
+Tennessee,1,Married,3761
+Tennessee,1,Unmarried,2977
+Tennessee,2,Married,3787
+Tennessee,2,Unmarried,2704
+Tennessee,3,Married,3949
+Tennessee,3,Unmarried,2856
+Tennessee,4,Married,3812
+Tennessee,4,Unmarried,2680
+Tennessee,5,Married,4249
+Tennessee,5,Unmarried,2862
+Tennessee,6,Married,3917
+Tennessee,6,Unmarried,2915
+Tennessee,7,Married,4348
+Tennessee,7,Unmarried,3131
+Tennessee,8,Married,4468
+Tennessee,8,Unmarried,3054
+Tennessee,9,Married,4231
+Tennessee,9,Unmarried,2930
+Tennessee,10,Married,4204
+Tennessee,10,Unmarried,2919
+Tennessee,11,Married,3868
+Tennessee,11,Unmarried,2800
+Tennessee,12,Married,4040
+Tennessee,12,Unmarried,3068
+Texas,1,Married,18447
+Texas,1,Unmarried,13795
+Texas,2,Married,17595
+Texas,2,Unmarried,12513
+Texas,2,Not Reported,10
+Texas,3,Married,18100
+Texas,3,Unmarried,12570
+Texas,4,Married,17888
+Texas,4,Unmarried,12097
+Texas,5,Married,18922
+Texas,5,Unmarried,12505
+Texas,6,Married,18017
+Texas,6,Unmarried,12442
+Texas,7,Married,20128
+Texas,7,Unmarried,14411
+Texas,8,Married,20593
+Texas,8,Unmarried,14793
+Texas,8,Not Reported,11
+Texas,9,Married,19889
+Texas,9,Unmarried,13940
+Texas,10,Married,20549
+Texas,10,Unmarried,14121
+Texas,11,Married,18751
+Texas,11,Unmarried,13192
+Texas,12,Married,19709
+Texas,12,Unmarried,14068
+Texas,12,Not Reported,10
+Utah,1,Married,2837
+Utah,1,Unmarried,856
+Utah,2,Married,2790
+Utah,2,Unmarried,827
+Utah,3,Married,3087
+Utah,3,Unmarried,807
+Utah,4,Married,3072
+Utah,4,Unmarried,814
+Utah,5,Married,3141
+Utah,5,Unmarried,818
+Utah,6,Married,3020
+Utah,6,Unmarried,915
+Utah,7,Married,3253
+Utah,7,Unmarried,988
+Utah,8,Married,3257
+Utah,8,Unmarried,919
+Utah,9,Married,3108
+Utah,9,Unmarried,831
+Utah,10,Married,3045
+Utah,10,Unmarried,829
+Utah,11,Married,2728
+Utah,11,Unmarried,812
+Utah,12,Married,2922
+Utah,12,Unmarried,877
+Vermont,1,Married,227
+Vermont,1,Unmarried,153
+Vermont,2,Married,234
+Vermont,2,Unmarried,149
+Vermont,3,Married,258
+Vermont,3,Unmarried,178
+Vermont,4,Married,261
+Vermont,4,Unmarried,152
+Vermont,5,Married,303
+Vermont,5,Unmarried,145
+Vermont,6,Married,281
+Vermont,6,Unmarried,162
+Vermont,7,Married,277
+Vermont,7,Unmarried,142
+Vermont,8,Married,285
+Vermont,8,Unmarried,167
+Vermont,9,Married,250
+Vermont,9,Unmarried,150
+Vermont,10,Married,264
+Vermont,10,Unmarried,158
+Vermont,11,Married,255
+Vermont,11,Unmarried,140
+Vermont,12,Married,241
+Vermont,12,Unmarried,174
+Virginia,1,Married,4930
+Virginia,1,Unmarried,2782
+Virginia,2,Married,4699
+Virginia,2,Unmarried,2660
+Virginia,3,Married,5117
+Virginia,3,Unmarried,2711
+Virginia,4,Married,4943
+Virginia,4,Unmarried,2628
+Virginia,5,Married,5190
+Virginia,5,Unmarried,2645
+Virginia,6,Married,4893
+Virginia,6,Unmarried,2694
+Virginia,7,Married,5248
+Virginia,7,Unmarried,2853
+Virginia,8,Married,5357
+Virginia,8,Unmarried,2911
+Virginia,9,Married,5080
+Virginia,9,Unmarried,2725
+Virginia,10,Married,5272
+Virginia,10,Unmarried,2763
+Virginia,11,Married,4864
+Virginia,11,Unmarried,2644
+Virginia,12,Married,3864
+Virginia,12,Unmarried,2075
+Washington,1,Married,4464
+Washington,1,Unmarried,2132
+Washington,2,Married,4334
+Washington,2,Unmarried,2067
+Washington,3,Married,4760
+Washington,3,Unmarried,2199
+Washington,4,Married,4531
+Washington,4,Unmarried,2126
+Washington,5,Married,4969
+Washington,5,Unmarried,2198
+Washington,6,Married,4776
+Washington,6,Unmarried,2132
+Washington,7,Married,4956
+Washington,7,Unmarried,2308
+Washington,8,Married,5120
+Washington,8,Unmarried,2333
+Washington,9,Married,4745
+Washington,9,Unmarried,2104
+Washington,10,Married,4934
+Washington,10,Unmarried,2207
+Washington,11,Married,4493
+Washington,11,Unmarried,2159
+Washington,12,Married,4519
+Washington,12,Unmarried,2107
+West Virginia,1,Married,757
+West Virginia,1,Unmarried,615
+West Virginia,2,Married,740
+West Virginia,2,Unmarried,635
+West Virginia,3,Married,780
+West Virginia,3,Unmarried,628
+West Virginia,4,Married,736
+West Virginia,4,Unmarried,627
+West Virginia,5,Married,796
+West Virginia,5,Unmarried,615
+West Virginia,6,Married,812
+West Virginia,6,Unmarried,574
+West Virginia,7,Married,866
+West Virginia,7,Unmarried,617
+West Virginia,8,Married,858
+West Virginia,8,Unmarried,687
+West Virginia,9,Married,794
+West Virginia,9,Unmarried,628
+West Virginia,10,Married,827
+West Virginia,10,Unmarried,628
+West Virginia,11,Married,743
+West Virginia,11,Unmarried,592
+West Virginia,12,Married,727
+West Virginia,12,Unmarried,564
+Wisconsin,1,Married,2907
+Wisconsin,1,Unmarried,1747
+Wisconsin,2,Married,2951
+Wisconsin,2,Unmarried,1773
+Wisconsin,3,Married,3169
+Wisconsin,3,Unmarried,1780
+Wisconsin,4,Married,3079
+Wisconsin,4,Unmarried,1791
+Wisconsin,5,Married,3380
+Wisconsin,5,Unmarried,1845
+Wisconsin,6,Married,3242
+Wisconsin,6,Unmarried,1795
+Wisconsin,7,Married,3336
+Wisconsin,7,Unmarried,1919
+Wisconsin,8,Married,3366
+Wisconsin,8,Unmarried,1978
+Wisconsin,9,Married,3077
+Wisconsin,9,Unmarried,1814
+Wisconsin,10,Married,3123
+Wisconsin,10,Unmarried,1853
+Wisconsin,11,Married,2885
+Wisconsin,11,Unmarried,1737
+Wisconsin,12,Married,3097
+Wisconsin,12,Unmarried,1834
+Wyoming,1,Married,297
+Wyoming,1,Unmarried,185
+Wyoming,2,Married,301
+Wyoming,2,Unmarried,186
+Wyoming,3,Married,337
+Wyoming,3,Unmarried,186
+Wyoming,4,Married,359
+Wyoming,4,Unmarried,164
+Wyoming,5,Married,337
+Wyoming,5,Unmarried,185
+Wyoming,6,Married,363
+Wyoming,6,Unmarried,163
+Wyoming,7,Married,358
+Wyoming,7,Unmarried,173
+Wyoming,8,Married,359
+Wyoming,8,Unmarried,178
+Wyoming,9,Married,330
+Wyoming,9,Unmarried,152
+Wyoming,10,Married,356
+Wyoming,10,Unmarried,166
+Wyoming,11,Married,306
+Wyoming,11,Unmarried,136
+Wyoming,12,Married,321
+Wyoming,12,Unmarried,172
